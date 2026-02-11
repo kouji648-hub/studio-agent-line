@@ -282,13 +282,33 @@ async function handlePregnantChoice(choice) {
   addStepIndicator('— Step 4: 予約・相談 —');
 
   if (choice === 'nb') {
-    addRichMsg({
-      gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
-      title: '👶 ニューボーンフォト',
-      subtitle: 'スタジオplan ¥38,500（税込）',
-      features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '出産後にお日にち調整OK'],
-      urgency: '生後2〜3週間を逃すと撮影が難しくなります',
-      proof: '年間500組以上のママにご利用いただいています'
+    await addMsg('bot', 'ニューボーン撮影ですね。\n撮影場所はどちらがご希望ですか？');
+
+    addChoices([
+      { label: '📸 スタジオ撮影', value: 'studio_preg' },
+      { label: '🏠 自宅出張撮影', value: 'home_preg' }
+    ], async (pregNbStyle) => {
+
+      if (pregNbStyle === 'studio_preg') {
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+          title: '👶 ニューボーンスタジオplan',
+          subtitle: '¥38,500（税込）',
+          features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '出産後にお日にち調整OK'],
+          urgency: '生後2〜3週間を逃すと撮影が難しくなります',
+          proof: '年間500組以上のママにご利用いただいています'
+        });
+
+      } else {
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+          title: '🏠 ナチュラルニューボーン出張',
+          subtitle: '¥33,000（税込）',
+          features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '出産後にお日にち調整OK'],
+          urgency: '生後2〜3週間がベストタイミング',
+          proof: '産後の移動が不安なママにおすすめ'
+        });
+      }
     });
   } else if (choice === 'maternity') {
     addRichMsg({
@@ -335,36 +355,137 @@ async function handleNewbornChoice(choice) {
   addStepIndicator('— Step 3: プラン提案 —');
 
   if (choice === 'nb') {
-    await addMsg('bot', '赤ちゃんのペースに合わせて撮影するので、ゆったり過ごしていただけます。');
-    addRichMsg({
-      gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
-      title: '👶 ニューボーンフォト',
-      subtitle: 'スタジオplan ¥38,500（税込）',
-      features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '家族写真・兄弟撮影OK'],
-      urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
-      proof: '赤ちゃんのペースに合わせた撮影で安心'
+    await addMsg('bot', '赤ちゃんのペースに合わせて撮影するので、ゆったり過ごしていただけます。\n\n撮影場所はどちらがご希望ですか？');
+
+    addChoices([
+      { label: '📸 スタジオ撮影', value: 'studio_nb' },
+      { label: '🏠 自宅出張撮影', value: 'home_nb' }
+    ], async (nbStyle) => {
+
+      addStepIndicator('— Step 4: プラン詳細 —');
+
+      if (nbStyle === 'studio_nb') {
+        await addMsg('bot', 'スタジオプランは衣装・小物がすべて無料。\n完全貸切なので授乳もおむつ替えも気兼ねなくできます。');
+
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+          title: '👶 ニューボーンスタジオplan',
+          subtitle: '¥38,500（税込）',
+          features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '家族写真・兄弟撮影OK'],
+          urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
+          proof: '赤ちゃんのペースに合わせた撮影で安心'
+        });
+
+      } else {
+        await addMsg('bot', 'ご自宅での出張撮影ですね。\n\n赤ちゃんの移動負担がなく、自然光を活かした柔らかい雰囲気で撮影できます。');
+
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+          title: '🏠 ナチュラルニューボーン出張',
+          subtitle: '¥33,000（税込）',
+          features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '赤ちゃんのペースで撮影'],
+          urgency: '生後2〜3週間がベストタイミング',
+          proof: 'いつもの場所だから赤ちゃんもリラックス'
+        });
+      }
     });
   } else if (choice === 'omiya') {
-    await addMsg('bot', 'お宮参りは訪問着の着付けも無料で対応しています。\n神社ロケなら1日で全部完結します。');
+    await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
+
     addChoices([
-      { label: '📍 下北方（宮崎神宮でロケ）', value: 'shimokitakata' },
-      { label: '📍 都城（神柱宮でロケ）', value: 'miyakonojo' },
-      { label: '📷 スタジオのみでOK', value: 'studio' }
-    ], async (studio) => {
-      addStepIndicator('— Step 4: 予約・相談 —');
-      const studioInfo = {
-        shimokitakata: '宮崎神宮は木漏れ日と参道の雰囲気が素敵です',
-        miyakonojo: '神柱宮は白い鳥居と広い参道が特徴です',
-        studio: 'スタジオでゆっくり撮影しましょう'
-      };
-      await addMsg('bot', studioInfo[studio]);
-      addRichMsg({
-        gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
-        title: '⛩️ お宮参り撮影',
-        subtitle: studio !== 'studio' ? 'スタジオ＋ロケ ¥33,000（税込）' : 'ベーシックプラン ¥33,000（税込）',
-        features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', studio === 'studio' ? '👘 訪問着レンタル・着付け無料' : '👘 訪問着 +¥16,500（レンタル・着付け込）', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', studio !== 'studio' ? '⛩️ 神社ロケ20分（1日で完結）' : '完全貸切スタジオ'],
-        proof: studio !== 'studio' ? 'スタジオ→神社→お参りが1日で完結' : '産着の着せ方もお任せください'
-      });
+      { label: '📸 スタジオ撮影のみ', value: 'studio' },
+      { label: '⛩️ スタジオ＋神社ロケ', value: 'location' }
+    ], async (styleChoice) => {
+
+      if (styleChoice === 'studio') {
+        // スタジオのみ → 訪問着無料訴求
+        await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥33,000（税込）。');
+
+        addStepIndicator('— Step 4: お宮参りベーシック —');
+
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+          title: '⛩️ お宮参りベーシック',
+          subtitle: '¥33,000（税込）',
+          features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '👘 訪問着レンタル・着付け無料', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', '完全貸切スタジオ'],
+          proof: '産着・訪問着の着せ方もお任せください'
+        });
+
+      } else {
+        // 神社ロケ → 神社選択
+        await addMsg('bot', '神社ロケをご希望ですね！\n\nスタジオから神社まで車で5分。\n撮影→お参りが1日で完結します。');
+
+        addChoices([
+          { label: '📍 宮崎神宮（下北方スタジオ）', value: 'shimokitakata' },
+          { label: '📍 神柱宮（都城スタジオ）', value: 'miyakonojo' }
+        ], async (shrineChoice) => {
+
+          addStepIndicator('— Step 4: 当日の流れ —');
+
+          const shrineInfo = {
+            shimokitakata: {
+              shrine: '宮崎神宮',
+              feature: '木漏れ日と参道の雰囲気が素敵',
+              studio: '下北方スタジオ'
+            },
+            miyakonojo: {
+              shrine: '神柱宮',
+              feature: '白い鳥居と広い参道が特徴',
+              studio: '都城スタジオ'
+            }
+          };
+
+          const info = shrineInfo[shrineChoice];
+
+          await addMsg('bot', `${info.shrine}（${info.studio}から車5分）\n${info.feature}です。`);
+
+          // 当日のスケジュールを表示
+          addTimeline([
+            { title: '10:00 スタジオ到着', desc: '着付け・撮影準備', active: true },
+            { title: '10:30 スタジオ撮影', desc: '家族写真・赤ちゃんのアップ等（60分）', active: true },
+            { title: '11:30 神社へ移動', desc: '車で5分', active: false },
+            { title: '11:40 神社ロケ撮影', desc: '参道・境内で撮影（20分）', active: false },
+            { title: '12:00 そのままお参り', desc: '御祈祷・記念撮影', active: false, highlight: '→ 1日で全部完結！' }
+          ]);
+
+          await new Promise(r => setTimeout(r, 1000));
+
+          await addMsg('bot', 'ママの訪問着についてお伺いします。\n\nスタジオ＋ロケプランの場合、訪問着は撮影後もそのままレンタル継続できます（+¥16,500）。', 800);
+
+          addChoices([
+            { label: '👘 訪問着も借りたい', value: 'with_kimono' },
+            { label: '🙅‍♀️ 持参します / 不要です', value: 'no_kimono' }
+          ], async (kimonoChoice) => {
+
+            addStepIndicator('— Step 5: プラン確定 —');
+
+            if (kimonoChoice === 'with_kimono') {
+              await addMsg('bot', '訪問着レンタル＋着付け＋撮影後レンタル込みで、総額¥49,500（税込）です。\n\n着付けスタッフが対応するので準備不要です。');
+
+              addRichMsg({
+                gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+                title: '⛩️ お宮参り スタジオ＋ロケ',
+                subtitle: '¥49,500（税込）',
+                features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '👘 訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', `⛩️ ${info.shrine}ロケ20分（1日で完結）`],
+                urgency: 'スタジオ→神社→お参りが1日で完結',
+                proof: '訪問着のまま御祈祷に行けるのでスムーズです'
+              });
+
+            } else {
+              await addMsg('bot', '承知しました。\n訪問着なしの場合、総額¥33,000（税込）です。');
+
+              addRichMsg({
+                gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+                title: '⛩️ お宮参り スタジオ＋ロケ',
+                subtitle: '¥33,000（税込）',
+                features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', `⛩️ ${info.shrine}ロケ20分（1日で完結）`],
+                urgency: 'スタジオ→神社→お参りが1日で完結',
+                proof: '産着の着せ方もお任せください'
+              });
+            }
+          });
+        });
+      }
     });
   } else {
     await addMsg('bot', 'ニューボーン→お宮参りの流れで撮影されるママ、多いです！');
@@ -464,18 +585,70 @@ async function flowChild() {
           proof: '前撮りなら衣装選び放題・混雑を避けられます'
         });
       } else if (pref === 'loca') {
-        await addMsg('bot', '神社ロケなら撮影→そのままお参りが1日で完結します。');
+        await addMsg('bot', '神社ロケなら撮影→そのままお参りが1日で完結します。\nどちらの神社がご希望ですか？');
+
         addChoices([
-          { label: '📍 宮崎神宮（下北方）', value: 'shimokitakata' },
-          { label: '📍 神柱宮（都城）', value: 'miyakonojo' }
-        ], async () => {
-          addRichMsg({
-            gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
-            title: '⛩️ 七五三 スタジオ＋ロケ',
-            subtitle: '¥35,000〜（税込）',
-            features: ['💰 明朗会計・大手の半額', '60カット（3〜4シーン）', '着物1着＋洋装1着（2着撮影）', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '⛩️ 神社ロケで家族写真（1日で完結）'],
-            urgency: '秋の七五三シーズンは予約が埋まりやすくなります',
-            proof: 'スタジオ→神社→お参りが1日で完結'
+          { label: '📍 宮崎神宮（下北方）', value: 'shimokitakata_753' },
+          { label: '📍 神柱宮（都城）', value: 'miyakonojo_753' }
+        ], async (shrine753) => {
+
+          const shrineInfo753 = {
+            shimokitakata_753: {
+              shrine: '宮崎神宮',
+              feature: '木漏れ日と参道の雰囲気が素敵',
+              studio: '下北方スタジオ'
+            },
+            miyakonojo_753: {
+              shrine: '神柱宮',
+              feature: '白い鳥居と広い参道が特徴',
+              studio: '都城スタジオ'
+            }
+          };
+
+          const info753 = shrineInfo753[shrine753];
+
+          await addMsg('bot', `${info753.shrine}（${info753.studio}から車5分）\n${info753.feature}です。`);
+
+          // 七五三の当日スケジュール
+          addTimeline([
+            { title: '9:00 スタジオ到着', desc: 'ヘアメイク・着付け', active: true },
+            { title: '10:00 スタジオ撮影', desc: '着物＋洋装の2着撮影（60分）', active: true },
+            { title: '11:00 神社へ移動', desc: '着物のまま車で5分', active: false },
+            { title: '11:10 神社ロケ撮影', desc: '参道・境内で撮影（20分）', active: false },
+            { title: '11:30 そのままお参り', desc: '御祈祷・記念撮影', active: false, highlight: '→ 1日で全部完結！' }
+          ]);
+
+          await new Promise(r => setTimeout(r, 1000));
+
+          await addMsg('bot', 'ママの訪問着についてもご案内できます。\n\n七五三の場合、訪問着は+¥11,000（着付け込）です。', 800);
+
+          addChoices([
+            { label: '👘 訪問着も借りたい', value: 'with_kimono_753' },
+            { label: '🙅‍♀️ 不要です', value: 'no_kimono_753' }
+          ], async (kimono753) => {
+
+            if (kimono753 === 'with_kimono_753') {
+              await addMsg('bot', '訪問着＋着付け込みで、総額¥46,000（税込）です。\n\n親子で着物姿の記念写真、素敵ですね。');
+
+              addRichMsg({
+                gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+                title: '⛩️ 七五三 スタジオ＋ロケ（訪問着付き）',
+                subtitle: '¥46,000（税込）',
+                features: ['💰 明朗会計・大手の半額', '60カット（3〜4シーン）', '着物1着＋洋装1着（2着撮影）', 'お子様のヘアメイク・着付け込み', '👘 ママの訪問着＋着付け込み', '⭐️ 兄弟も着物着用可能', `⛩️ ${info753.shrine}ロケで家族写真（1日で完結）`],
+                urgency: '秋の七五三シーズンは予約が埋まりやすくなります',
+                proof: '親子で着物姿の記念写真が残せます'
+              });
+
+            } else {
+              addRichMsg({
+                gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+                title: '⛩️ 七五三 スタジオ＋ロケ',
+                subtitle: '¥35,000〜（税込）',
+                features: ['💰 明朗会計・大手の半額', '60カット（3〜4シーン）', '着物1着＋洋装1着（2着撮影）', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', `⛩️ ${info753.shrine}ロケで家族写真（1日で完結）`],
+                urgency: '秋の七五三シーズンは予約が埋まりやすくなります',
+                proof: 'スタジオ→神社→お参りが1日で完結'
+              });
+            }
           });
         });
       } else {
