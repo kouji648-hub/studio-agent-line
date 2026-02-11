@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>パターンA: 興味ベース - ヒカリノスタジオ LINE デモ</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #7494C0; display: flex; justify-content: center; padding: 20px 10px; }
+.phone { width: 390px; height: 844px; background: #fff; border-radius: 40px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+.header { background: #fff; padding: 50px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e5e5e5; flex-shrink: 0; }
+.header .back { font-size: 24px; color: #06C755; cursor: pointer; }
+.header .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ff6b9d, #ff8fab); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold; }
+.header .name { font-size: 16px; font-weight: 600; }
+.header .badge { background: #06C755; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 8px; margin-left: 4px; }
+.chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #7494C0; }
+.msg { max-width: 80%; animation: fadeIn 0.3s ease; }
+.msg.bot { align-self: flex-start; }
+.msg.user { align-self: flex-end; }
+.msg .bubble { padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.6; word-break: break-word; }
+.msg.bot .bubble { background: #fff; color: #333; border-bottom-left-radius: 4px; }
+.msg.user .bubble { background: #06C755; color: #fff; border-bottom-right-radius: 4px; }
+.msg .time { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 2px; padding: 0 4px; }
+.msg.bot .time { text-align: left; }
+.msg.user .time { text-align: right; }
+.choices { display: flex; flex-direction: column; gap: 8px; max-width: 85%; align-self: flex-start; animation: fadeIn 0.3s ease; }
+.choices button { background: #fff; border: 2px solid #06C755; color: #06C755; padding: 12px 20px; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left; }
+.choices button:hover { background: #06C755; color: #fff; }
+.choices button:active { transform: scale(0.97); }
+.carousel { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 8px; max-width: 100%; align-self: flex-start; animation: fadeIn 0.3s ease; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.carousel::-webkit-scrollbar { display: none; }
+.card { min-width: 240px; max-width: 240px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); scroll-snap-align: start; flex-shrink: 0; }
+.card img { width: 100%; height: 150px; object-fit: cover; background: linear-gradient(135deg, #ffeef5, #fff5f8); display: flex; align-items: center; justify-content: center; }
+.card .card-body { padding: 12px; }
+.card .card-body h4 { font-size: 14px; margin-bottom: 6px; color: #333; }
+.card .card-body p { font-size: 12px; color: #666; line-height: 1.5; margin-bottom: 8px; }
+.card .card-body .price { font-size: 18px; font-weight: 700; color: #ff6b9d; }
+.card .card-body .price span { font-size: 11px; font-weight: 400; color: #999; }
+.card .card-btn { display: block; text-align: center; padding: 10px; background: #06C755; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; border: none; width: 100%; transition: background 0.2s; }
+.card .card-btn:hover { background: #05b04c; }
+.rich-msg { max-width: 85%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+.rich-msg .rich-header { background: linear-gradient(135deg, #ff6b9d, #ff8fab); padding: 16px; color: #fff; }
+.rich-msg .rich-header h3 { font-size: 16px; margin-bottom: 4px; }
+.rich-msg .rich-header p { font-size: 12px; opacity: 0.9; }
+.rich-msg .rich-body { padding: 14px; }
+.rich-msg .rich-body .feat { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #555; }
+.rich-msg .rich-body .feat::before { content: "✓"; color: #06C755; font-weight: bold; font-size: 16px; }
+.rich-msg .social-proof { background: #fff9fb; padding: 10px 14px; font-size: 12px; color: #ff6b9d; font-weight: 500; border-top: 1px solid #ffeef5; }
+.rich-msg .cta-row { display: flex; border-top: 1px solid #eee; }
+.rich-msg .cta-row button { flex: 1; padding: 12px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.rich-msg .cta-row .cta-primary { background: #06C755; color: #fff; }
+.rich-msg .cta-row .cta-primary:hover { background: #05b04c; }
+.rich-msg .cta-row .cta-secondary { background: #fff; color: #06C755; }
+.rich-msg .cta-row .cta-secondary:hover { background: #f0faf4; }
+.step-indicator { text-align: center; padding: 8px; font-size: 11px; color: rgba(255,255,255,0.7); }
+.typing { align-self: flex-start; animation: fadeIn 0.3s ease; }
+.typing .bubble { background: #fff; border-radius: 18px; border-bottom-left-radius: 4px; padding: 12px 18px; display: flex; gap: 4px; }
+.typing .dot { width: 8px; height: 8px; background: #ccc; border-radius: 50%; animation: typingDot 1.4s infinite; }
+.typing .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing .dot:nth-child(3) { animation-delay: 0.4s; }
+.hidden { display: none !important; }
+.input-bar { background: #fff; padding: 8px 12px 30px; display: flex; align-items: center; gap: 8px; border-top: 1px solid #e5e5e5; flex-shrink: 0; }
+.input-bar input { flex: 1; padding: 10px 16px; border: 1px solid #ddd; border-radius: 20px; font-size: 14px; outline: none; }
+.input-bar .send { width: 36px; height: 36px; background: #06C755; border: none; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; }
+.debug-bar { background: #333; color: #aaa; padding: 8px 16px; font-size: 11px; display: flex; justify-content: space-between; flex-shrink: 0; }
+.debug-bar .reset { color: #ff6b6b; cursor: pointer; text-decoration: underline; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+.photo-placeholder { width: 100%; height: 150px; background: linear-gradient(135deg, #ffeef5, #fff5f8); display: flex; align-items: center; justify-content: center; color: #ff6b9d; font-size: 40px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="header">
+    <span class="back">&lsaquo;</span>
+    <div class="avatar">H</div>
+    <div>
+      <span class="name">ヒカリノスタジオ</span>
+      <span class="badge">公式</span>
+    </div>
+  </div>
+  <div class="chat" id="chat">
+    <!-- Messages will be injected here -->
+  </div>
+  <div class="input-bar">
+    <input type="text" placeholder="メッセージを入力" disabled>
+    <button class="send">&#9654;</button>
+  </div>
+  <div class="debug-bar">
+    <span>パターンA: 興味ベース（What型）</span>
+    <span class="reset" onclick="resetFlow()">リセット</span>
+  </div>
+</div>
+
+<script>
+const chat = document.getElementById('chat');
+let currentStep = 0;
+
+const PLANS = {
+  newborn: {
+    name: 'ニューボーン撮影',
+    emoji: '👶',
+    price: '33,000',
+    features: ['50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '家族写真・兄弟撮影OK'],
+    proof: '年間500組以上のママが撮影',
+    cards: [
+      { title: 'スタジオplan', desc: '赤ちゃん・家族・兄弟の3シーン撮影。衣装・小物すべて無料。', price: '33,000', icon: '📸' },
+      { title: 'ナチュラル出張', desc: 'ご自宅での自然光撮影。宮崎市内出張無料。期間限定。', price: '19,000', icon: '🏠' },
+      { title: '出張ベーシック', desc: '3着3シーン。じっくり撮影したい方に。', price: '53,900', icon: '🌿' }
+    ]
+  },
+  omiyamairi: {
+    name: 'お宮参り撮影',
+    emoji: '⛩️',
+    price: '33,000',
+    features: ['60カット（明るさ・色味調整済み）', '産着・訪問着レンタル無料', '神社ロケ撮影（1日で完結）', '兄弟衣装1着無料'],
+    proof: '産着・訪問着の着付けもスタッフが対応',
+    cards: [
+      { title: 'ベーシックプラン', desc: '産着+洋装無料。神社ロケも撮影日に完結。', price: '33,000', icon: '👘' },
+      { title: 'スタジオ＋ロケ', desc: 'スタジオ撮影後、神社で家族写真。', price: '33,000', icon: '⛩️' },
+      { title: '訪問着レンタル', desc: 'ママの訪問着も無料。着付けもお任せ。', price: '無料', icon: '🎀' }
+    ]
+  },
+  shichigosan: {
+    name: '七五三撮影',
+    emoji: '🎎',
+    price: '35,000',
+    features: ['60カット撮影', 'ヘアメイク・着付け込み', '着物+洋装の2着対応', '宮崎神宮・神柱宮でロケ可能'],
+    proof: '前撮りなら衣装選び放題',
+    cards: [
+      { title: '着物&洋装プラン', desc: '着物1着+洋装1着。ヘアメイク着付け込み。', price: '35,000', icon: '👧' },
+      { title: 'スタジオ＋ロケ', desc: 'スタジオ→神社のお得なセットプラン。', price: '35,000~', icon: '⛩️' },
+      { title: '兄弟追加', desc: '兄弟もまとめて撮影。洋装1着無料。', price: '+22,000', icon: '👦' }
+    ]
+  },
+  birthday: {
+    name: 'バースデー撮影',
+    emoji: '🎂',
+    price: '33,000',
+    features: ['60カット撮影', '衣装2着', '兄弟衣装1着無料', 'ハーフバースデーもOK'],
+    proof: '1歳のスマッシュケーキも対応',
+    cards: [
+      { title: 'バースデープラン', desc: '衣装2着で2シーン。ケーキスマッシュもOK。', price: '33,000', icon: '🎂' },
+      { title: 'ハーフバースデー', desc: '生後6ヶ月の記念撮影。寝返り前がベスト。', price: '33,000', icon: '🎀' },
+      { title: '兄弟撮影追加', desc: '兄弟のソロカットも一緒に。', price: '+16,500', icon: '👶' }
+    ]
+  }
+};
+
+function addMsg(type, text, delay) {
+  return new Promise(resolve => {
+    if (type === 'bot') {
+      const typing = document.createElement('div');
+      typing.className = 'typing';
+      typing.innerHTML = '<div class="bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+      chat.appendChild(typing);
+      scrollDown();
+      setTimeout(() => {
+        typing.remove();
+        const div = document.createElement('div');
+        div.className = 'msg bot';
+        div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+        chat.appendChild(div);
+        scrollDown();
+        resolve();
+      }, delay || 800);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'msg user';
+      div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+      chat.appendChild(div);
+      scrollDown();
+      setTimeout(resolve, 300);
+    }
+  });
+}
+
+function addChoices(options, callback) {
+  const div = document.createElement('div');
+  div.className = 'choices';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt.label;
+    btn.onclick = () => {
+      div.remove();
+      addMsg('user', opt.label).then(() => callback(opt.value));
+    };
+    div.appendChild(btn);
+  });
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addCarousel(cards, callback) {
+  const div = document.createElement('div');
+  div.className = 'carousel';
+  cards.forEach(card => {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `
+      <div class="photo-placeholder">${card.icon}</div>
+      <div class="card-body">
+        <h4>${card.title}</h4>
+        <p>${card.desc}</p>
+        <div class="price">&yen;${card.price}<span>（税込）</span></div>
+      </div>
+      <button class="card-btn" onclick="this.closest('.carousel').remove()">詳しく見る</button>
+    `;
+    c.querySelector('.card-btn').addEventListener('click', () => callback(card));
+    div.appendChild(c);
+  });
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addRichMsg(plan) {
+  const div = document.createElement('div');
+  div.className = 'rich-msg';
+  div.innerHTML = `
+    <div class="rich-header">
+      <h3>${plan.emoji} ${plan.name}</h3>
+      <p>&yen;${plan.price}〜（税込）</p>
+    </div>
+    <div class="rich-body">
+      ${plan.features.map(f => `<div class="feat">${f}</div>`).join('')}
+    </div>
+    <div class="social-proof">${plan.proof}</div>
+    <div class="cta-row">
+      <button class="cta-primary" onclick="handleCTA('reservation')">空き状況を見る</button>
+      <button class="cta-secondary" onclick="handleCTA('consult')">LINEで相談</button>
+    </div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addStepIndicator(text) {
+  const div = document.createElement('div');
+  div.className = 'step-indicator';
+  div.textContent = text;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function scrollDown() {
+  setTimeout(() => chat.scrollTop = chat.scrollHeight, 50);
+}
+
+function getTime() {
+  const now = new Date();
+  return `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+}
+
+// === FLOW ===
+
+async function startFlow() {
+  addStepIndicator('— Step 1: 興味の把握 —');
+  await addMsg('bot', 'ヒカリノスタジオ公式LINEへようこそ！\n\nお子様のかけがえのない瞬間を、プロの撮影で残しませんか？');
+  await addMsg('bot', 'どんな撮影に興味がありますか？', 600);
+
+  addChoices([
+    { label: '👶 ニューボーン（新生児）', value: 'newborn' },
+    { label: '⛩️ お宮参り・お食い初め', value: 'omiyamairi' },
+    { label: '🎎 七五三', value: 'shichigosan' },
+    { label: '🎂 バースデー・記念日', value: 'birthday' }
+  ], handleInterest);
+}
+
+async function handleInterest(planKey) {
+  currentStep = 1;
+  const plan = PLANS[planKey];
+
+  addStepIndicator('— Step 2: プラン紹介 —');
+  await addMsg('bot', `${plan.emoji} ${plan.name}ですね！\n\n素敵な選択です。ヒカリノスタジオでは完全貸切のプライベート空間で、ゆったり撮影できます。`);
+  await addMsg('bot', 'こちらのプランをご用意しています', 600);
+
+  addCarousel(plan.cards, (card) => handleCardSelect(planKey, card));
+}
+
+async function handleCardSelect(planKey, card) {
+  currentStep = 2;
+  const plan = PLANS[planKey];
+
+  addStepIndicator('— Step 3: 詳細・口コミ —');
+  await addMsg('bot', `「${card.title}」をお選びいただきました！`);
+
+  // Add studio selection for relevant plans
+  if (planKey === 'omiyamairi' || planKey === 'shichigosan') {
+    await addMsg('bot', 'どちらのスタジオをご希望ですか？\n\n神社ロケなら撮影当日にそのままお参りできます。', 600);
+    addChoices([
+      { label: '📍 下北方スタジオ（宮崎市）→ 宮崎神宮', value: 'shimokitakata' },
+      { label: '📍 都城スタジオ → 神柱宮', value: 'miyakonojo' },
+      { label: '🤔 まだ決めていない', value: 'undecided' }
+    ], (studio) => handleStudioSelect(planKey, studio));
+  } else {
+    showRichMessage(planKey);
+  }
+}
+
+async function handleStudioSelect(planKey, studio) {
+  const studioNames = {
+    shimokitakata: '下北方スタジオ（宮崎神宮まで車5分）',
+    miyakonojo: '都城スタジオ（神柱宮まで車5分）',
+    undecided: 'ご相談しながら決めましょう'
+  };
+  await addMsg('bot', `${studioNames[studio]}ですね！`);
+  showRichMessage(planKey);
+}
+
+async function showRichMessage(planKey) {
+  const plan = PLANS[planKey];
+
+  addStepIndicator('— Step 4: 予約・相談 —');
+
+  // Social proof message
+  const proofMessages = {
+    newborn: '先月は32組のママにご利用いただきました',
+    omiyamairi: '訪問着の着付けも無料で対応しています',
+    shichigosan: '前撮りなら混雑前にゆっくり撮影できます',
+    birthday: 'スマッシュケーキも無料でご用意しています'
+  };
+  await addMsg('bot', proofMessages[planKey], 600);
+
+  addRichMsg(plan);
+}
+
+async function handleCTA(type) {
+  if (type === 'reservation') {
+    await addMsg('user', '空き状況を見たい');
+    await addMsg('bot', '今月の空き状況をお調べしますね！\n\nご希望の日程はありますか？平日は比較的空きがあります。');
+    await addMsg('bot', 'こちらからご予約いただけます\nhttps://select-type.com/rsv/?id=...', 600);
+    addStepIndicator('✅ 予約フローへ移行');
+  } else {
+    await addMsg('user', 'LINEで相談したい');
+    await addMsg('bot', 'もちろんです！どんなことでもお気軽にどうぞ。\n\n撮影内容・衣装・日程など、何でもご相談ください。スタッフが丁寧にお答えします。');
+    addStepIndicator('✅ スタッフ対応へ移行');
+  }
+}
+
+function resetFlow() {
+  chat.innerHTML = '';
+  currentStep = 0;
+  startFlow();
+}
+
+startFlow();
+</script>
+</body>
+</html>

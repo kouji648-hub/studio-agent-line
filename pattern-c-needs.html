@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>パターンC: ニーズベース - ヒカリノスタジオ LINE デモ</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #7494C0; display: flex; justify-content: center; padding: 20px 10px; }
+.phone { width: 390px; height: 844px; background: #fff; border-radius: 40px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+.header { background: #fff; padding: 50px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e5e5e5; flex-shrink: 0; }
+.header .back { font-size: 24px; color: #06C755; cursor: pointer; }
+.header .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ff6b9d, #ff8fab); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold; }
+.header .name { font-size: 16px; font-weight: 600; }
+.header .badge { background: #06C755; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 8px; margin-left: 4px; }
+.chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #7494C0; }
+.msg { max-width: 80%; animation: fadeIn 0.3s ease; }
+.msg.bot { align-self: flex-start; }
+.msg.user { align-self: flex-end; }
+.msg .bubble { padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.6; word-break: break-word; }
+.msg.bot .bubble { background: #fff; color: #333; border-bottom-left-radius: 4px; }
+.msg.user .bubble { background: #06C755; color: #fff; border-bottom-right-radius: 4px; }
+.msg .time { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 2px; padding: 0 4px; }
+.msg.bot .time { text-align: left; }
+.msg.user .time { text-align: right; }
+.choices { display: flex; flex-direction: column; gap: 8px; max-width: 85%; align-self: flex-start; animation: fadeIn 0.3s ease; }
+.choices button { background: #fff; border: 2px solid #06C755; color: #06C755; padding: 12px 20px; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left; }
+.choices button:hover { background: #06C755; color: #fff; }
+.choices button:active { transform: scale(0.97); }
+.rich-msg { max-width: 85%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+.rich-msg .rich-header { padding: 16px; color: #fff; }
+.rich-msg .rich-header h3 { font-size: 16px; margin-bottom: 4px; }
+.rich-msg .rich-header p { font-size: 12px; opacity: 0.9; }
+.rich-msg .rich-body { padding: 14px; }
+.rich-msg .rich-body .feat { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #555; }
+.rich-msg .rich-body .feat::before { content: "✓"; color: #06C755; font-weight: bold; font-size: 16px; }
+.rich-msg .urgency { background: #fff3e0; padding: 10px 14px; font-size: 12px; color: #e65100; font-weight: 500; border-top: 1px solid #ffe0b2; }
+.rich-msg .social-proof { background: #fff9fb; padding: 10px 14px; font-size: 12px; color: #ff6b9d; font-weight: 500; border-top: 1px solid #ffeef5; }
+.rich-msg .cta-row { display: flex; border-top: 1px solid #eee; }
+.rich-msg .cta-row button { flex: 1; padding: 12px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.rich-msg .cta-row .cta-primary { background: #06C755; color: #fff; }
+.rich-msg .cta-row .cta-primary:hover { background: #05b04c; }
+.rich-msg .cta-row .cta-secondary { background: #fff; color: #06C755; }
+.rich-msg .cta-row .cta-secondary:hover { background: #f0faf4; }
+.review-card { max-width: 85%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+.review-card .rc-header { background: #fff9fb; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #ffeef5; }
+.review-card .rc-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #ffeef5, #fff5f8); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.review-card .rc-info { flex: 1; }
+.review-card .rc-info .rc-name { font-size: 13px; font-weight: 600; color: #333; }
+.review-card .rc-info .rc-meta { font-size: 11px; color: #999; }
+.review-card .rc-stars { color: #ffc107; font-size: 14px; letter-spacing: 2px; }
+.review-card .rc-body { padding: 12px 16px; font-size: 13px; color: #555; line-height: 1.7; }
+.solution-card { max-width: 85%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+.solution-card .sc-problem { background: #f5f5f5; padding: 12px 16px; }
+.solution-card .sc-problem .label { font-size: 10px; color: #999; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px; }
+.solution-card .sc-problem p { font-size: 13px; color: #666; }
+.solution-card .sc-arrow { text-align: center; padding: 4px; font-size: 16px; color: #06C755; }
+.solution-card .sc-solution { background: #f0faf4; padding: 12px 16px; }
+.solution-card .sc-solution .label { font-size: 10px; color: #06C755; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px; }
+.solution-card .sc-solution p { font-size: 13px; color: #333; font-weight: 500; }
+.solution-card .sc-solution .highlight { color: #ff6b9d; font-weight: 700; }
+.step-indicator { text-align: center; padding: 8px; font-size: 11px; color: rgba(255,255,255,0.7); }
+.typing { align-self: flex-start; animation: fadeIn 0.3s ease; }
+.typing .bubble { background: #fff; border-radius: 18px; border-bottom-left-radius: 4px; padding: 12px 18px; display: flex; gap: 4px; }
+.typing .dot { width: 8px; height: 8px; background: #ccc; border-radius: 50%; animation: typingDot 1.4s infinite; }
+.typing .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing .dot:nth-child(3) { animation-delay: 0.4s; }
+.input-bar { background: #fff; padding: 8px 12px 30px; display: flex; align-items: center; gap: 8px; border-top: 1px solid #e5e5e5; flex-shrink: 0; }
+.input-bar input { flex: 1; padding: 10px 16px; border: 1px solid #ddd; border-radius: 20px; font-size: 14px; outline: none; }
+.input-bar .send { width: 36px; height: 36px; background: #06C755; border: none; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; }
+.debug-bar { background: #333; color: #aaa; padding: 8px 16px; font-size: 11px; display: flex; justify-content: space-between; flex-shrink: 0; }
+.debug-bar .reset { color: #ff6b6b; cursor: pointer; text-decoration: underline; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="header">
+    <span class="back">&lsaquo;</span>
+    <div class="avatar">H</div>
+    <div>
+      <span class="name">ヒカリノスタジオ</span>
+      <span class="badge">公式</span>
+    </div>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="input-bar">
+    <input type="text" placeholder="メッセージを入力" disabled>
+    <button class="send">&#9654;</button>
+  </div>
+  <div class="debug-bar">
+    <span>パターンC: ニーズベース（Why型）</span>
+    <span class="reset" onclick="resetFlow()">リセット</span>
+  </div>
+</div>
+
+<script>
+const chat = document.getElementById('chat');
+
+function addMsg(type, text, delay) {
+  return new Promise(resolve => {
+    if (type === 'bot') {
+      const typing = document.createElement('div');
+      typing.className = 'typing';
+      typing.innerHTML = '<div class="bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+      chat.appendChild(typing);
+      scrollDown();
+      setTimeout(() => {
+        typing.remove();
+        const div = document.createElement('div');
+        div.className = 'msg bot';
+        div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+        chat.appendChild(div);
+        scrollDown();
+        resolve();
+      }, delay || 800);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'msg user';
+      div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+      chat.appendChild(div);
+      scrollDown();
+      setTimeout(resolve, 300);
+    }
+  });
+}
+
+function addChoices(options, callback) {
+  const div = document.createElement('div');
+  div.className = 'choices';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt.label;
+    btn.onclick = () => { div.remove(); addMsg('user', opt.label).then(() => callback(opt.value)); };
+    div.appendChild(btn);
+  });
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addReview(config) {
+  const div = document.createElement('div');
+  div.className = 'review-card';
+  div.innerHTML = `
+    <div class="rc-header">
+      <div class="rc-avatar">${config.emoji}</div>
+      <div class="rc-info">
+        <div class="rc-name">${config.name}</div>
+        <div class="rc-meta">${config.meta}</div>
+      </div>
+      <div class="rc-stars">${'★'.repeat(config.stars)}${'☆'.repeat(5 - config.stars)}</div>
+    </div>
+    <div class="rc-body">${config.review}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addSolutionCard(problem, solution) {
+  const div = document.createElement('div');
+  div.className = 'solution-card';
+  div.innerHTML = `
+    <div class="sc-problem">
+      <div class="label">YOUR CONCERN</div>
+      <p>${problem}</p>
+    </div>
+    <div class="sc-arrow">▼</div>
+    <div class="sc-solution">
+      <div class="label">OUR SOLUTION</div>
+      <p>${solution}</p>
+    </div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addRichMsg(config) {
+  const div = document.createElement('div');
+  div.className = 'rich-msg';
+  div.innerHTML = `
+    <div class="rich-header" style="background: ${config.gradient}">
+      <h3>${config.title}</h3>
+      <p>${config.subtitle}</p>
+    </div>
+    <div class="rich-body">
+      ${config.features.map(f => `<div class="feat">${f}</div>`).join('')}
+    </div>
+    ${config.urgency ? `<div class="urgency">⏰ ${config.urgency}</div>` : ''}
+    ${config.proof ? `<div class="social-proof">${config.proof}</div>` : ''}
+    <div class="cta-row">
+      <button class="cta-primary" onclick="handleCTA('reservation')">空き状況を見る</button>
+      <button class="cta-secondary" onclick="handleCTA('consult')">LINEで相談</button>
+    </div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function addStepIndicator(text) {
+  const div = document.createElement('div');
+  div.className = 'step-indicator';
+  div.textContent = text;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+function scrollDown() { setTimeout(() => chat.scrollTop = chat.scrollHeight, 50); }
+function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.getMinutes()).padStart(2, '0')}`; }
+
+// === FLOW ===
+
+async function startFlow() {
+  addStepIndicator('— Step 1: お悩みの共感 —');
+  await addMsg('bot', 'ヒカリノスタジオ公式LINEへようこそ！');
+  await addMsg('bot', 'こんなこと、思ったことはありませんか？', 600);
+
+  addChoices([
+    { label: '📸 プロに撮ってもらいたいけど緊張する', value: 'nervous' },
+    { label: '👗 撮影用の衣装をどうすればいいかわからない', value: 'costume' },
+    { label: '👶 赤ちゃんが泣かないか心配', value: 'crying' },
+    { label: '💰 料金やプランがよくわからない', value: 'price' },
+    { label: '⛩️ ロケ撮影に興味がある', value: 'location' }
+  ], handleNeed);
+}
+
+async function handleNeed(need) {
+  switch(need) {
+    case 'nervous': return flowNervous();
+    case 'costume': return flowCostume();
+    case 'crying': return flowCrying();
+    case 'price': return flowPrice();
+    case 'location': return flowLocation();
+  }
+}
+
+// --- 緊張するフロー ---
+async function flowNervous() {
+  addStepIndicator('— Step 2: 不安の解消 —');
+
+  addSolutionCard(
+    '写真スタジオは緊張する…ポーズも表情もぎこちなくなりそう',
+    'ヒカリノスタジオは<span class="highlight">完全貸切</span>。他のお客様はいません。自然な表情を引き出すのはプロにお任せください。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', '実は「緊張していた」というママからこんな声をいただいています。', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'M様',
+    meta: 'ニューボーン撮影',
+    stars: 5,
+    review: '最初は緊張していましたが、スタッフさんがとても温かくて、途中から家にいるような気持ちでリラックスできました。自然な笑顔の写真ばかりで大満足です！'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  await addMsg('bot', '完全貸切なので、授乳やおむつ替えも気兼ねなくできます。\n\nどんな撮影をお考えですか？', 800);
+
+  addChoices([
+    { label: '👶 ニューボーン', value: 'newborn' },
+    { label: '⛩️ お宮参り', value: 'omiyamairi' },
+    { label: '🎎 七五三', value: 'shichigosan' },
+    { label: '🎂 バースデー', value: 'birthday' }
+  ], showPlanForNeed);
+}
+
+// --- 衣装フロー ---
+async function flowCostume() {
+  addStepIndicator('— Step 2: 衣装の不安を解消 —');
+
+  addSolutionCard(
+    '撮影用の衣装を用意するのが大変…何を着ればいいの？',
+    'ヒカリノスタジオでは<span class="highlight">衣装レンタル無料</span>。お宮参りなら産着も訪問着も無料です。手ぶらでOK！'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', 'プランによって含まれる衣装が違います。\nどんな撮影をお考えですか？', 600);
+
+  addChoices([
+    { label: '👶 ニューボーン（衣装・小物無料）', value: 'newborn' },
+    { label: '⛩️ お宮参り（産着・訪問着無料）', value: 'omiyamairi' },
+    { label: '🎎 七五三（着物・着付け込み）', value: 'shichigosan' },
+    { label: '🎂 バースデー（衣装2着）', value: 'birthday' }
+  ], async (plan) => {
+    addStepIndicator('— Step 3: 衣装詳細 —');
+
+    const costumeInfo = {
+      newborn: {
+        msg: 'ニューボーン撮影は衣装・小物すべて無料です。\n\nスタッフが赤ちゃんに合わせてセッティングするので、ママは見守るだけでOK。',
+        review: { emoji: '👩', name: 'K様', meta: 'ニューボーン撮影', stars: 5, review: '衣装も小物も全部スタジオで用意してくれたので、本当に手ぶらで行けました。可愛いおくるみがたくさんあって選ぶのも楽しかったです。' }
+      },
+      omiyamairi: {
+        msg: 'お宮参りは産着も訪問着も無料レンタル。\n着付けもスタッフが対応するので、準備不要です。\n\n訪問着の種類も豊富にご用意しています。',
+        review: { emoji: '👩', name: 'S様', meta: 'お宮参り撮影', stars: 5, review: '訪問着のレンタルが無料で驚きました。着付けもしていただいて、赤ちゃんの産着も可愛いのがたくさん。全部お任せで楽でした。' }
+      },
+      shichigosan: {
+        msg: '七五三はヘアメイク・着付け込み。\n帯や髪飾りも含まれています。\n\n着物＋洋装の2着プランなら、和洋どちらの雰囲気も楽しめます。',
+        review: { emoji: '👩', name: 'T様', meta: '七五三（3歳女の子）', stars: 5, review: '着物の種類がたくさんあって娘も大喜び。ヘアメイクもしていただいて、見違えるほど可愛くなりました。洋装とのギャップも素敵な写真に。' }
+      },
+      birthday: {
+        msg: 'バースデープランは衣装2着で2つの雰囲気を楽しめます。\n兄弟の洋装も1着無料です。',
+        review: { emoji: '👩', name: 'A様', meta: '1歳バースデー', stars: 5, review: '衣装が2着あるので、カジュアルな雰囲気とおめかし感の2パターン撮れました。お兄ちゃんの衣装も無料で助かりました！' }
+      }
+    };
+
+    const info = costumeInfo[plan];
+    await addMsg('bot', info.msg);
+    await new Promise(r => setTimeout(r, 500));
+    addReview(info.review);
+    await new Promise(r => setTimeout(r, 1000));
+    showPlanForNeed(plan);
+  });
+}
+
+// --- 赤ちゃん泣くフロー ---
+async function flowCrying() {
+  addStepIndicator('— Step 2: 赤ちゃんの不安を解消 —');
+
+  addSolutionCard(
+    '撮影中に赤ちゃんが泣いたらどうしよう…',
+    '<span class="highlight">赤ちゃんのペースに合わせた撮影</span>。途中で授乳やおむつ替えもOK。完全貸切だから焦る必要はありません。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  addReview({
+    emoji: '👩',
+    name: 'Y様',
+    meta: 'ニューボーン撮影',
+    stars: 5,
+    review: '途中で何度も泣いて授乳もしましたが、スタッフさんが「大丈夫ですよ、ゆっくりで」と言ってくれて安心しました。むしろ泣き顔の写真も可愛くて宝物です。'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  await addMsg('bot', '年間500組以上の赤ちゃんを撮影しているスタッフが対応します。\n泣いても寝ても、その瞬間を素敵な写真に残します。', 800);
+
+  addChoices([
+    { label: '👶 ニューボーン撮影に興味がある', value: 'newborn' },
+    { label: '⛩️ お宮参りの撮影を考えている', value: 'omiyamairi' },
+    { label: '🎂 バースデー撮影を考えている', value: 'birthday' }
+  ], showPlanForNeed);
+}
+
+// --- 料金フロー ---
+async function flowPrice() {
+  addStepIndicator('— Step 2: 料金の明確化 —');
+
+  addSolutionCard(
+    '料金やプランがわかりにくい…追加料金が怖い',
+    'ヒカリノスタジオは<span class="highlight">シンプルな料金体系</span>。基本プランは税込33,000円から。衣装・データ込みで追加料金の心配なし。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', '全プランに含まれるもの:\n\n・60カット（明るさ・色味調整済み）\n・衣装レンタル\n・完全貸切\n\n追加料金は土日祝の+3,300円のみです。', 600);
+
+  await addMsg('bot', 'どの撮影をお考えですか？\n具体的なプランと料金をお伝えします。', 800);
+
+  addChoices([
+    { label: '👶 ニューボーン ¥33,000〜', value: 'newborn' },
+    { label: '⛩️ お宮参り ¥33,000〜', value: 'omiyamairi' },
+    { label: '🎎 七五三 ¥35,000〜', value: 'shichigosan' },
+    { label: '🎂 バースデー ¥33,000〜', value: 'birthday' }
+  ], showPlanForNeed);
+}
+
+// --- ロケ撮影フロー ---
+async function flowLocation() {
+  addStepIndicator('— Step 2: ロケ撮影のご案内 —');
+
+  addSolutionCard(
+    'スタジオ撮影だけじゃなく、外でも撮りたい！',
+    'お宮参り・七五三なら<span class="highlight">スタジオ＋神社ロケが1日で完結</span>。宮崎神宮・神柱宮が車5分の好立地。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', 'ロケ撮影できるスタジオ:\n\n📍 下北方スタジオ → 宮崎神宮（車5分）\n　木漏れ日と参道の雰囲気が素敵\n\n📍 都城スタジオ → 神柱宮（車5分）\n　白い鳥居と広い参道が特徴', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'H様',
+    meta: 'お宮参り スタジオ＋ロケ',
+    stars: 5,
+    review: 'スタジオで家族写真を撮ってから宮崎神宮でロケ撮影。1日で全部終わるので赤ちゃんの負担も少なかったです。神社の写真がとても綺麗でした。'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  await addMsg('bot', 'どんなイベントの撮影ですか？', 800);
+
+  addChoices([
+    { label: '⛩️ お宮参り＋神社ロケ', value: 'omiyamairi' },
+    { label: '🎎 七五三＋神社ロケ', value: 'shichigosan' },
+    { label: '📷 ロケーション撮影（その他）', value: 'location_other' }
+  ], async (choice) => {
+    if (choice === 'location_other') {
+      addStepIndicator('— Step 3: ロケ撮影 —');
+      addRichMsg({
+        gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+        title: '📍 ロケーション撮影',
+        subtitle: '¥29,700（税込）',
+        features: ['60カット撮影', '家族・兄弟撮影OK', '出張料無料（下北方・都城）', '自然光を活かした撮影'],
+        proof: '屋外の自然な雰囲気で撮影'
+      });
+    } else {
+      showPlanForNeed(choice);
+    }
+  });
+}
+
+// --- 共通: プラン表示 ---
+async function showPlanForNeed(planKey) {
+  addStepIndicator('— Step 3: あなたにぴったりのプラン —');
+
+  const plans = {
+    newborn: {
+      gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+      title: '👶 ニューボーンフォト',
+      subtitle: 'スタジオplan ¥33,000（税込）',
+      features: ['50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '家族写真・兄弟撮影OK'],
+      urgency: '生後2〜3週間がベストタイミング',
+      proof: '年間500組以上のママにご利用いただいています'
+    },
+    omiyamairi: {
+      gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+      title: '⛩️ お宮参り撮影',
+      subtitle: 'ベーシックプラン ¥33,000（税込）',
+      features: ['60カット（明るさ・色味調整済み）', '産着・訪問着レンタル無料', '着付けスタッフが対応', '兄弟衣装1着無料', '神社ロケ撮影（1日で完結）'],
+      proof: '産着・訪問着の着付けもお任せください'
+    },
+    shichigosan: {
+      gradient: 'linear-gradient(135deg, #e57373, #ef9a9a)',
+      title: '🎎 七五三撮影',
+      subtitle: '着物&洋装プラン ¥35,000〜（税込）',
+      features: ['60カット撮影', '着物1着＋洋装1着', 'ヘアメイク・着付け込み', '帯・髪飾り含む'],
+      proof: '前撮りなら衣装選び放題・混雑を避けられます'
+    },
+    birthday: {
+      gradient: 'linear-gradient(135deg, #ffb347, #ffcc80)',
+      title: '🎂 バースデーフォト',
+      subtitle: '¥33,000（税込）',
+      features: ['60カット撮影', '衣装2着', '兄弟衣装1着無料', 'スマッシュケーキ対応'],
+      proof: 'お誕生日の特別な1日を写真に残せます'
+    }
+  };
+
+  await addMsg('bot', 'こちらのプランがぴったりです。');
+
+  addRichMsg(plans[planKey]);
+}
+
+async function handleCTA(type) {
+  if (type === 'reservation') {
+    await addMsg('user', '空き状況を見たい');
+    await addMsg('bot', '今月の空き状況をお調べします！\n\nご希望の日程はありますか？\n平日は比較的ご予約が取りやすいです。');
+    await addMsg('bot', 'お気軽にここでメッセージしてくださいね。\nスタッフが丁寧にご案内します。', 600);
+    addStepIndicator('✅ 予約フローへ移行');
+  } else {
+    await addMsg('user', '相談したい');
+    await addMsg('bot', 'もちろんです！\n\n撮影内容・衣装・日程など、何でもお気軽にどうぞ。\n不安なことがあれば全部解消してから予約いただけます。');
+    addStepIndicator('✅ スタッフ対応へ移行');
+  }
+}
+
+function resetFlow() { chat.innerHTML = ''; startFlow(); }
+startFlow();
+</script>
+</body>
+</html>

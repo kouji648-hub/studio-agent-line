@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヒカリノスタジオ LINE コンバージョンフロー デモ</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.container { max-width: 900px; width: 100%; }
+header {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 40px;
+}
+header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+header p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b9d, #ff8fab);
+}
+.card.pattern-b::before {
+  background: linear-gradient(90deg, #4a90d9, #7ab8e8);
+}
+.card.pattern-c::before {
+  background: linear-gradient(90deg, #81c784, #a5d6a7);
+}
+.card .badge {
+  display: inline-block;
+  background: #ff6b9d;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.card.pattern-b .badge {
+  background: #4a90d9;
+}
+.card.pattern-c .badge {
+  background: #81c784;
+}
+.card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+}
+.card .subtitle {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 16px;
+}
+.card ul {
+  list-style: none;
+  margin-bottom: 20px;
+}
+.card ul li {
+  font-size: 13px;
+  color: #555;
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+}
+.card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #06C755;
+  font-weight: bold;
+}
+.card .cvr {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 16px;
+}
+.card .cvr strong {
+  color: #ff6b9d;
+  font-size: 16px;
+}
+.card.pattern-b .cvr strong {
+  color: #4a90d9;
+}
+.card.pattern-c .cvr strong {
+  color: #81c784;
+}
+.card a {
+  display: block;
+  text-align: center;
+  background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+.card.pattern-b a {
+  background: linear-gradient(135deg, #4a90d9, #7ab8e8);
+}
+.card.pattern-c a {
+  background: linear-gradient(135deg, #81c784, #a5d6a7);
+}
+.card a:hover {
+  transform: scale(1.02);
+}
+.recommended {
+  position: absolute;
+  top: 16px;
+  right: -32px;
+  background: #FFD700;
+  color: #333;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 40px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+footer {
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 40px;
+}
+footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  header h1 { font-size: 24px; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📸 ヒカリノスタジオ</h1>
+    <p>LINE コンバージョンフロー デモ（3パターン）</p>
+  </header>
+
+  <div class="grid">
+    <!-- Pattern A -->
+    <div class="card pattern-a">
+      <span class="badge">Pattern A</span>
+      <h2>興味ベース（What型）</h2>
+      <p class="subtitle">「何を撮りたい？」から入る能動的選択</p>
+      <ul>
+        <li>カルーセルでプラン比較</li>
+        <li>リッチメッセージで詳細</li>
+        <li>シンプルで迷わない導線</li>
+      </ul>
+      <div class="cvr">想定CVR: <strong>25-30%</strong></div>
+      <a href="pattern-a-interest.html">デモを見る &rarr;</a>
+    </div>
+
+    <!-- Pattern B -->
+    <div class="card pattern-b">
+      <span class="recommended">★推奨</span>
+      <span class="badge">Pattern B</span>
+      <h2>タイミングベース（When型）</h2>
+      <p class="subtitle">「お子様の状況は？」で自動セグメント</p>
+      <ul>
+        <li>妊娠中→ニューボーン予約誘導</li>
+        <li>お宮参り＋ニューボーンセット</li>
+        <li>七五三→スタジオ/ロケ分岐</li>
+      </ul>
+      <div class="cvr">想定CVR: <strong>30-40%</strong>（最高）</div>
+      <a href="pattern-b-timing.html">デモを見る &rarr;</a>
+    </div>
+
+    <!-- Pattern C -->
+    <div class="card pattern-c">
+      <span class="badge">Pattern C</span>
+      <h2>ニーズベース（Why型）</h2>
+      <p class="subtitle">「こんなお悩みありませんか？」で共感</p>
+      <ul>
+        <li>悩み→解決カードで信頼構築</li>
+        <li>口コミレビュー表示</li>
+        <li>5つの悩み別フロー</li>
+      </ul>
+      <div class="cvr">想定CVR: <strong>20-30%</strong></div>
+      <a href="pattern-c-needs.html">デモを見る &rarr;</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>開発者向けデモ | <a href="https://hikarinostudio.com" target="_blank">ヒカリノスタジオ</a></p>
+  </footer>
+</div>
+</body>
+</html>
