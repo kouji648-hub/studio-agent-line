@@ -70,6 +70,22 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 .input-bar .send { width: 36px; height: 36px; background: #06C755; border: none; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; }
 .debug-bar { background: #333; color: #aaa; padding: 8px 16px; font-size: 11px; display: flex; justify-content: space-between; flex-shrink: 0; }
 .debug-bar .reset { color: #ff6b6b; cursor: pointer; text-decoration: underline; }
+.comparison-table { max-width: 85%; width: 100%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+.comparison-table .ct-header { background: linear-gradient(135deg, #ff6b9d, #ff8fab); padding: 14px 16px; color: #fff; }
+.comparison-table .ct-header h4 { font-size: 14px; }
+.comparison-table .ct-scroll { overflow-x: auto; }
+.comparison-table table { width: 100%; min-width: 700px; border-collapse: collapse; }
+.comparison-table th, .comparison-table td { padding: 10px 12px; font-size: 12px; border-bottom: 1px solid #f0f0f0; }
+.comparison-table th { background: #f5f5f5; color: #666; font-weight: 600; text-align: left; position: sticky; top: 0; z-index: 1; }
+.comparison-table td { color: #333; }
+.comparison-table .ct-plan-name { font-weight: 700; color: #ff6b9d; }
+.comparison-table .ct-price { font-weight: 700; color: #333; font-size: 14px; }
+.comparison-table .ct-yes { color: #06C755; font-weight: 600; }
+.comparison-table .ct-no { color: #ccc; }
+.comparison-table .ct-partial { color: #ff8fab; font-size: 11px; }
+.comparison-table .ct-cta { padding: 12px; text-align: center; border-bottom: none; }
+.comparison-table .ct-cta button { background: #06C755; color: #fff; border: none; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; width: 90%; }
+.comparison-table .ct-cta button:hover { background: #05b04c; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 </style>
@@ -220,7 +236,12 @@ async function startFlow() {
     { label: '👗 撮影用の衣装をどうすればいいかわからない', value: 'costume' },
     { label: '👶 赤ちゃんが泣かないか心配', value: 'crying' },
     { label: '💰 料金やプランがよくわからない', value: 'price' },
-    { label: '⛩️ ロケ撮影に興味がある', value: 'location' }
+    { label: '⛩️ ロケ撮影に興味がある', value: 'location' },
+    { label: '👘 訪問着を着たい（ママ向け）', value: 'kimono' },
+    { label: '⏱️ 1日で撮影もお参りも済ませたい', value: 'oneday' },
+    { label: '👨‍👩‍👧‍👦 兄弟も一緒に撮りたい', value: 'siblings' },
+    { label: '⛩️ 神社でお参りもしたい', value: 'shrine' },
+    { label: '🏠 自宅で自然な雰囲気で撮りたい', value: 'athome' }
   ], handleNeed);
 }
 
@@ -231,6 +252,11 @@ async function handleNeed(need) {
     case 'crying': return flowCrying();
     case 'price': return flowPrice();
     case 'location': return flowLocation();
+    case 'kimono': return flowKimono();
+    case 'oneday': return flowOneDay();
+    case 'siblings': return flowSiblings();
+    case 'shrine': return flowShrine();
+    case 'athome': return flowAtHome();
   }
 }
 
@@ -453,6 +479,326 @@ async function showPlanForNeed(planKey) {
   await addMsg('bot', 'こちらのプランがぴったりです。');
 
   addRichMsg(plans[planKey]);
+
+  await new Promise(r => setTimeout(r, 800));
+
+  await addMsg('bot', '他のプランも気になりますか？\n比較表もご用意しています。', 600);
+
+  addChoices([
+    { label: '📊 プラン比較表を見る', value: 'compare' },
+    { label: '💬 このプランで相談したい', value: 'consult' }
+  ], async (choice) => {
+    if (choice === 'compare') {
+      await addMsg('user', 'プラン比較表を見る');
+      showComparison();
+    } else {
+      handleCTA('consult');
+    }
+  });
+}
+
+// --- 訪問着フロー ---
+async function flowKimono() {
+  addStepIndicator('— Step 2: 訪問着のご案内 —');
+
+  addSolutionCard(
+    'お宮参りでママも訪問着を着たいけど、レンタル料金が心配…',
+    'お宮参りベーシックプランなら<span class="highlight">訪問着レンタル＋着付けが無料</span>！着付けスタッフが対応するので準備不要です。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', 'ヒカリノスタジオのお宮参りベーシックプランは、訪問着の種類も豊富にご用意。\n\n産着・訪問着・着付けが全て無料で¥33,000（税込）です。', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'N様',
+    meta: 'お宮参りベーシック',
+    stars: 5,
+    review: '訪問着のレンタルが無料で本当に助かりました。色も柄も選べて、着付けもしていただいて至れり尽くせり。この価格でこの内容は他にないと思います！'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  addStepIndicator('— Step 3: お宮参りプラン —');
+  showPlanForNeed('omiyamairi');
+}
+
+// --- 1日完結フロー ---
+async function flowOneDay() {
+  addStepIndicator('— Step 2: 1日完結のご案内 —');
+
+  addSolutionCard(
+    '撮影とお参りを別の日にするのは大変…1日で済ませたい',
+    '<span class="highlight">スタジオ＋神社ロケプラン</span>なら、撮影→神社→お参りが1日で完結。赤ちゃんの負担も最小限です。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', '当日の流れ:\n\n① スタジオで家族写真撮影（1時間）\n② 車で神社へ移動（5分）\n③ 神社ロケ撮影（20分）\n④ そのままお参り\n\n全て半日で完結します。', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'R様',
+    meta: 'お宮参り スタジオ＋ロケ',
+    stars: 5,
+    review: 'スタジオ撮影して神社ロケして、そのまま御祈祷に行けました。1日で全部終わるので本当に楽でした。写真も室内と屋外の両方が撮れて大満足です。'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  await addMsg('bot', 'どんなイベントの撮影ですか？', 800);
+
+  addChoices([
+    { label: '⛩️ お宮参り＋神社ロケ', value: 'omiyamairi' },
+    { label: '🎎 七五三＋神社ロケ', value: 'shichigosan' }
+  ], showPlanForNeed);
+}
+
+// --- 兄弟撮影フロー ---
+async function flowSiblings() {
+  addStepIndicator('— Step 2: 兄弟撮影のご案内 —');
+
+  addSolutionCard(
+    '兄弟も一緒に撮りたいけど、追加料金が高そう…',
+    'ヒカリノスタジオは<span class="highlight">兄弟衣装1着無料</span>。追加料金なしで家族全員の思い出を残せます。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', '全プランで兄弟撮影OK:\n\n・兄弟の洋装1着無料\n・七五三なら着物着用も可能\n・家族全員での記念写真も撮影\n\n追加料金は一切ありません。', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'I様',
+    meta: '七五三（兄弟撮影）',
+    stars: 5,
+    review: 'お兄ちゃんも着物を着られて大喜び。兄弟2人の写真も、家族4人の写真も、全部綺麗に撮っていただきました。兄弟の衣装が無料なのが本当にありがたかったです。'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  await addMsg('bot', 'どんな撮影をお考えですか？', 800);
+
+  addChoices([
+    { label: '👶 ニューボーン（兄弟撮影OK）', value: 'newborn' },
+    { label: '⛩️ お宮参り（兄弟衣装無料）', value: 'omiyamairi' },
+    { label: '🎎 七五三（兄弟も着物OK）', value: 'shichigosan' },
+    { label: '🎂 バースデー（兄弟衣装無料）', value: 'birthday' }
+  ], showPlanForNeed);
+}
+
+// --- 神社お参りフロー ---
+async function flowShrine() {
+  addStepIndicator('— Step 2: 神社撮影のご案内 —');
+
+  addSolutionCard(
+    '神社でのお参りも一緒にしたいけど、撮影と別日は大変…',
+    'スタジオから<span class="highlight">神社まで車5分</span>。スタジオ＋ロケプランなら撮影後にそのままお参りできます。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', '対応神社:\n\n📍 宮崎神宮（下北方スタジオから車5分）\n　木漏れ日と参道の雰囲気が素敵\n\n📍 神柱宮（都城スタジオから車5分）\n　白い鳥居と広い参道が特徴', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'W様',
+    meta: '七五三 スタジオ＋ロケ',
+    stars: 5,
+    review: 'スタジオで着物の写真を撮って、そのまま宮崎神宮へ。参道での撮影も素敵でしたし、そのまま御祈祷に行けて本当に便利でした。着物を着替える必要もなく楽でした。'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  await addMsg('bot', 'どんなイベントの撮影ですか？', 800);
+
+  addChoices([
+    { label: '⛩️ お宮参り＋神社', value: 'omiyamairi' },
+    { label: '🎎 七五三＋神社', value: 'shichigosan' }
+  ], showPlanForNeed);
+}
+
+// --- 自宅撮影フロー ---
+async function flowAtHome() {
+  addStepIndicator('— Step 2: 自宅撮影のご案内 —');
+
+  addSolutionCard(
+    'スタジオより自宅で自然な雰囲気で撮りたい…',
+    'ナチュラルニューボーン出張プランなら<span class="highlight">ご自宅で自然光撮影</span>。赤ちゃんの移動負担もなく、リラックスした表情を残せます。'
+  );
+
+  await new Promise(r => setTimeout(r, 1000));
+
+  await addMsg('bot', 'ナチュラルニューボーン出張プラン:\n\n・ご自宅で撮影（移動なし）\n・自然光を活かした柔らかい雰囲気\n・赤ちゃんのペースで撮影\n・出張料込み ¥33,000（税込）', 600);
+
+  addReview({
+    emoji: '👩',
+    name: 'F様',
+    meta: 'ナチュラルニューボーン出張',
+    stars: 5,
+    review: '自宅のリビングで撮影していただきました。普段過ごしている場所で撮れるので、赤ちゃんもリラックス。自然光での柔らかい写真が本当に素敵でした。'
+  });
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  addStepIndicator('— Step 3: ナチュラルニューボーン —');
+
+  addRichMsg({
+    gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+    title: '🏠 ナチュラルニューボーン出張',
+    subtitle: '¥33,000（税込）',
+    features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '赤ちゃんのペースで撮影'],
+    proof: '生後2〜3週間がベストタイミング'
+  });
+}
+
+// --- プラン比較機能 ---
+async function showComparison() {
+  addStepIndicator('— プラン比較表 —');
+
+  await addMsg('bot', 'プランの詳しい比較表です。\n横にスクロールできます。', 600);
+
+  addComparisonTable();
+
+  await new Promise(r => setTimeout(r, 800));
+
+  await addMsg('bot', '気になるプランはありましたか？\n詳しい説明もできます。', 600);
+
+  addChoices([
+    { label: '👶 ニューボーンについて詳しく', value: 'newborn' },
+    { label: '⛩️ お宮参りについて詳しく', value: 'omiyamairi' },
+    { label: '🎎 七五三について詳しく', value: 'shichigosan' },
+    { label: '🎂 バースデーについて詳しく', value: 'birthday' },
+    { label: '💬 相談したい', value: 'consult' }
+  ], (choice) => {
+    if (choice === 'consult') {
+      handleCTA('consult');
+    } else {
+      addMsg('user', choice === 'newborn' ? 'ニューボーンについて詳しく' :
+                     choice === 'omiyamairi' ? 'お宮参りについて詳しく' :
+                     choice === 'shichigosan' ? '七五三について詳しく' : 'バースデーについて詳しく');
+      showPlanForNeed(choice);
+    }
+  });
+}
+
+function addComparisonTable() {
+  const div = document.createElement('div');
+  div.className = 'comparison-table';
+
+  div.innerHTML = `
+    <div class="ct-header">
+      <h4>📊 プラン比較表</h4>
+    </div>
+    <div class="ct-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>👶 ニューボーン</th>
+            <th>⛩️ お宮参り</th>
+            <th>🎎 七五三</th>
+            <th>🎂 バースデー</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>料金（税込）</strong></td>
+            <td class="ct-price">¥38,500〜</td>
+            <td class="ct-price">¥33,000〜</td>
+            <td class="ct-price">¥35,000〜</td>
+            <td class="ct-price">¥33,000</td>
+          </tr>
+          <tr>
+            <td><strong>撮影カット数</strong></td>
+            <td>50カット<br><span class="ct-partial">(レタッチ10+調整40)</span></td>
+            <td class="ct-yes">60カット</td>
+            <td class="ct-yes">60カット</td>
+            <td class="ct-yes">60カット</td>
+          </tr>
+          <tr>
+            <td><strong>衣装内容</strong></td>
+            <td>衣装・小物<br><span class="ct-yes">すべて無料</span></td>
+            <td>産着<span class="ct-yes">無料</span><br>訪問着<span class="ct-partial">条件付無料</span></td>
+            <td>着物+洋装<br>2着込み</td>
+            <td>衣装2着</td>
+          </tr>
+          <tr>
+            <td><strong>着付け・ヘアメイク</strong></td>
+            <td class="ct-no">—</td>
+            <td class="ct-yes">着付け込み</td>
+            <td class="ct-yes">着付け・ヘアメイク込み</td>
+            <td class="ct-no">—</td>
+          </tr>
+          <tr>
+            <td><strong>兄弟撮影</strong></td>
+            <td class="ct-yes">OK<br>衣装無料</td>
+            <td class="ct-yes">OK<br>衣装1着無料</td>
+            <td class="ct-yes">OK<br>着物着用可</td>
+            <td class="ct-yes">OK<br>衣装1着無料</td>
+          </tr>
+          <tr>
+            <td><strong>ママ訪問着</strong></td>
+            <td class="ct-no">—</td>
+            <td><span class="ct-yes">ベーシック:無料</span><br><span class="ct-partial">ロケ:+¥16,500</span></td>
+            <td class="ct-partial">+¥11,000</td>
+            <td class="ct-partial">+¥11,000</td>
+          </tr>
+          <tr>
+            <td><strong>神社ロケ</strong></td>
+            <td class="ct-no">—</td>
+            <td class="ct-yes">対応可<br>(宮崎神宮・神柱宮)</td>
+            <td class="ct-yes">対応可<br>(宮崎神宮・神柱宮)</td>
+            <td class="ct-no">—</td>
+          </tr>
+          <tr>
+            <td><strong>出張撮影</strong></td>
+            <td class="ct-yes">ナチュラル出張プラン<br>¥33,000</td>
+            <td class="ct-no">—</td>
+            <td class="ct-no">—</td>
+            <td class="ct-no">—</td>
+          </tr>
+          <tr>
+            <td><strong>ベストタイミング</strong></td>
+            <td>生後2〜3週間</td>
+            <td>生後1ヶ月前後</td>
+            <td>3歳・5歳・7歳</td>
+            <td>お誕生日前後</td>
+          </tr>
+          <tr>
+            <td><strong>こんな方におすすめ</strong></td>
+            <td>生まれたての<br>姿を残したい</td>
+            <td>訪問着無料で<br>1日で完結したい</td>
+            <td>和装も洋装も<br>楽しみたい</td>
+            <td>成長の記念を<br>おしゃれに残したい</td>
+          </tr>
+          <tr>
+            <td class="ct-cta"></td>
+            <td class="ct-cta"><button onclick="handlePlanCTA('newborn')">詳しく見る</button></td>
+            <td class="ct-cta"><button onclick="handlePlanCTA('omiyamairi')">詳しく見る</button></td>
+            <td class="ct-cta"><button onclick="handlePlanCTA('shichigosan')">詳しく見る</button></td>
+            <td class="ct-cta"><button onclick="handlePlanCTA('birthday')">詳しく見る</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  chat.appendChild(div);
+  scrollDown();
+}
+
+async function handlePlanCTA(plan) {
+  const planNames = {
+    newborn: 'ニューボーン',
+    omiyamairi: 'お宮参り',
+    shichigosan: '七五三',
+    birthday: 'バースデー'
+  };
+
+  await addMsg('user', planNames[plan] + 'について詳しく見る');
+  showPlanForNeed(plan);
 }
 
 async function handleCTA(type) {
