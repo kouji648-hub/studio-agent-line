@@ -1,0 +1,356 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://hikarinostudio.com/wp-content/uploads/shichigosan-studio-sample.jpg",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "七五三スタジオプラン",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "¥35,000",
+                "size": "xxl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "（税込）",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "margin": "md"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上撮影",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "着物・袴レンタル無料",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "ヘアメイク・着付け込み",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "兄弟撮影無料",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/shichigosan/"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約・相談",
+              "uri": "https://lin.ee/rODiR3b"
+            }
+          }
+        ],
+        "flex": 0
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://hikarinostudio.com/wp-content/uploads/shichigosan-location-sample.jpg",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "七五三神社ロケプラン",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "¥35,000",
+                "size": "xl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "flex": 0,
+                "decoration": "line-through"
+              },
+              {
+                "type": "text",
+                "text": "¥46,000",
+                "size": "xxl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "margin": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "（税込）",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "margin": "md"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "スタジオ＋神社ロケ撮影",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "ママの訪問着レンタル＋着付け",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "神社（宮崎神宮 or 神柱宮）",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "1日で撮影もお参りも完結",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/shichigosan/"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約・相談",
+              "uri": "https://lin.ee/rODiR3b"
+            }
+          }
+        ],
+        "flex": 0
+      }
+    }
+  ]
+}

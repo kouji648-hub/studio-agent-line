@@ -1,0 +1,147 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "こんなお悩みありませんか？",
+        "weight": "bold",
+        "size": "xl",
+        "color": "#ff6b9d",
+        "wrap": true
+      },
+      {
+        "type": "text",
+        "text": "あなたのニーズに合わせた最適なプランをご提案します",
+        "size": "sm",
+        "color": "#666666",
+        "wrap": true,
+        "margin": "md"
+      },
+      {
+        "type": "separator",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xl",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "📸 プロに撮ってもらいたいけど緊張する",
+              "data": "need=nervous"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "👗 撮影用の衣装をどうすればいいか",
+              "data": "need=costume"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "👶 赤ちゃんが泣かないか心配",
+              "data": "need=crying"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "💰 料金やプランがよくわからない",
+              "data": "need=price"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "⛩️ ロケ撮影に興味がある",
+              "data": "need=location"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "👘 訪問着を着たい（ママ向け）",
+              "data": "need=kimono"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "⏱️ 1日で撮影もお参りも済ませたい",
+              "data": "need=oneday"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "👨‍👩‍👧‍👦 兄弟も一緒に撮りたい",
+              "data": "need=siblings"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "⛩️ 神社でお参りもしたい",
+              "data": "need=shrine"
+            },
+            "color": "#666666"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "postback",
+              "label": "🏠 自宅で自然な雰囲気で撮りたい",
+              "data": "need=athome"
+            },
+            "color": "#666666"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,381 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://hikarinostudio.com/wp-content/uploads/omiyamairi-basic-sample.jpg",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "お宮参りベーシック",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "¥33,000",
+                    "size": "xxl",
+                    "weight": "bold",
+                    "color": "#ff6b9d",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "（税込）",
+                    "size": "sm",
+                    "color": "#aaaaaa",
+                    "margin": "md"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "👘訪問着無料",
+                    "size": "xs",
+                    "color": "#ffffff",
+                    "align": "center",
+                    "weight": "bold"
+                  }
+                ],
+                "backgroundColor": "#ff6b9d",
+                "cornerRadius": "md",
+                "paddingAll": "xs",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上撮影",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "訪問着レンタル＋着付け無料",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "祝い着（産着）無料レンタル",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "完全貸切（1組限定）",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/omiyamairi/"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約・相談",
+              "uri": "https://lin.ee/rODiR3b"
+            }
+          }
+        ],
+        "flex": 0
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://hikarinostudio.com/wp-content/uploads/omiyamairi-location-sample.jpg",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "お宮参り神社ロケ",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "¥33,000",
+                "size": "xl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "flex": 0,
+                "decoration": "line-through"
+              },
+              {
+                "type": "text",
+                "text": "¥49,500",
+                "size": "xxl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "margin": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "（税込）",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "margin": "md"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "スタジオ＋神社ロケ撮影",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "訪問着レンタル＋着付け",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "撮影後の着物レンタル",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "1日で撮影もお参りも完結",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/omiyamairi/"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約・相談",
+              "uri": "https://lin.ee/rODiR3b"
+            }
+          }
+        ],
+        "flex": 0
+      }
+    }
+  ]
+}

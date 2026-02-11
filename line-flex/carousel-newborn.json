@@ -1,0 +1,345 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://hikarinostudio.com/wp-content/uploads/newborn-sample.jpg",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ニューボーンフォト",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "¥38,500",
+                "size": "xxl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "（税込）",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "margin": "md"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上撮影",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "衣装・小物全て無料",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "完全貸切（1組限定）",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "ベストタイミング：生後2〜3週",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/プラン/newbornplan/"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約・相談",
+              "uri": "https://lin.ee/rODiR3b"
+            }
+          }
+        ],
+        "flex": 0
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://hikarinostudio.com/wp-content/uploads/newborn-natural-sample.jpg",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ナチュラルニューボーン",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "¥33,000",
+                "size": "xxl",
+                "weight": "bold",
+                "color": "#ff6b9d",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "（税込）",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "margin": "md"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "ご自宅で撮影",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "自然光での柔らかい雰囲気",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "移動負担なし",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "✓",
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "宮崎市内無料",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/プラン/newbornplan/"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約・相談",
+              "uri": "https://lin.ee/rODiR3b"
+            }
+          }
+        ],
+        "flex": 0
+      }
+    }
+  ]
+}

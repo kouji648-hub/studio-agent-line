@@ -1,0 +1,324 @@
+{
+  "type": "bubble",
+  "size": "mega",
+  "hero": {
+    "type": "image",
+    "url": "https://hikarinostudio.com/wp-content/uploads/sample-photo.jpg",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "プラン名",
+        "weight": "bold",
+        "size": "xxl",
+        "color": "#ff6b9d"
+      },
+      {
+        "type": "text",
+        "text": "プランの簡単な説明がここに入ります",
+        "size": "sm",
+        "wrap": true,
+        "color": "#666666",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "margin": "lg",
+        "contents": [
+          {
+            "type": "text",
+            "text": "¥33,000",
+            "size": "xxxl",
+            "weight": "bold",
+            "color": "#ff6b9d",
+            "flex": 0
+          },
+          {
+            "type": "text",
+            "text": "（税込）",
+            "size": "sm",
+            "color": "#aaaaaa",
+            "margin": "md"
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "✓",
+                "color": "#ff6b9d",
+                "size": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "60カット以上撮影",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 1,
+                "margin": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "✓",
+                "color": "#ff6b9d",
+                "size": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "衣装・小物全て無料",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 1,
+                "margin": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "✓",
+                "color": "#ff6b9d",
+                "size": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "完全貸切（1組限定）",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 1,
+                "margin": "sm"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "✓",
+                "color": "#ff6b9d",
+                "size": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ヘアメイク・着付け込み",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 1,
+                "margin": "sm"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "📋 プラン詳細",
+            "weight": "bold",
+            "size": "md",
+            "color": "#333333"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "撮影時間",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "約2時間",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 3
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "納品形式",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "データ納品（全カット）",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 3
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "納期",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "撮影後7〜10日",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "💬 お客様の声",
+            "weight": "bold",
+            "size": "md",
+            "color": "#333333"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "md",
+            "backgroundColor": "#fff9fb",
+            "cornerRadius": "md",
+            "paddingAll": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "「とても良かったです。赤ちゃんが泣いても優しく対応してくださり、安心して撮影できました。」",
+                "wrap": true,
+                "size": "sm",
+                "color": "#666666"
+              },
+              {
+                "type": "text",
+                "text": "- 30代ママ",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "align": "end",
+                "margin": "md"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "このプランを予約",
+          "uri": "https://lin.ee/rODiR3b"
+        },
+        "color": "#06C755"
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "他のプランと比較する",
+          "uri": "https://kouji648-hub.github.io/studio-agent-line/pattern-c-needs.html"
+        }
+      },
+      {
+        "type":="box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "sm"
+          }
+        ],
+        "flex": 0
+      }
+    ],
+    "flex": 0
+  }
+}

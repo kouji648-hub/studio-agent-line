@@ -1,0 +1,988 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "プラン比較表",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ffffff"
+          },
+          {
+            "type": "text",
+            "text": "左右にスワイプ →",
+            "size": "xs",
+            "color": "#ffffff",
+            "margin": "sm"
+          }
+        ],
+        "backgroundColor": "#ff6b9d",
+        "paddingAll": "20px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "👶 ニューボーン",
+            "weight": "bold",
+            "size": "lg",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "料金",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "¥38,500",
+                    "wrap": true,
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "撮影カット数",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "衣装",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "全て無料",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "兄弟撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "衣装のみ +2,200円",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ママ訪問着",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "なし",
+                    "wrap": true,
+                    "color": "#999999",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "神社ロケ",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "なし",
+                    "wrap": true,
+                    "color": "#999999",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "出張撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "宮崎市内無料",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ベストタイミング",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "生後2〜3週",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/プラン/newbornplan/"
+            },
+            "color": "#ff6b9d"
+          }
+        ],
+        "flex": 0
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "プラン比較表",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ffffff"
+          },
+          {
+            "type": "text",
+            "text": "← 左右にスワイプ →",
+            "size": "xs",
+            "color": "#ffffff",
+            "margin": "sm",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ff6b9d",
+        "paddingAll": "20px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "⛩️ お宮参り",
+            "weight": "bold",
+            "size": "lg",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "料金",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "¥33,000",
+                    "wrap": true,
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "撮影カット数",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "衣装",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "産着無料",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "兄弟撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "衣装のみ +2,200円",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ママ訪問着",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "無料✨",
+                    "wrap": true,
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "神社ロケ",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "+16,500円",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "出張撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "なし",
+                    "wrap": true,
+                    "color": "#999999",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ベストタイミング",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "生後1ヶ月前後",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/omiyamairi/"
+            },
+            "color": "#ff6b9d"
+          }
+        ],
+        "flex": 0
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "プラン比較表",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ffffff"
+          },
+          {
+            "type": "text",
+            "text": "← 左右にスワイプ →",
+            "size": "xs",
+            "color": "#ffffff",
+            "margin": "sm",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ff6b9d",
+        "paddingAll": "20px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "🎎 七五三",
+            "weight": "bold",
+            "size": "lg",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "料金",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "¥35,000",
+                    "wrap": true,
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "撮影カット数",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "衣装",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "着物・袴無料",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "兄弟撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "無料",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ママ訪問着",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "+11,000円",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "神社ロケ",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "対応可能",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "出張撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "なし",
+                    "wrap": true,
+                    "color": "#999999",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ベストタイミング",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "3歳・5歳・7歳",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/shichigosan/"
+            },
+            "color": "#ff6b9d"
+          }
+        ],
+        "flex": 0
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "プラン比較表",
+            "weight": "bold",
+            "size": "xl",
+            "color": "#ffffff"
+          },
+          {
+            "type": "text",
+            "text": "← スワイプ",
+            "size": "xs",
+            "color": "#ffffff",
+            "margin": "sm",
+            "align": "end"
+          }
+        ],
+        "backgroundColor": "#ff6b9d",
+        "paddingAll": "20px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "🎂 バースデー",
+            "weight": "bold",
+            "size": "lg",
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "料金",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "¥35,000",
+                    "wrap": true,
+                    "color": "#ff6b9d",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "撮影カット数",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "60カット以上",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "衣装",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "全て無料",
+                    "wrap": true,
+                    "color": "#06C755",
+                    "size": "sm",
+                    "flex": 3,
+                    "weight": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "兄弟撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "衣装のみ +2,200円",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ママ訪問着",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "+11,000円",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "神社ロケ",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "なし",
+                    "wrap": true,
+                    "color": "#999999",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "出張撮影",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "なし",
+                    "wrap": true,
+                    "color": "#999999",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "ベストタイミング",
+                    "color": "#aaaaaa",
+                    "size": "sm",
+                    "flex": 2
+                  },
+                  {
+                    "type": "text",
+                    "text": "1歳・2歳",
+                    "wrap": true,
+                    "color": "#666666",
+                    "size": "sm",
+                    "flex": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "label": "詳しく見る",
+              "uri": "https://hikarinostudio.com/birthday/"
+            },
+            "color": "#ff6b9d"
+          }
+        ],
+        "flex": 0
+      }
+    }
+  ]
+}

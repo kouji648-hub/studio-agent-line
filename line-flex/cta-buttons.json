@@ -1,0 +1,122 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "ご予約・ご相談はこちら",
+        "weight": "bold",
+        "size": "xl",
+        "color": "#ff6b9d",
+        "align": "center"
+      },
+      {
+        "type": "text",
+        "text": "お気軽にお問い合わせください",
+        "size": "sm",
+        "color": "#666666",
+        "align": "center",
+        "margin": "md"
+      },
+      {
+        "type": "separator",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xl",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "md",
+            "action": {
+              "type": "uri",
+              "label": "LINEで予約する",
+              "uri": "https://lin.ee/rODiR3b"
+            },
+            "color": "#06C755"
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "md",
+            "action": {
+              "type": "uri",
+              "label": "LINEで相談する",
+              "uri": "https://lin.ee/rODiR3b"
+            },
+            "color": "#ff6b9d"
+          },
+          {
+            "type": "button",
+            "style": "link",
+            "height": "md",
+            "action": {
+              "type": "uri",
+              "label": "公式HPを見る",
+              "uri": "https://hikarinostudio.com/"
+            }
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xl",
+        "backgroundColor": "#fff9fb",
+        "cornerRadius": "md",
+        "paddingAll": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "📞 お急ぎの場合",
+            "weight": "bold",
+            "size": "sm",
+            "color": "#333333"
+          },
+          {
+            "type": "text",
+            "text": "電話でのご予約も承っております",
+            "size": "xs",
+            "color": "#666666",
+            "margin": "sm"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "md",
+            "contents": [
+              {
+                "type": "text",
+                "text": "☎︎",
+                "color": "#ff6b9d",
+                "size": "md",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "0985-XX-XXXX",
+                "size": "md",
+                "color": "#ff6b9d",
+                "weight": "bold",
+                "margin": "sm"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "受付時間：10:00〜18:00（火曜定休）",
+            "size": "xs",
+            "color": "#aaaaaa",
+            "margin": "sm"
+          }
+        ]
+      }
+    ]
+  }
+}
