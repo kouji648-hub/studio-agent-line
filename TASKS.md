@@ -7,7 +7,8 @@
 
 ## ステータス
 
-- ✅ 完了: 7タスク（全タスク完了）
+- ✅ 完了: 7タスク
+- 🔲 未着手: 1タスク
 
 ---
 
@@ -291,11 +292,58 @@ HTMLデモからLINE公式アカウントで使えるFlexMessage JSONを生成�
 
 ---
 
-## 🎉 全タスク完了
+## 🔲 未着手タスク
+
+### Task 8: HTML確認とFlexMessage JSONのプレビュー 🔲
+
+既存の3つのHTMLデモファイルが正しく動作するか確認し、FlexMessage JSONが実際のLINEでどう表示されるかをプレビューする。
+
+**確認項目:**
+
+#### 1. GitHub Pagesでの表示確認
+- Pattern A: 興味ベース（What型）
+- Pattern B: タイミングベース（When型）
+- Pattern C: ニーズベース（Why型）
+- デモサイト: https://kouji648-hub.github.io/studio-agent-line/
+
+#### 2. FlexMessage JSONのプレビュー
+LINE Flex Message Simulator（https://developers.line.biz/flex-simulator/）で各JSONを確認：
+- `carousel-newborn.json` - ニューボーンプランカルーセル
+- `carousel-omiyamairi.json` - お宮参りプランカルーセル
+- `carousel-shichigosan.json` - 七五三プランカルーセル
+- `needs-selection.json` - ニーズ選択ボタン（10個）
+- `comparison-table.json` - プラン比較表（4プラン）
+- `rich-message-template.json` - リッチメッセージテンプレート
+- `cta-buttons.json` - 予約・相談ボタン
+
+#### 3. レスポンシブデザイン確認
+- スマホ（iPhone/Android）での表示
+- タブレットでの表示
+- PCブラウザでの表示
+
+#### 4. インタラクション確認
+- ボタンクリック動作
+- カルーセルのスワイプ動作
+- タイムライン表示の確認
+- プラン比較表の横スクロール
+
+#### 5. 修正が必要な箇所の特定
+- UIの崩れ
+- リンク切れ
+- 誤字脱字
+- 料金や情報の最新性
+
+**成果物:**
+- 動作確認レポート（問題点リスト）
+- 必要に応じて修正パッチ
+
+---
+
+## 🎉 フェーズ1完了
 
 **完了日**: 2026-02-11
 
-全7タスクが完了しました。HTMLデモから実際のLINE FlexMessage JSONまで、コンバージョン最適化フローの全要素が揃いました。
+HTMLデモから実際のLINE FlexMessage JSONまで、コンバージョン最適化フローの全要素が揃いました。
 
 ### プロジェクト成果物
 
