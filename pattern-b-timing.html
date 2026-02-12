@@ -25,7 +25,7 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 .phone { width: 390px; height: 844px; background: #fff; border-radius: 40px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
 .header { background: #fff; padding: 50px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e5e5e5; flex-shrink: 0; }
 .header .back { font-size: 24px; color: #06C755; cursor: pointer; }
-.header .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ff6b9d, #ff8fab); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold; }
+.header .avatar { width: 40px; height: 40px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold; overflow: hidden; }
 .header .name { font-size: 16px; font-weight: 600; }
 .header .badge { background: #06C755; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 8px; margin-left: 4px; }
 .chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #7494C0; }
@@ -96,7 +96,9 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 <div class="phone">
   <div class="header">
     <span class="back">&lsaquo;</span>
-    <div class="avatar">H</div>
+    <div class="avatar">
+      <img src="https://hikarinostudio.com/wp-content/uploads/2019/09/IMG_2478.png" alt="ヒカリノスタジオ" style="width:100%;height:100%;object-fit:cover;">
+    </div>
     <div>
       <span class="name">ヒカリノスタジオ</span>
       <span class="badge">公式</span>
@@ -118,6 +120,9 @@ const chat = document.getElementById('chat');
 
 function addMsg(type, text, delay) {
   return new Promise(resolve => {
+    // \n を <br> に変換
+    const formattedText = text.replace(/\n/g, '<br>');
+
     if (type === 'bot') {
       const typing = document.createElement('div');
       typing.className = 'typing';
@@ -128,7 +133,7 @@ function addMsg(type, text, delay) {
         typing.remove();
         const div = document.createElement('div');
         div.className = 'msg bot';
-        div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+        div.innerHTML = `<div class="bubble">${formattedText}</div><div class="time">${getTime()}</div>`;
         chat.appendChild(div);
         scrollDown();
         resolve();
@@ -136,7 +141,7 @@ function addMsg(type, text, delay) {
     } else {
       const div = document.createElement('div');
       div.className = 'msg user';
-      div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+      div.innerHTML = `<div class="bubble">${formattedText}</div><div class="time">${getTime()}</div>`;
       chat.appendChild(div);
       scrollDown();
       setTimeout(resolve, 300);
@@ -234,6 +239,76 @@ function addStepIndicator(text) {
   scrollDown();
 }
 
+// 画像表示メッセージ
+function addImageMsg(src, alt, caption) {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `
+    <div class="bubble" style="padding:4px !important;max-width:250px;">
+      <img src="${src}" alt="${alt}" style="width:100%;border-radius:8px;display:block;" loading="lazy">
+      ${caption ? `<p style="margin:8px 0 0;font-size:12px;color:#666;">${caption}</p>` : ''}
+    </div>
+    <div class="time">${getTime()}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// スタジオ比較表示
+function addStudioComparison() {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `
+    <div class="bubble" style="padding:0;border-radius:8px;overflow:hidden;">
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <h4 style="padding:12px 16px;margin:0;font-size:14px;color:#333;">📍 2つのスタジオ</h4>
+        <div style="background:linear-gradient(135deg, #f8bbd0, #f48fb1);padding:12px 16px;color:#fff;">
+          <h5 style="margin:0 0 4px;font-size:14px;">🌸 下北方スタジオ</h5>
+          <span style="font-size:12px;opacity:0.9;">宮崎市</span>
+        </div>
+        <div style="padding:12px 16px;font-size:13px;color:#555;">
+          <p style="margin:0 0 8px;line-height:1.5;">複数の撮影ルーム＋緑あふれるお庭</p>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;">
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🌸 SAKURA×Antique</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">☀️ Natural light</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">⭐ Starry sky</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🌺 Flower cafe</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:12px;color:#666;">⛩ 宮崎神宮（車5分）</p>
+        </div>
+        <div style="border-top:1px solid #f5f5f5;background:linear-gradient(135deg, #d7ccc8, #bcaaa4);padding:12px 16px;color:#fff;">
+          <h5 style="margin:0 0 4px;font-size:14px;">🏛 都城スタジオ</h5>
+          <span style="font-size:12px;opacity:0.9;">都城市</span>
+        </div>
+        <div style="padding:12px 16px;font-size:13px;color:#555;">
+          <p style="margin:0 0 8px;line-height:1.5;">100年前のアンティーク家具×ワントーン空間</p>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;">
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🪑 Antique</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🤍 White tone</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:12px;color:#666;">⛩ 神柱宮（車5分）</p>
+        </div>
+      </div>
+    </div>
+    <div class="time">${getTime()}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// 兄弟衣装訴求
+async function addSiblingAppeal() {
+  await addMsg('bot', `👨‍👩‍👧‍👦 兄弟・姉妹がいるママへ
+【無料で含まれるもの】
+⭐ 兄弟の衣装1着レンタル
+⭐ 家族と兄弟の一緒のカット
+【もっと残したいなら】
+📸 兄弟ソロカット有りオプション
+　+¥16,500（衣装2点・10カット追加）
+「おそろいコーデで兄弟ショット」
+人気のオプションです✨`, 600);
+}
+
 function scrollDown() { setTimeout(() => chat.scrollTop = chat.scrollHeight, 50); }
 function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.getMinutes()).padStart(2, '0')}`; }
 
@@ -295,6 +370,15 @@ async function flowPregnant() {
 ✓ 出産報告を待ってから正式予約
 今なら余裕をもって準備できます🤰`, 800);
 
+  await addMsg('bot', `赤ちゃんの移動負担を考慮して
+ご自宅に近いスタジオがおすすめです🏠
+📍 宮崎市にお住まいなら → 下北方スタジオ
+📍 都城市にお住まいなら → 都城スタジオ
+📍 どちらも遠い場合は → 出張撮影がおすすめ`, 600);
+
+  addStudioComparison();
+  await new Promise(r => setTimeout(r, 1200));
+
   await addMsg('bot', `🎁 先行予約で安心!
 ニューボーンとお宮参りの先行予約で
 産後のバタバタの時期も安心。
@@ -335,7 +419,7 @@ async function handlePregnantChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '👶 ニューボーンスタジオプラン',
-          subtitle: '¥33,000（税込）',
+          subtitle: '¥33,000（税込）※土日祝+¥3,300',
           features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '出産後にお日にち調整OK', '👘 訪問着対応'],
           urgency: '生後2〜3週間を逃すと撮影が難しくなります',
           proof: '年間500組以上のママにご利用いただいています'
@@ -345,7 +429,7 @@ async function handlePregnantChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
           title: '💎 ライトプラン(出張)',
-          subtitle: '¥40,000（税込）',
+          subtitle: '¥40,000（税込）※土日祝+¥3,300',
           features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '出産後にお日にち調整OK', '👘 訪問着対応'],
           urgency: '生後2〜3週間がベストタイミング',
           proof: '産後の移動が不安なママにおすすめ'
@@ -375,7 +459,37 @@ async function handlePregnantChoice(choice) {
     await new Promise(r => setTimeout(r, 500));
     await addMsg('bot', 'お宮参りでは訪問着の着付けも無料で対応しています。\n神社ロケなら撮影当日にそのままお参りできます。', 600);
   } else {
-    await addMsg('bot', 'もちろんです！ゆっくりご検討ください。\n\nいつでもこのLINEからご相談いただけます。\n\n出産が近づいてきたらお声がけくださいね。');
+    await addMsg('bot', 'もちろんです！ゆっくりご検討ください😊');
+    addChoices([
+      { label: '📸 撮影サンプルを見たい', value: 'see_samples' },
+      { label: '🏠 スタジオの雰囲気を見たい', value: 'see_studio' },
+      { label: '💰 料金を詳しく知りたい', value: 'see_price' },
+      { label: '💬 その他の質問', value: 'question' }
+    ], async (laterChoice) => {
+      if (laterChoice === 'see_studio') {
+        addStudioComparison();
+        await new Promise(r => setTimeout(r, 1200));
+      } else if (laterChoice === 'see_price') {
+        await addMsg('bot', `💡 ニューボーン撮影の料金について
+【スタジオプラン】¥33,000（税込）
+- コスパ抜群、衣装・小物無料
+- 複数のスタジオで異なる雰囲気
+- 土日祝は+¥3,300
+【ライトプラン（出張）】¥40,000（税込）
+- ご自宅で撮影、赤ちゃんの移動なし
+- 自然光を活かした柔らかい雰囲気
+- 土日祝は+¥3,300
+【お宮参りセット】¥71,500（税込）
+- ニューボーン + お宮参り + 訪問着
+- 続けて撮影されるママに人気
+⏰ 迷ったらスタジオプラン（¥33,000）がおすすめ！`, 800);
+      } else if (laterChoice === 'question') {
+        await addMsg('bot', 'どんなことでもお気軽にどうぞ！\nスタッフが丁寧にお答えします。');
+      } else {
+        await addMsg('bot', 'サンプル写真はスタジオのInstagramやホームページをチェック！\n素敵な撮影が見られますよ📸');
+      }
+      await addMsg('bot', 'いつでもこのLINEからご相談いただけます。\n出産が近づいてきたらお声がけくださいね。');
+    });
   }
 }
 
@@ -399,6 +513,15 @@ async function handleNewbornChoice(choice) {
   if (choice === 'nb') {
     await addMsg('bot', '赤ちゃんのペースに合わせて撮影するので、ゆったり過ごしていただけます。\n\n撮影場所はどちらがご希望ですか？');
 
+    await addMsg('bot', `赤ちゃんの移動負担を考慮して
+ご自宅に近いスタジオがおすすめです🏠
+📍 宮崎市にお住まいなら → 下北方スタジオ
+📍 都城市にお住まいなら → 都城スタジオ
+📍 どちらも遠い場合は → 出張撮影がおすすめ`, 600);
+
+    addStudioComparison();
+    await new Promise(r => setTimeout(r, 1200));
+
     await addMsg('bot', `撮影プランによって料金が異なります。
 📸 ニューボーンスタジオプラン: ¥33,000
 💎 ライトプラン(出張): ¥40,000
@@ -417,7 +540,7 @@ async function handleNewbornChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '👶 ニューボーンスタジオプラン',
-          subtitle: '¥33,000（税込）',
+          subtitle: '¥33,000（税込）※土日祝+¥3,300',
           features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '家族写真・兄弟撮影OK', '👘 訪問着対応'],
           urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
           proof: '赤ちゃんのペースに合わせた撮影で安心'
@@ -429,7 +552,7 @@ async function handleNewbornChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
           title: '💎 ライトプラン(出張)',
-          subtitle: '¥40,000（税込）',
+          subtitle: '¥40,000（税込）※土日祝+¥3,300',
           features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '赤ちゃんのペースで撮影', '👘 訪問着対応'],
           urgency: '生後2〜3週間がベストタイミング',
           proof: 'いつもの場所だから赤ちゃんもリラックス'
@@ -453,7 +576,7 @@ async function handleNewbornChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
           title: '⛩️ お宮参りベーシック',
-          subtitle: '¥33,000（税込）',
+          subtitle: '¥33,000（税込）※土日祝+¥3,300',
           features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '👘 訪問着レンタル・着付け無料', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', '完全貸切スタジオ'],
           proof: '産着・訪問着の着せ方もお任せください'
         });
@@ -512,7 +635,7 @@ async function handleNewbornChoice(choice) {
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ お宮参り スタジオ＋ロケ',
-                subtitle: '¥49,500（税込）',
+                subtitle: '¥49,500（税込）※土日祝+¥3,300',
                 features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '👘 訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', `⛩️ ${info.shrine}ロケ20分（1日で完結）`],
                 urgency: 'スタジオ→神社→お参りが1日で完結',
                 proof: '訪問着のまま御祈祷に行けるのでスムーズです'
@@ -524,7 +647,7 @@ async function handleNewbornChoice(choice) {
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ お宮参り スタジオ＋ロケ',
-                subtitle: '¥33,000（税込）',
+                subtitle: '¥33,000（税込）※土日祝+¥3,300',
                 features: ['💰 明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '産着レンタル無料', '⭐️ 兄弟衣装1着無料', `⛩️ ${info.shrine}ロケ20分（1日で完結）`],
                 urgency: 'スタジオ→神社→お参りが1日で完結',
                 proof: '産着の着せ方もお任せください'
@@ -558,6 +681,7 @@ async function flowToddler() {
   addChoices([
     { label: '🎂 バースデー撮影', value: 'birthday' },
     { label: '🎀 ハーフバースデー', value: 'half' },
+    { label: '🎏 初節句（2〜6月限定）', value: 'sekku' },
     { label: '📷 記念撮影（特に理由なし）', value: 'casual' },
     { label: '⛩️ お宮参りがまだだった', value: 'omiya_late' }
   ], async (choice) => {
@@ -567,21 +691,73 @@ async function flowToddler() {
       await addMsg('bot', choice === 'birthday'
         ? '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！'
         : 'ハーフバースデーは寝返り前後の可愛い時期。今がベストタイミングです！');
+      await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
+      addStudioComparison();
+      await new Promise(r => setTimeout(r, 1000));
+      await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #ffb347, #ffcc80)',
         title: title,
-        subtitle: '¥33,000（税込）',
-        features: ['💰 明朗会計・大手の半額', '60カット撮影', '衣装2着', '⭐️ 兄弟衣装1着無料', '👘 訪問着 +¥11,000（着付け込）', choice === 'birthday' ? '完全貸切でリラックス' : '寝返り前の可愛い時期に'],
+        subtitle: '¥33,000（税込）※土日祝+¥3,300',
+        features: ['💰 明朗会計・大手の半額', '60カット撮影', '衣装2着', '⭐️ 兄弟衣装1着無料', '👘 訪問着 +¥11,000（着付け込）', choice === 'birthday' ? '完全貸切でリラックス' : '寝回り前の可愛い時期に'],
         proof: '衣装チェンジで2つの雰囲気を楽しめます'
       });
-    } else {
+    } else if (choice === 'sekku') {
+      addStepIndicator('— Step 3: 初節句プラン —');
+      await addMsg('bot', `初節句の撮影ですね！🎏
+ヒカリノスタジオでは2〜6月の期間限定で
+おしゃれな「白粋(HAKI)」の小物を
+ご用意しています✨`);
+      await new Promise(r => setTimeout(r, 1000));
+      addImageMsg(
+        'https://hikarinostudio.com/wp-content/uploads/2025/08/147-563x750.png',
+        '白粋(HAKI)の節句小物',
+        '白粋(HAKI) — 白を基調としたモダンな節句飾り'
+      );
+      await new Promise(r => setTimeout(r, 1200));
+      addImageMsg(
+        'https://hikarinostudio.com/wp-content/uploads/2025/08/148-563x750.png',
+        '白粋(HAKI)の節句撮影サンプル',
+        'お子様と一緒に。おしゃれな節句写真が残せます'
+      );
+      await new Promise(r => setTimeout(r, 1200));
+      await addMsg('bot', `🎏 節句撮影オプション
+メインのお子様のみ: +¥2,200
+メイン＋兄弟一緒: +¥3,300
+メイン＋兄弟＋家族: +¥4,400
+ベーシックプラン¥33,000に
+節句オプションを追加する形です💡`, 600);
+      await addMsg('bot', `👨‍👩‍👧‍👦 兄弟の節句も一緒にできます！
+⭐ 兄弟も衣装を着て節句撮影OK
+⭐ 兄弟のソロ節句カットも追加可能
+⭐ おしゃれなHAKIの小物で特別感◎`, 600);
+      addRichMsg({
+        gradient: 'linear-gradient(135deg, #e8eaf6, #c5cae9)',
+        title: '🎏 初節句プラン',
+        subtitle: '¥33,000＋節句オプション¥2,200〜 ※土日祝+¥3,300',
+        features: [
+          '💰 ベーシックプラン¥33,000',
+          '🤍 「白粋(HAKI)」のおしゃれ小物',
+          '📸 60カット撮影',
+          '⭐ 兄弟衣装1着無料',
+          '👘 ママ訪問着対応（+¥11,000）',
+          '📅 2〜6月の期間限定'
+        ],
+        urgency: '白粋(HAKI)は2〜6月限定。この時期だけの特別な撮影です',
+        proof: 'SNSで人気のHAKI × ナチュラルな空間で特別な1枚'
+      });
+    } else if (choice === 'casual') {
       await addMsg('bot', 'どんな理由でもOK！成長の記録は何度撮っても良いものです。');
+      await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
+      addStudioComparison();
+      await new Promise(r => setTimeout(r, 1000));
+      await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
         title: '📷 記念撮影',
-        subtitle: '¥33,000（税込）',
+        subtitle: '¥33,000（税込）※土日祝+¥3,300',
         features: ['💰 明朗会計・大手の半額', '60カット撮影', '衣装2着', '⭐️ 兄弟衣装1着無料', '👘 訪問着 +¥11,000（着付け込）', '完全貸切でリラックス'],
-        proof: '家族みんなの思い出を形に'
+        proof: '家族みんの思い出を形に'
       });
     }
   });
@@ -616,6 +792,10 @@ async function flowChild() {
     const ageLabel = { '3f': '3歳女の子', '5m': '5歳男の子', '7f': '7歳女の子' };
     await addMsg('bot', `${ageLabel[choice]}の七五三ですね！\n\nヘアメイク・着付け込みなので、手ぶらでOKです。`);
 
+    await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
+    addStudioComparison();
+    await new Promise(r => setTimeout(r, 1200));
+
     addChoices([
       { label: '👘 着物＋洋装（2着）がいい', value: 'double' },
       { label: '⛩️ 神社ロケもしたい', value: 'loca' },
@@ -624,10 +804,15 @@ async function flowChild() {
       addStepIndicator('— Step 4: 予約・相談 —');
 
       if (pref === 'double') {
+        await addMsg('bot', `💡 七五三の洋装について
+8月までのご予約なら
+着物1着＋洋装1着が全て込み！
+9月以降は洋装追加料金がかかります。
+前撮りなら断然お得です✨`, 600);
         addRichMsg({
           gradient: 'linear-gradient(135deg, #e57373, #ef9a9a)',
           title: '🎎 七五三 着物&洋装プラン',
-          subtitle: '¥35,000〜（税込）',
+          subtitle: '¥35,000〜（税込）※土日祝+¥3,300',
           features: ['💰 明朗会計・大手の半額', '60カット撮影', '着物1着＋洋装1着', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '帯・髪飾り含む'],
           proof: '前撮りなら衣装選び放題・混雑を避けられます'
         });
@@ -680,7 +865,7 @@ async function flowChild() {
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ 七五三 スタジオ＋ロケ（訪問着付き）',
-                subtitle: '¥46,000（税込）',
+                subtitle: '¥46,000（税込）※土日祝+¥3,300',
                 features: ['💰 明朗会計・大手の半額', '60カット（3〜4シーン）', '着物1着＋洋装1着（2着撮影）', 'お子様のヘアメイク・着付け込み', '👘 ママの訪問着＋着付け込み', '⭐️ 兄弟も着物着用可能', `⛩️ ${info753.shrine}ロケで家族写真（1日で完結）`],
                 urgency: '秋の七五三シーズンは予約が埋まりやすくなります',
                 proof: '親子で着物姿の記念写真が残せます'
@@ -690,7 +875,7 @@ async function flowChild() {
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ 七五三 スタジオ＋ロケ',
-                subtitle: '¥35,000〜（税込）',
+                subtitle: '¥35,000〜（税込）※土日祝+¥3,300',
                 features: ['💰 明朗会計・大手の半額', '60カット（3〜4シーン）', '着物1着＋洋装1着（2着撮影）', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', `⛩️ ${info753.shrine}ロケで家族写真（1日で完結）`],
                 urgency: '秋の七五三シーズンは予約が埋まりやすくなります',
                 proof: 'スタジオ→神社→お参りが1日で完結'
@@ -700,11 +885,21 @@ async function flowChild() {
         });
       } else {
         await addMsg('bot', '兄弟撮影、素敵ですね！\n兄弟も着物が着られるプランがあります。');
+        await addMsg('bot', `👘 兄弟撮影について
+【無料で含まれるもの】
+⭐ 兄弟の着物1着レンタル
+⭐ 家族・兄弟と一緒のカット
+【もっと残したいなら】
+📸 兄弟ソロカット有りオプション
+　+¥16,500（衣装2点・10カット追加）
+⚠️ スタジオ＋ロケの場合
+　兄弟の洋装追加はできません
+　（着物のみとなります）`, 600);
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '🎎 七五三＋兄弟撮影',
           subtitle: '¥35,000〜（税込）',
-          features: ['💰 明朗会計・大手の半額', '60カット撮影', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '家族全員での記念写真'],
+          features: ['💰 明朗会計・大手の半額', '60カット撮影', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '👘 ソロカット有りオプション +¥16,500', '家族全員での記念写真'],
           proof: '兄弟の絆を写真に残す大切な機会'
         });
       }
@@ -744,22 +939,54 @@ async function flowOther() {
 async function handleCTA(type) {
   if (type === 'reservation') {
     await addMsg('user', '空き状況を見たい');
-    await addMsg('bot', '📋 ご予約ありがとうございます！\n\n【次のステップ】\n1️⃣ LINE予約\n2️⃣ 出産報告\n3️⃣ 日程調整\n4️⃣ 前日確認\n5️⃣ 撮影当日');
+    await addMsg('bot', '📋 ご予約ありがとうございます！', 600);
+
+    await addMsg('bot', `📅 ご予約の流れ
+1️⃣ LINEの予約カレンダーで【仮予約】
+2️⃣ 届いたLINEを確認
+3️⃣ 「仮予約日＋お名前」をLINE送信
+4️⃣ スタジオから予約確定のLINE
+とっても簡単です！
+キャンセルは3日前まで無料🆓`, 600);
+
+    await addMsg('bot', `💡 料金について補足です
+✓ 表示価格は全て税込
+✓ 土日祝は+¥3,300
+✓ 追加オプション以外の料金は一切なし
+安心の明瞭会計です💰`, 600);
+
+    await addMsg('bot', `📸 hikarino studioの7つのこだわり
+① 完全貸切 → 周りを気にせずリラックス
+② こだわりの撮影シーン
+　 下北方: 複数ルーム＋お庭
+　 都城: アンティーク×ワントーン
+③ 大手の半額の明瞭会計
+④ 衣装・小物すべて無料
+⑤ データ50〜60枚の大容量
+⑥ お子様のペースに合わせた撮影
+⑦ 丁寧なレタッチ・色味調整`, 800);
+
     await addMsg('bot', `👶 初めての撮影でも安心してください!
-【妊娠中の先行予約のメリット】
-✓ 産後のバタバタの時期も日程が確保されています
-✓ 出産後に日程調整が可能
-✓ ニューボーンとお宮参りを一貫してご対応
-✓ 訪問着も対応
 【撮影当日のこと】
 ✓ 持ち物は何もいりません(手ぶらでOK)
 ✓ 授乳・ミルク・おむつ替えは途中で何度でもOK
-✓ 赤ちゃんが泣いても大丈夫。休憩しながら進めます
-✓ 産後の体調に配慮。椅子での撮影も可能です`, 800);
+✓ お子様が泣いても大丈夫。休憩しながら進めます
+✓ 産後の体調に配慮。椅子での撮影も可能です`, 600);
+
     addStepIndicator('✅ 予約フローへ移行');
   } else {
     await addMsg('user', '相談したい');
-    await addMsg('bot', 'もちろんです！\n\n撮影内容・衣装・日程など、何でもお気軽にどうぞ。\nスタッフが丁寧にお答えします。');
+    await addMsg('bot', 'もちろんです！\n\n撮影内容・衣装・日程など、何でもお気軽にどうぞ。\nスタッフが丁寧にお答えします。', 600);
+
+    await addMsg('bot', `📸 hikarino studioの7つのこだわり
+① 完全貸切 → 周りを気にせずリラックス
+② こだわりの撮影シーン
+③ 大手の半額の明瞭会計
+④ 衣装・小物すべて無料
+⑤ データ50〜60枚の大容量
+⑥ お子様のペースに合わせた撮影
+⑦ 丁寧なレタッチ・色味調整`, 600);
+
     addStepIndicator('✅ スタッフ対応へ移行');
   }
 }
