@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+<!--
+パターンB: タイミングベース（When型LINEチャットボット）
+バージョン: v1.0（LINE改善案_完全版を反映）
+実装日: 2026-02-12
+改善内容: 60点→100点の完全改善版
+- 初回メッセージに差別化ポイント強調（大手の半額）
+- ニューボーン価格修正: ¥38,500→¥33,000
+- 出張プラン訴求: ¥19,000~
+- FOMO喚起メッセージ追加
+- セット割引訴求追加
+- ママの不安解消メッセージ
+- リマインド機能実装
+- 競合比較メッセージ追加
+-->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -226,8 +240,14 @@ function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.ge
 
 async function startFlow() {
   addStepIndicator('— Step 1: お子様の状況を把握 —');
-  await addMsg('bot', 'ヒカリノスタジオ公式LINEへようこそ！');
-  await addMsg('bot', 'お子様の今の状況を教えてください。\nぴったりの撮影プランをご提案します。', 600);
+  await addMsg('bot', `ヒカリノスタジオ公式LINEへようこそ!👶
+宮崎で【大手の半額】で撮影できる
+完全貸切フォトスタジオです。
+✨ 明瞭会計(追加料金なし)
+✨ データ50~60枚標準付属
+✨ 衣装・小物すべて無料
+まずはお子様の今の状況を教えてください。
+最適なプランをご提案します💝`);
 
   addChoices([
     { label: '🤰 妊娠中です', value: 'pregnant' },
@@ -264,7 +284,22 @@ async function flowPregnant() {
 
   await new Promise(r => setTimeout(r, 1500));
 
-  await addMsg('bot', 'ニューボーン撮影は生後2〜3週間がベストタイミング。\n\n出産前にご予約いただければ、出産後にお日にちを調整できます。', 800);
+  await addMsg('bot', `ニューボーン撮影のベストタイミングは生後7~21日。
+この時期を逃すと:
+❌ 関節が硬くなり、丸まったポーズが難しい
+❌ 起きている時間が増えて撮影が大変に
+でも大丈夫!
+✓ 妊娠中に仮予約→出産後に日程調整
+✓ 予定日の前後に柔軟対応
+✓ 出産報告を待ってから正式予約
+今なら余裕をもって準備できます🤰`, 800);
+
+  await addMsg('bot', `🎁 セット予約でさらにお得!
+通常 ¥71,500 → セット予約で ¥68,000
+(¥3,500 OFF)
+✓ 2回撮影で成長を残せる
+✓ 同じカメラマンだから雰囲気が統一
+✓ 割引が自動適用`, 600);
 
   addStepIndicator('— Step 3: プラン提案 —');
 
@@ -284,6 +319,11 @@ async function handlePregnantChoice(choice) {
   if (choice === 'nb') {
     await addMsg('bot', 'ニューボーン撮影ですね。\n撮影場所はどちらがご希望ですか？');
 
+    await addMsg('bot', `撮影場所によって料金が異なります。
+📸 スタジオ撮影: ¥33,000
+🏠 出張撮影: ¥19,000~
+※ 同日出張は全プラン +¥3,300`, 600);
+
     addChoices([
       { label: '📸 スタジオ撮影', value: 'studio_preg' },
       { label: '🏠 自宅出張撮影', value: 'home_preg' }
@@ -293,8 +333,8 @@ async function handlePregnantChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '👶 ニューボーンスタジオplan',
-          subtitle: '¥38,500（税込）',
-          features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '出産後にお日にち調整OK'],
+          subtitle: '¥33,000（税込）',
+          features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '出産後にお日にち調整OK', '🎁 セット予約で ¥3,500 OFF'],
           urgency: '生後2〜3週間を逃すと撮影が難しくなります',
           proof: '年間500組以上のママにご利用いただいています'
         });
@@ -303,8 +343,8 @@ async function handlePregnantChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
           title: '🏠 ナチュラルニューボーン出張',
-          subtitle: '¥33,000（税込）',
-          features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '出産後にお日にち調整OK'],
+          subtitle: '¥19,000~（税込）',
+          features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '出産後にお日にち調整OK', '🎁 同日出張で +¥3,300'],
           urgency: '生後2〜3週間がベストタイミング',
           proof: '産後の移動が不安なママにおすすめ'
         });
@@ -357,6 +397,11 @@ async function handleNewbornChoice(choice) {
   if (choice === 'nb') {
     await addMsg('bot', '赤ちゃんのペースに合わせて撮影するので、ゆったり過ごしていただけます。\n\n撮影場所はどちらがご希望ですか？');
 
+    await addMsg('bot', `撮影場所によって料金が異なります。
+📸 スタジオ撮影: ¥33,000
+🏠 出張撮影: ¥19,000~
+※ 同日出張は全プラン +¥3,300`, 600);
+
     addChoices([
       { label: '📸 スタジオ撮影', value: 'studio_nb' },
       { label: '🏠 自宅出張撮影', value: 'home_nb' }
@@ -370,7 +415,7 @@ async function handleNewbornChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '👶 ニューボーンスタジオplan',
-          subtitle: '¥38,500（税込）',
+          subtitle: '¥33,000（税込）',
           features: ['💰 明朗会計・大手の半額', '50カット（レタッチ10+調整40）', '衣装・小物すべて無料', '完全貸切 約1時間45分', '家族写真・兄弟撮影OK'],
           urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
           proof: '赤ちゃんのペースに合わせた撮影で安心'
@@ -382,7 +427,7 @@ async function handleNewbornChoice(choice) {
         addRichMsg({
           gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
           title: '🏠 ナチュラルニューボーン出張',
-          subtitle: '¥33,000（税込）',
+          subtitle: '¥19,000~（税込）',
           features: ['ご自宅で撮影（赤ちゃんの移動なし）', '自然光を活かした柔らかい雰囲気', '60カット撮影', '出張料込み（下北方・都城）', '赤ちゃんのペースで撮影'],
           urgency: '生後2〜3週間がベストタイミング',
           proof: 'いつもの場所だから赤ちゃんもリラックス'
@@ -669,6 +714,14 @@ async function flowChild() {
 async function flowOther() {
   addStepIndicator('— Step 2: その他の撮影 —');
   await addMsg('bot', 'どんな撮影でもお気軽にご相談ください！');
+
+  await addMsg('bot', `【大手スタジオ相場】
+スタジオアリス: ¥70,000~150,000
+
+【ヒカリノスタジオ】
+ニューボーン＋お宮参り: ¥66,000
+(大手の半額以下!)`, 800);
+
   addChoices([
     { label: '🤰 マタニティフォト', value: 'maternity' },
     { label: '🎓 成人式・入学卒園', value: 'event' },
@@ -688,13 +741,64 @@ async function flowOther() {
 async function handleCTA(type) {
   if (type === 'reservation') {
     await addMsg('user', '空き状況を見たい');
-    await addMsg('bot', '今月の空き状況をお調べします！\n\nご希望の日程はありますか？\n平日は比較的ご予約が取りやすいです。');
+    await addMsg('bot', '📋 ご予約ありがとうございます！\n\n【次のステップ】\n1️⃣ LINE予約\n2️⃣ 出産報告\n3️⃣ 日程調整\n4️⃣ 前日確認\n5️⃣ 撮影当日');
+    await addMsg('bot', `👶 初めての撮影でも安心してください!
+【撮影当日のこと】
+✓ 持ち物は何もいりません(手ぶらでOK)
+✓ 授乳・ミルク・おむつ替えは途中で何度でもOK
+✓ 赤ちゃんが泣いても大丈夫。休憩しながら進めます
+✓ 産後の体調に配慮。椅子での撮影も可能です
+何かご不明な点がございましたら
+いつでもこのLINEでご連絡ください🌟`, 800);
     addStepIndicator('✅ 予約フローへ移行');
   } else {
     await addMsg('user', '相談したい');
     await addMsg('bot', 'もちろんです！\n\n撮影内容・衣装・日程など、何でもお気軽にどうぞ。\nスタッフが丁寧にお答えします。');
     addStepIndicator('✅ スタッフ対応へ移行');
   }
+}
+
+// =========================================
+// リマインド機能
+// =========================================
+const scheduledReminders = {};
+
+async function setReminder(dueDate, message, delayDays) {
+  const reminderDate = new Date(dueDate);
+  reminderDate.setDate(reminderDate.getDate() + delayDays);
+
+  const reminderId = `reminder_${Date.now()}`;
+  scheduledReminders[reminderId] = {
+    date: reminderDate,
+    message: message
+  };
+
+  // ローカルストレージに保存（本番はサーバー側でスケジュール）
+  localStorage.setItem('reminders', JSON.stringify(scheduledReminders));
+}
+
+async function sendScheduledReminder(reminderId) {
+  const reminder = scheduledReminders[reminderId];
+  if (reminder) {
+    await addMsg('bot', reminder.message, 600);
+    delete scheduledReminders[reminderId];
+    localStorage.setItem('reminders', JSON.stringify(scheduledReminders));
+  }
+}
+
+// 妊娠中フローでリマインド設定
+async function setPregnancyReminders(dueDate) {
+  // 出産予定日の2週間前
+  await setReminder(dueDate, `出産予定日まで2週間となりました!
+体調はいかがですか?
+出産後にまたご連絡いたしますね🤰`, -14);
+
+  // 出産予定日の7日後
+  await setReminder(dueDate, `🎉 ご出産おめでとうございます!
+ニューボーン撮影のベストタイミングは
+生後7~21日です。
+体調が落ち着かれましたら
+撮影日のご相談をさせてください💝`, 7);
 }
 
 function resetFlow() { chat.innerHTML = ''; startFlow(); }
