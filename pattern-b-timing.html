@@ -641,6 +641,9 @@ async function flowToddler() {
       await addMsg('bot', choice === 'birthday'
         ? '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！'
         : 'ハーフバースデーは寝返り前後の可愛い時期。今がベストタイミングです！');
+      await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
+      addStudioComparison();
+      await new Promise(r => setTimeout(r, 1000));
       await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #ffb347, #ffcc80)',
@@ -693,8 +696,11 @@ async function flowToddler() {
         urgency: '白粋(HAKI)は2〜6月限定。この時期だけの特別な撮影です',
         proof: 'SNSで人気のHAKI × ナチュラルな空間で特別な1枚'
       });
-    } else {
+    } else if (choice === 'casual') {
       await addMsg('bot', 'どんな理由でもOK！成長の記録は何度撮っても良いものです。');
+      await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
+      addStudioComparison();
+      await new Promise(r => setTimeout(r, 1000));
       await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
@@ -820,11 +826,21 @@ async function flowChild() {
         });
       } else {
         await addMsg('bot', '兄弟撮影、素敵ですね！\n兄弟も着物が着られるプランがあります。');
+        await addMsg('bot', `👘 兄弟撮影について
+【無料で含まれるもの】
+⭐ 兄弟の着物1着レンタル
+⭐ 家族・兄弟と一緒のカット
+【もっと残したいなら】
+📸 兄弟ソロカット有りオプション
+　+¥16,500（衣装2点・10カット追加）
+⚠️ スタジオ＋ロケの場合
+　兄弟の洋装追加はできません
+　（着物のみとなります）`, 600);
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '🎎 七五三＋兄弟撮影',
           subtitle: '¥35,000〜（税込）',
-          features: ['💰 明朗会計・大手の半額', '60カット撮影', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '家族全員での記念写真'],
+          features: ['💰 明朗会計・大手の半額', '60カット撮影', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '👘 ソロカット有りオプション +¥16,500', '家族全員での記念写真'],
           proof: '兄弟の絆を写真に残す大切な機会'
         });
       }
