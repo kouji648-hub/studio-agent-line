@@ -118,6 +118,9 @@ const chat = document.getElementById('chat');
 
 function addMsg(type, text, delay) {
   return new Promise(resolve => {
+    // \n を <br> に変換
+    const formattedText = text.replace(/\n/g, '<br>');
+
     if (type === 'bot') {
       const typing = document.createElement('div');
       typing.className = 'typing';
@@ -128,7 +131,7 @@ function addMsg(type, text, delay) {
         typing.remove();
         const div = document.createElement('div');
         div.className = 'msg bot';
-        div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+        div.innerHTML = `<div class="bubble">${formattedText}</div><div class="time">${getTime()}</div>`;
         chat.appendChild(div);
         scrollDown();
         resolve();
@@ -136,7 +139,7 @@ function addMsg(type, text, delay) {
     } else {
       const div = document.createElement('div');
       div.className = 'msg user';
-      div.innerHTML = `<div class="bubble">${text}</div><div class="time">${getTime()}</div>`;
+      div.innerHTML = `<div class="bubble">${formattedText}</div><div class="time">${getTime()}</div>`;
       chat.appendChild(div);
       scrollDown();
       setTimeout(resolve, 300);
@@ -232,6 +235,76 @@ function addStepIndicator(text) {
   div.textContent = text;
   chat.appendChild(div);
   scrollDown();
+}
+
+// 画像表示メッセージ
+function addImageMsg(src, alt, caption) {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `
+    <div class="bubble" style="padding:4px !important;max-width:250px;">
+      <img src="${src}" alt="${alt}" style="width:100%;border-radius:8px;display:block;" loading="lazy">
+      ${caption ? `<p style="margin:8px 0 0;font-size:12px;color:#666;">${caption}</p>` : ''}
+    </div>
+    <div class="time">${getTime()}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// スタジオ比較表示
+function addStudioComparison() {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `
+    <div class="bubble" style="padding:0;border-radius:8px;overflow:hidden;">
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <h4 style="padding:12px 16px;margin:0;font-size:14px;color:#333;">📍 2つのスタジオ</h4>
+        <div style="background:linear-gradient(135deg, #f8bbd0, #f48fb1);padding:12px 16px;color:#fff;">
+          <h5 style="margin:0 0 4px;font-size:14px;">🌸 下北方スタジオ</h5>
+          <span style="font-size:12px;opacity:0.9;">宮崎市</span>
+        </div>
+        <div style="padding:12px 16px;font-size:13px;color:#555;">
+          <p style="margin:0 0 8px;line-height:1.5;">複数の撮影ルーム＋緑あふれるお庭</p>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;">
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🌸 SAKURA×Antique</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">☀️ Natural light</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">⭐ Starry sky</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🌺 Flower cafe</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:12px;color:#666;">⛩ 宮崎神宮（車5分）</p>
+        </div>
+        <div style="border-top:1px solid #f5f5f5;background:linear-gradient(135deg, #d7ccc8, #bcaaa4);padding:12px 16px;color:#fff;">
+          <h5 style="margin:0 0 4px;font-size:14px;">🏛 都城スタジオ</h5>
+          <span style="font-size:12px;opacity:0.9;">都城市</span>
+        </div>
+        <div style="padding:12px 16px;font-size:13px;color:#555;">
+          <p style="margin:0 0 8px;line-height:1.5;">100年前のアンティーク家具×ワントーン空間</p>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;">
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🪑 Antique</span>
+            <span style="background:#f5f5f5;padding:4px 8px;border-radius:12px;font-size:11px;">🤍 White tone</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:12px;color:#666;">⛩ 神柱宮（車5分）</p>
+        </div>
+      </div>
+    </div>
+    <div class="time">${getTime()}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// 兄弟衣装訴求
+async function addSiblingAppeal() {
+  await addMsg('bot', `👨‍👩‍👧‍👦 兄弟・姉妹がいるママへ
+【無料で含まれるもの】
+⭐ 兄弟の衣装1着レンタル
+⭐ 家族と兄弟の一緒のカット
+【もっと残したいなら】
+📸 兄弟ソロカット有りオプション
+　+¥16,500（衣装2点・10カット追加）
+「おそろいコーデで兄弟ショット」
+人気のオプションです✨`, 600);
 }
 
 function scrollDown() { setTimeout(() => chat.scrollTop = chat.scrollHeight, 50); }
@@ -558,6 +631,7 @@ async function flowToddler() {
   addChoices([
     { label: '🎂 バースデー撮影', value: 'birthday' },
     { label: '🎀 ハーフバースデー', value: 'half' },
+    { label: '🎏 初節句（2〜6月限定）', value: 'sekku' },
     { label: '📷 記念撮影（特に理由なし）', value: 'casual' },
     { label: '⛩️ お宮参りがまだだった', value: 'omiya_late' }
   ], async (choice) => {
@@ -567,6 +641,7 @@ async function flowToddler() {
       await addMsg('bot', choice === 'birthday'
         ? '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！'
         : 'ハーフバースデーは寝返り前後の可愛い時期。今がベストタイミングです！');
+      await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #ffb347, #ffcc80)',
         title: title,
@@ -574,14 +649,59 @@ async function flowToddler() {
         features: ['💰 明朗会計・大手の半額', '60カット撮影', '衣装2着', '⭐️ 兄弟衣装1着無料', '👘 訪問着 +¥11,000（着付け込）', choice === 'birthday' ? '完全貸切でリラックス' : '寝返り前の可愛い時期に'],
         proof: '衣装チェンジで2つの雰囲気を楽しめます'
       });
+    } else if (choice === 'sekku') {
+      addStepIndicator('— Step 3: 初節句プラン —');
+      await addMsg('bot', `初節句の撮影ですね！🎏
+ヒカリノスタジオでは2〜6月の期間限定で
+おしゃれな「白粋(HAKI)」の小物を
+ご用意しています✨`);
+      await new Promise(r => setTimeout(r, 1000));
+      addImageMsg(
+        'https://hikarinostudio.com/wp-content/uploads/2025/08/147-563x750.png',
+        '白粋(HAKI)の節句小物',
+        '白粋(HAKI) — 白を基調としたモダンな節句飾り'
+      );
+      await new Promise(r => setTimeout(r, 1200));
+      addImageMsg(
+        'https://hikarinostudio.com/wp-content/uploads/2025/08/148-563x750.png',
+        '白粋(HAKI)の節句撮影サンプル',
+        'お子様と一緒に。おしゃれな節句写真が残せます'
+      );
+      await new Promise(r => setTimeout(r, 1200));
+      await addMsg('bot', `🎏 節句撮影オプション
+メインのお子様のみ: +¥2,200
+メイン＋兄弟一緒: +¥3,300
+メイン＋兄弟＋家族: +¥4,400
+ベーシックプラン¥33,000に
+節句オプションを追加する形です💡`, 600);
+      await addMsg('bot', `👨‍👩‍👧‍👦 兄弟の節句も一緒にできます！
+⭐ 兄弟も衣装を着て節句撮影OK
+⭐ 兄弟のソロ節句カットも追加可能
+⭐ おしゃれなHAKIの小物で特別感◎`, 600);
+      addRichMsg({
+        gradient: 'linear-gradient(135deg, #e8eaf6, #c5cae9)',
+        title: '🎏 初節句プラン',
+        subtitle: '¥33,000＋節句オプション¥2,200〜',
+        features: [
+          '💰 ベーシックプラン¥33,000',
+          '🤍 「白粋(HAKI)」のおしゃれ小物',
+          '📸 60カット撮影',
+          '⭐ 兄弟衣装1着無料',
+          '👘 ママ訪問着対応（+¥11,000）',
+          '📅 2〜6月の期間限定'
+        ],
+        urgency: '白粋(HAKI)は2〜6月限定。この時期だけの特別な撮影です',
+        proof: 'SNSで人気のHAKI × ナチュラルな空間で特別な1枚'
+      });
     } else {
       await addMsg('bot', 'どんな理由でもOK！成長の記録は何度撮っても良いものです。');
+      await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
         title: '📷 記念撮影',
         subtitle: '¥33,000（税込）',
         features: ['💰 明朗会計・大手の半額', '60カット撮影', '衣装2着', '⭐️ 兄弟衣装1着無料', '👘 訪問着 +¥11,000（着付け込）', '完全貸切でリラックス'],
-        proof: '家族みんなの思い出を形に'
+        proof: '家族みんの思い出を形に'
       });
     }
   });
