@@ -25,7 +25,7 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 .phone { width: 390px; height: 844px; background: #fff; border-radius: 40px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
 .header { background: #fff; padding: 50px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e5e5e5; flex-shrink: 0; }
 .header .back { font-size: 24px; color: #06C755; cursor: pointer; }
-.header .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ff6b9d, #ff8fab); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold; }
+.header .avatar { width: 40px; height: 40px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: bold; overflow: hidden; }
 .header .name { font-size: 16px; font-weight: 600; }
 .header .badge { background: #06C755; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 8px; margin-left: 4px; }
 .chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #7494C0; }
@@ -96,7 +96,9 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 <div class="phone">
   <div class="header">
     <span class="back">&lsaquo;</span>
-    <div class="avatar">H</div>
+    <div class="avatar">
+      <img src="https://hikarinostudio.com/wp-content/uploads/2019/09/IMG_2478.png" alt="ヒカリノスタジオ" style="width:100%;height:100%;object-fit:cover;">
+    </div>
     <div>
       <span class="name">ヒカリノスタジオ</span>
       <span class="badge">公式</span>
@@ -457,7 +459,37 @@ async function handlePregnantChoice(choice) {
     await new Promise(r => setTimeout(r, 500));
     await addMsg('bot', 'お宮参りでは訪問着の着付けも無料で対応しています。\n神社ロケなら撮影当日にそのままお参りできます。', 600);
   } else {
-    await addMsg('bot', 'もちろんです！ゆっくりご検討ください。\n\nいつでもこのLINEからご相談いただけます。\n\n出産が近づいてきたらお声がけくださいね。');
+    await addMsg('bot', 'もちろんです！ゆっくりご検討ください😊');
+    addChoices([
+      { label: '📸 撮影サンプルを見たい', value: 'see_samples' },
+      { label: '🏠 スタジオの雰囲気を見たい', value: 'see_studio' },
+      { label: '💰 料金を詳しく知りたい', value: 'see_price' },
+      { label: '💬 その他の質問', value: 'question' }
+    ], async (laterChoice) => {
+      if (laterChoice === 'see_studio') {
+        addStudioComparison();
+        await new Promise(r => setTimeout(r, 1200));
+      } else if (laterChoice === 'see_price') {
+        await addMsg('bot', `💡 ニューボーン撮影の料金について
+【スタジオプラン】¥33,000（税込）
+- コスパ抜群、衣装・小物無料
+- 複数のスタジオで異なる雰囲気
+- 土日祝は+¥3,300
+【ライトプラン（出張）】¥40,000（税込）
+- ご自宅で撮影、赤ちゃんの移動なし
+- 自然光を活かした柔らかい雰囲気
+- 土日祝は+¥3,300
+【お宮参りセット】¥71,500（税込）
+- ニューボーン + お宮参り + 訪問着
+- 続けて撮影されるママに人気
+⏰ 迷ったらスタジオプラン（¥33,000）がおすすめ！`, 800);
+      } else if (laterChoice === 'question') {
+        await addMsg('bot', 'どんなことでもお気軽にどうぞ！\nスタッフが丁寧にお答えします。');
+      } else {
+        await addMsg('bot', 'サンプル写真はスタジオのInstagramやホームページをチェック！\n素敵な撮影が見られますよ📸');
+      }
+      await addMsg('bot', 'いつでもこのLINEからご相談いただけます。\n出産が近づいてきたらお声がけくださいね。');
+    });
   }
 }
 
@@ -772,10 +804,15 @@ async function flowChild() {
       addStepIndicator('— Step 4: 予約・相談 —');
 
       if (pref === 'double') {
+        await addMsg('bot', `💡 七五三の洋装について
+8月までのご予約なら
+着物1着＋洋装1着が全て込み！
+9月以降は洋装追加料金がかかります。
+前撮りなら断然お得です✨`, 600);
         addRichMsg({
           gradient: 'linear-gradient(135deg, #e57373, #ef9a9a)',
           title: '🎎 七五三 着物&洋装プラン',
-          subtitle: '¥35,000〜（税込）',
+          subtitle: '¥35,000〜（税込）※土日祝+¥3,300',
           features: ['💰 明朗会計・大手の半額', '60カット撮影', '着物1着＋洋装1着', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '帯・髪飾り含む'],
           proof: '前撮りなら衣装選び放題・混雑を避けられます'
         });
