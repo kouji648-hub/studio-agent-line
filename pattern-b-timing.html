@@ -276,9 +276,17 @@ function addImageGallery(images, label) {
 
   chat.appendChild(div);
 
+  // ギャラリー表示中は自動スクロールを一時停止
+  pauseAutoScroll = true;
+
   // ギャラリーが見える位置までスムーズにスクロール
   setTimeout(() => {
-    div.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    div.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    // 4秒後に自動スクロールを再開（ユーザーがギャラリーを見る時間）
+    setTimeout(() => {
+      pauseAutoScroll = false;
+    }, 4000);
   }, 100);
 }
 
@@ -426,7 +434,14 @@ https://bit.ly/3GSS8c
   });
 }
 
-function scrollDown() { setTimeout(() => chat.scrollTop = chat.scrollHeight, 50); }
+let pauseAutoScroll = false;
+
+function scrollDown() {
+  if (pauseAutoScroll) return;
+  setTimeout(() => {
+    chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+  }, 50);
+}
 function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.getMinutes()).padStart(2, '0')}`; }
 
 // === FLOW ===
