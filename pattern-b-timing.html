@@ -90,6 +90,12 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 .debug-bar .reset { color: #ff6b6b; cursor: pointer; text-decoration: underline; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+.image-gallery { max-width: 90%; align-self: flex-start; animation: fadeIn 0.3s ease; margin: 8px 0; }
+.image-gallery .gallery-scroll { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.image-gallery .gallery-scroll::-webkit-scrollbar { display: none; }
+.image-gallery .gallery-scroll img { flex-shrink: 0; width: 280px; height: auto; border-radius: 12px; scroll-snap-align: start; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
+.image-gallery .gallery-scroll img:hover { transform: scale(1.02); }
+.image-gallery .gallery-indicator { text-align: center; font-size: 11px; color: #999; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -250,6 +256,24 @@ function addImageMsg(src, alt, caption) {
     </div>
     <div class="time">${getTime()}</div>
   `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// 画像ギャラリー（横スクロール）
+function addImageGallery(images, label) {
+  const div = document.createElement('div');
+  div.className = 'image-gallery';
+
+  const imagesHTML = images.map(img =>
+    `<img src="${img.src}" alt="${img.alt}" loading="lazy">`
+  ).join('');
+
+  div.innerHTML = `
+    <div class="gallery-scroll">${imagesHTML}</div>
+    ${label ? `<div class="gallery-indicator">${label}</div>` : ''}
+  `;
+
   chat.appendChild(div);
   scrollDown();
 }
@@ -722,18 +746,26 @@ async function handleNewbornChoice(choice) {
   } else if (choice === 'omiya') {
     await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
 
-    // お宮参り写真を表示
-    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/11/172-563x750.png', 'お宮参り 宮崎神宮');
-    await new Promise(r => setTimeout(r, 800));
-    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/11/173-563x750.png', 'お宮参り 神柱宮');
-    await new Promise(r => setTimeout(r, 800));
-
     addChoices([
       { label: '📸 スタジオ撮影のみ', value: 'studio' },
       { label: '⛩️ スタジオ＋神社ロケ', value: 'location' }
     ], async (styleChoice) => {
 
       if (styleChoice === 'studio') {
+        // スタジオ撮影サンプル写真を表示
+        addImageGallery([
+          { src: 'assets/images/omiyamairi/omiya-1.jpg', alt: 'お宮参りスタジオ撮影 1' },
+          { src: 'assets/images/omiyamairi/omiya-2.jpg', alt: 'お宮参りスタジオ撮影 2' },
+          { src: 'assets/images/omiyamairi/omiya-3.jpg', alt: 'お宮参りスタジオ撮影 3' },
+          { src: 'assets/images/omiyamairi/omiya-4.jpg', alt: 'お宮参りスタジオ撮影 4' },
+          { src: 'assets/images/omiyamairi/omiya-5.jpg', alt: 'お宮参りスタジオ撮影 5' },
+          { src: 'assets/images/omiyamairi/omiya-6.jpg', alt: 'お宮参りスタジオ撮影 6' },
+          { src: 'assets/images/omiyamairi/omiya-7.jpg', alt: 'お宮参りスタジオ撮影 7' },
+          { src: 'assets/images/omiyamairi/omiya-8.jpg', alt: 'お宮参りスタジオ撮影 8' }
+        ], '← 横にスライドできます →');
+
+        await new Promise(r => setTimeout(r, 1000));
+
         // スタジオのみ → 訪問着無料訴求
         await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥33,000（税込）。');
 
