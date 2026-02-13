@@ -42,7 +42,7 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 .choices button { background: #fff; border: 2px solid #06C755; color: #06C755; padding: 12px 20px; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left; }
 .choices button:hover { background: #06C755; color: #fff; }
 .choices button:active { transform: scale(0.97); }
-.rich-msg { max-width: 85%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; }
+.rich-msg { max-width: 85%; align-self: flex-start; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); animation: fadeIn 0.3s ease; flex-shrink: 0; }
 .rich-msg .rich-header { padding: 16px; color: #fff; }
 .rich-msg .rich-body { padding: 14px; }
 .rich-msg .rich-body .feat { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #555; }
@@ -250,6 +250,33 @@ function addImageMsg(src, alt, caption) {
     </div>
     <div class="time">${getTime()}</div>
   `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// Instagramカード（クリッカブル）
+function addInstagramCard(accountName, displayName, qrImagePath, instagramUrl) {
+  const div = document.createElement('div');
+  div.className = 'rich-msg';
+
+  div.innerHTML = `
+    <div class="rich-header" style="background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
+      <h3 style="font-size: 15px; margin: 0;">📸 Instagram</h3>
+      <p style="font-size: 13px; opacity: 0.9; margin: 4px 0 0;">${displayName}</p>
+    </div>
+    <a href="${instagramUrl}" target="_blank" style="display: block; text-decoration: none; cursor: pointer; transition: opacity 0.2s;"
+       onmouseover="this.style.opacity='0.9'"
+       onmouseout="this.style.opacity='1'">
+      <img src="${qrImagePath}" alt="${accountName}"
+           style="width: 100%; display: block; background: #fff;">
+      <div style="padding: 14px; background: #fff; text-align: center; border-top: 1px solid #f0f0f0;">
+        <div style="color: #06C755; font-weight: 600; font-size: 14px;">
+          👆 タップして ${accountName} をフォロー
+        </div>
+      </div>
+    </a>
+  `;
+
   chat.appendChild(div);
   scrollDown();
 }
@@ -540,12 +567,20 @@ async function handlePregnantChoice(choice) {
     ], async (laterChoice) => {
       if (laterChoice === 'see_samples') {
         await addMsg('bot', '撮影実績はInstagramで毎日更新中！');
-        addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/instagram-qr.jpg', 'Instagram QRコード');
-        await addMsg('bot', 'ヒカリノスタジオのインスタグラムをチェック✨\nhttps://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr');
+        addInstagramCard(
+          '@hikarino_studio',
+          'ヒカリノスタジオ（メイン）',
+          'assets/images/instagram-qr-main.jpg',
+          'https://www.instagram.com/hikarino_studio/'
+        );
       } else if (laterChoice === 'see_studio') {
-        await addMsg('bot', 'ヒカリノスタジオのインスタグラムをチェック！\n素敵な撮影がたくさん見られますよ✨');
-        addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/instagram-qr.jpg', 'Instagram QRコード');
-        await addMsg('bot', 'https://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr');
+        await addMsg('bot', 'スタジオの雰囲気はInstagramでチェック！\n素敵な撮影がたくさん見られますよ✨');
+        addInstagramCard(
+          '@hikarinostudio_shimokitakata',
+          'ヒカリノスタジオ下北方',
+          'assets/images/instagram-qr-shimokitakata.jpg',
+          'https://www.instagram.com/hikarinostudio_shimokitakata/'
+        );
       } else if (laterChoice === 'see_price') {
         await addMsg('bot', `💡 ニューボーン撮影の料金について
 【スタジオプラン】¥38,500（税込）
