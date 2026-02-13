@@ -530,6 +530,19 @@ async function handlePregnantChoice(choice) {
     ], async (pregNbStyle) => {
 
       if (pregNbStyle === 'studio_preg') {
+        // ニューボーンスタジオ撮影サンプル写真を表示
+        addImageGallery([
+          { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
+          { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
+          { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
+          { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
+          { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
+          { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
+          { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
+        ], '← 横にスライドできます →');
+
+        await new Promise(r => setTimeout(r, 1000));
+
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
           title: '👶 ニューボーンスタジオプラン',
@@ -695,6 +708,19 @@ async function handleNewbornChoice(choice) {
       addStepIndicator('— Step 4: プラン詳細 —');
 
       if (nbStyle === 'studio_nb') {
+        // ニューボーンスタジオ撮影サンプル写真を表示
+        addImageGallery([
+          { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
+          { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
+          { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
+          { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
+          { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
+          { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
+          { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
+        ], '← 横にスライドできます →');
+
+        await new Promise(r => setTimeout(r, 1000));
+
         await addMsg('bot', 'スタジオプランは衣装・小物がすべて無料。\n完全貸切なので授乳もおむつ替えも気兼ねなくできます。');
 
         addRichMsg({
