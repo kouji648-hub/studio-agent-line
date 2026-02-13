@@ -309,6 +309,44 @@ async function addSiblingAppeal() {
 人気のオプションです✨`, 600);
 }
 
+// ニューボーン撮影後のスタジオ情報
+async function sendNewbornStudioInfo() {
+  await addMsg('bot', '📸 スタジオイメージをご覧ください');
+  addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/newborn-studio.jpg', 'ニューボーン撮影スタジオ');
+  await addMsg('bot', 'ニューボーン予約はこちら → https://bit.ly/3GSS8c');
+  await addMsg('bot', `📍 撮影場所のご案内
+
+【宮崎市にお住まいの方】
+下北方スタジオへお気軽にご来店ください
+
+【都城市にお住まいの方】
+都城スタジオが便利です`);
+}
+
+// フロー終了時の最終表示
+async function finalizeFlow() {
+  await addMsg('bot', '📸 スタジオの雰囲気をご覧ください');
+  addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/studio-main.jpg', 'ヒカリノスタジオ');
+
+  await addMsg('bot', `🔗 ご不明な点はこちらをご覧ください
+
+📍 公式HP: https://hikarinostudio.com/
+👶 ニューボーン予約: https://bit.ly/3GSS8c
+📸 Instagram: https://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr
+⛩️ お宮参り詳細: https://hikarinostudio.com/omiyamairi/`);
+
+  addChoices([
+    { label: '🗓️ 予約する', value: 'reserve' },
+    { label: '💬 相談する', value: 'consult' }
+  ], async (finalAction) => {
+    if (finalAction === 'reserve') {
+      await addMsg('bot', 'ご予約はこちらからどうぞ！\nhttps://bit.ly/3GSS8c');
+    } else {
+      await addMsg('bot', 'ご質問・ご相談はLINEでお気軽にどうぞ💝\nスタッフが丁寧にお答えします。');
+    }
+  });
+}
+
 function scrollDown() { setTimeout(() => chat.scrollTop = chat.scrollHeight, 50); }
 function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.getMinutes()).padStart(2, '0')}`; }
 
@@ -354,7 +392,6 @@ async function flowPregnant() {
     { title: '妊娠中（今）', desc: 'マタニティフォト撮影も可能', active: true, highlight: '→ 今なら余裕をもって準備できます' },
     { title: '生後7〜21日', desc: 'ニューボーン撮影の最適期間', active: false, highlight: '→ この期間を逃すと新生児らしいポーズが難しくなります' },
     { title: '生後1ヶ月', desc: 'お宮参り撮影', active: false },
-    { title: '生後6ヶ月', desc: 'ハーフバースデー', active: false },
     { title: '1歳', desc: 'ファーストバースデー', active: false }
   ]);
 
@@ -406,9 +443,10 @@ async function handlePregnantChoice(choice) {
     await addMsg('bot', 'ニューボーン撮影ですね。\n撮影場所はどちらがご希望ですか？');
 
     await addMsg('bot', `撮影プランによって料金が異なります。
-📸 ニューボーンスタジオプラン: ¥33,000
-💎 ライトプラン(出張): ¥40,000
-（どちらも先行予約で安心）`, 600);
+📸 ニューボーンスタジオプラン: ¥38,500
+🏠 ナチュラル出張ライトプラン: ¥33,000
+💎 出張ベーシックプラン: ¥53,900
+（いずれも先行予約で安心）`, 600);
 
     addChoices([
       { label: '📸 スタジオ撮影', value: 'studio_preg' },
@@ -466,29 +504,37 @@ async function handlePregnantChoice(choice) {
       { label: '💰 料金を詳しく知りたい', value: 'see_price' },
       { label: '💬 その他の質問', value: 'question' }
     ], async (laterChoice) => {
-      if (laterChoice === 'see_studio') {
-        addStudioComparison();
-        await new Promise(r => setTimeout(r, 1200));
+      if (laterChoice === 'see_samples') {
+        await addMsg('bot', '撮影実績はInstagramで毎日更新中！');
+        addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/instagram-qr.jpg', 'Instagram QRコード');
+        await addMsg('bot', 'ヒカリノスタジオのインスタグラムをチェック✨\nhttps://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr');
+      } else if (laterChoice === 'see_studio') {
+        await addMsg('bot', 'ヒカリノスタジオのインスタグラムをチェック！\n素敵な撮影がたくさん見られますよ✨');
+        addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/instagram-qr.jpg', 'Instagram QRコード');
+        await addMsg('bot', 'https://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr');
       } else if (laterChoice === 'see_price') {
         await addMsg('bot', `💡 ニューボーン撮影の料金について
-【スタジオプラン】¥33,000（税込）
+【スタジオプラン】¥38,500（税込）
 - コスパ抜群、衣装・小物無料
 - 複数のスタジオで異なる雰囲気
 - 土日祝は+¥3,300
-【ライトプラン（出張）】¥40,000（税込）
+【ナチュラル出張ライトプラン】¥33,000（税込）
 - ご自宅で撮影、赤ちゃんの移動なし
 - 自然光を活かした柔らかい雰囲気
 - 土日祝は+¥3,300
-【お宮参りセット】¥71,500（税込）
-- ニューボーン + お宮参り + 訪問着
-- 続けて撮影されるママに人気
-⏰ 迷ったらスタジオプラン（¥33,000）がおすすめ！`, 800);
+【出張ベーシックプラン】¥53,900（税込）
+- 充実した撮影内容
+- 土日祝は+¥3,300
+
+お宮参り撮影の詳細はこちら👇`, 800);
+        addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/omiyamairi-banner.jpg', 'お宮参りプラン');
+        await addMsg('bot', 'https://hikarinostudio.com/omiyamairi/');
       } else if (laterChoice === 'question') {
         await addMsg('bot', 'どんなことでもお気軽にどうぞ！\nスタッフが丁寧にお答えします。');
       } else {
         await addMsg('bot', 'サンプル写真はスタジオのInstagramやホームページをチェック！\n素敵な撮影が見られますよ📸');
       }
-      await addMsg('bot', 'いつでもこのLINEからご相談いただけます。\n出産が近づいてきたらお声がけくださいね。');
+      await addMsg('bot', 'ご不明な点やご質問はお気軽にお寄せください。');
     });
   }
 }
@@ -523,9 +569,10 @@ async function handleNewbornChoice(choice) {
     await new Promise(r => setTimeout(r, 1200));
 
     await addMsg('bot', `撮影プランによって料金が異なります。
-📸 ニューボーンスタジオプラン: ¥33,000
-💎 ライトプラン(出張): ¥40,000
-（どちらも先行予約で安心）`, 600);
+📸 ニューボーンスタジオプラン: ¥38,500
+🏠 ナチュラル出張ライトプラン: ¥33,000
+💎 出張ベーシックプラン: ¥53,900
+（いずれも先行予約で安心）`, 600);
 
     addChoices([
       { label: '📸 スタジオ撮影', value: 'studio_nb' },
@@ -545,6 +592,8 @@ async function handleNewbornChoice(choice) {
           urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
           proof: '赤ちゃんのペースに合わせた撮影で安心'
         });
+
+        await sendNewbornStudioInfo();
 
       } else {
         await addMsg('bot', 'ご自宅でのライトプランですね。\n\n赤ちゃんの移動負担がなく、自然光を活かした柔らかい雰囲気で撮影できます。');
@@ -581,9 +630,26 @@ async function handleNewbornChoice(choice) {
           proof: '産着・訪問着の着せ方もお任せください'
         });
 
+        addChoices([
+          { label: '🔗 詳しく見る', value: 'detail' },
+          { label: '💬 質問がある', value: 'question' },
+          { label: '📊 プラン比較', value: 'compare' }
+        ], async (omiyaChoice) => {
+          if (omiyaChoice === 'detail') {
+            await addMsg('bot', 'お宮参り撮影の詳細は公式HPをご覧ください👇');
+            addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/omiyamairi-detail.jpg', 'お宮参りプラン詳細');
+            await addMsg('bot', 'https://hikarinostudio.com/omiyamairi/');
+          } else if (omiyaChoice === 'question') {
+            await addMsg('bot', 'ご質問はLINEでお気軽にどうぞ！\nスタッフが丁寧にお答えします💝');
+          } else {
+            await addMsg('bot', 'プラン比較表は後ほど表示されます📊');
+          }
+        });
+
       } else {
         // 神社ロケ → 神社選択
         await addMsg('bot', '神社ロケをご希望ですね！\n\nスタジオから神社まで車で5分。\n撮影→お参りが1日で完結します。');
+        await addMsg('bot', '⏰ 所要時間について\n着替え〜撮影終了まで約1〜1.5時間です。\nお子様の体調やご機嫌により前後する場合があります。');
 
         addChoices([
           { label: '📍 宮崎神宮（下北方スタジオ）', value: 'shimokitakata' },
@@ -659,16 +725,9 @@ async function handleNewbornChoice(choice) {
     });
   } else {
     await addMsg('bot', 'ニューボーン→お宮参りの流れで撮影されるママ、多いです！');
-    addBundleMsg({
-      title: 'ニューボーン＋お宮参りセット',
-      tag: '同じスタジオで安心',
-      items: [
-        { name: '👶 ニューボーンフォト（50カット）', originalPrice: '¥38,500' },
-        { name: '⛩️ お宮参り撮影（60カット）', originalPrice: '¥33,000' },
-        { name: '👘 訪問着レンタル＋着付け（ベーシック）', originalPrice: '無料' }
-      ],
-      totalPrice: '71,500'
-    });
+    await addMsg('bot', 'お宮参り撮影詳細はこちら👇');
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/omiyamairi-banner.jpg', 'お宮参りプラン詳細');
+    await addMsg('bot', 'https://hikarinostudio.com/omiyamairi/');
   }
 }
 
@@ -680,17 +739,12 @@ async function flowToddler() {
 
   addChoices([
     { label: '🎂 バースデー撮影', value: 'birthday' },
-    { label: '🎀 ハーフバースデー', value: 'half' },
     { label: '🎏 初節句（2〜6月限定）', value: 'sekku' },
-    { label: '📷 記念撮影（特に理由なし）', value: 'casual' },
-    { label: '⛩️ お宮参りがまだだった', value: 'omiya_late' }
+    { label: '👨‍👩‍👧 家族撮影ご案内', value: 'family' }
   ], async (choice) => {
     addStepIndicator('— Step 3: プラン提案 —');
-    if (choice === 'birthday' || choice === 'half') {
-      const title = choice === 'birthday' ? '🎂 バースデーフォト' : '🎀 ハーフバースデーフォト';
-      await addMsg('bot', choice === 'birthday'
-        ? '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！'
-        : 'ハーフバースデーは寝返り前後の可愛い時期。今がベストタイミングです！');
+    if (choice === 'birthday') {
+      await addMsg('bot', '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！');
       await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
       addStudioComparison();
       await new Promise(r => setTimeout(r, 1000));
@@ -804,7 +858,12 @@ async function flowChild() {
       addStepIndicator('— Step 4: 予約・相談 —');
 
       if (pref === 'double') {
-        await addMsg('bot', `💡 七五三の洋装について
+        const currentMonth = new Date().getMonth() + 1;
+        const seasonMsg = (currentMonth >= 9 && currentMonth <= 12)
+          ? '🍁 当日撮影対応中！'
+          : '📸 前撮りキャンペーン中！';
+        await addMsg('bot', `💡 七五三の洋装について ${seasonMsg}
+
 8月までのご予約なら
 着物1着＋洋装1着が全て込み！
 9月以降は洋装追加料金がかかります。
@@ -818,6 +877,7 @@ async function flowChild() {
         });
       } else if (pref === 'loca') {
         await addMsg('bot', '神社ロケなら撮影→そのままお参りが1日で完結します。\nどちらの神社がご希望ですか？');
+        await addMsg('bot', '⏰ 所要時間について\n着替え〜撮影終了まで約1〜1.5時間です。\nお子様の体調やご機嫌により前後する場合があります。');
 
         addChoices([
           { label: '📍 宮崎神宮（下北方）', value: 'shimokitakata_753' },

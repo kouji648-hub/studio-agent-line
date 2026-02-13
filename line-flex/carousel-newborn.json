@@ -152,8 +152,8 @@
             "height": "sm",
             "action": {
               "type": "uri",
-              "label": "詳しく見る",
-              "uri": "https://hikarinostudio.com/プラン/newbornplan/"
+              "label": "予約する",
+              "uri": "https://bit.ly/3GSS8c"
             },
             "color": "#ff6b9d"
           },
@@ -322,8 +322,8 @@
             "height": "sm",
             "action": {
               "type": "uri",
-              "label": "詳しく見る",
-              "uri": "https://hikarinostudio.com/プラン/newbornplan/"
+              "label": "予約する",
+              "uri": "https://bit.ly/3GSS8c"
             },
             "color": "#ff6b9d"
           },
