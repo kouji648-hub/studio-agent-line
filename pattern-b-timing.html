@@ -536,28 +536,75 @@ async function handlePregnantChoice(choice) {
   addStepIndicator('— Step 4: 予約・相談 —');
 
   if (choice === 'nb') {
-    await addMsg('bot', 'ニューボーン撮影ですね。\nスタジオプランは ¥30,000（税別）です。');
+    await addMsg('bot', 'ニューボーン撮影ですね。\n撮影場所はどちらがご希望ですか？');
 
-    // ニューボーンスタジオ撮影サンプル写真を表示
-    addImageGallery([
-      { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
-      { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
-      { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
-      { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
-      { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
-      { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
-      { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
-    ], '← 横にスライドできます →');
+    await addMsg('bot', `撮影プランによって料金が異なります。
+①ニューボーンスタジオプラン: ¥30,000（税別）※土日祝+¥3,000
+②ニューボーン出張ライトプラン: ¥44,000（税別）
+③ベーシックプラン: ¥49,000（税別）`, 600);
 
-    await new Promise(r => setTimeout(r, 2500));
+    addChoices([
+      { label: '📸 スタジオ撮影', value: 'studio_preg' },
+      { label: '🏠 自宅出張撮影', value: 'home_preg' }
+    ], async (pregNbStyle) => {
 
-    addRichMsg({
-      gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
-      title: '👶 ニューボーンスタジオプラン',
-      subtitle: '¥30,000（税別）',
-      features: ['50カット（レタッチ10＋色味明るさ調整40）', '赤ちゃん・家族・兄弟の3シーン（リクエスト2）', '完全貸切', '出産後にお日にち調整OK', '明朗会計・大手の半額'],
-      urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
-      proof: '赤ちゃんのペースに合わせた撮影で安心'
+      if (pregNbStyle === 'studio_preg') {
+        // ニューボーンスタジオ撮影サンプル写真を表示
+        addImageGallery([
+          { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
+          { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
+          { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
+          { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
+          { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
+          { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
+          { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
+        ], '← 横にスライドできます →');
+
+        await new Promise(r => setTimeout(r, 2500));
+
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+          title: '👶 ニューボーンスタジオプラン',
+          subtitle: '¥30,000（税別）※土日祝+¥3,000',
+          features: ['50カット（レタッチ10＋色味明るさ調整40）', '赤ちゃん・家族・兄弟の3シーン（リクエスト2）', '土日祝 +3,000円', '完全貸切', '出産後にお日にち調整OK', '明朗会計・大手の半額'],
+          urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
+          proof: '赤ちゃんのペースに合わせた撮影で安心'
+        });
+
+      } else {
+        await addMsg('bot', 'ご自宅での出張撮影ですね。\n\n赤ちゃんの移動負担がなく、自然光を活かした柔らかい雰囲気で撮影できます。');
+
+        addChoices([
+          { label: '👶 赤ちゃんのみで良い', value: 'baby_only' },
+          { label: '👨‍👩‍👧 家族、兄弟も一緒に', value: 'with_family' }
+        ], async (homeChoice) => {
+
+          if (homeChoice === 'baby_only') {
+            await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+              title: '💎 ライトプラン(出張)',
+              subtitle: '¥44,000（税別）',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '20カット（レタッチ10＋色味明るさ調整10）', '2シーン（リクエスト1）・着替え2着'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: 'いつもの場所だから赤ちゃんもリラックス'
+            });
+
+          } else {
+            await addMsg('bot', '家族、兄弟も一緒に残したい方はベーシックプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+              title: '👶 ベーシックプラン(出張)',
+              subtitle: '¥49,000（税別）',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '40カット（レタッチ15＋色味明るさ調整25）', '3シーン（リクエスト2）・着替え3着・家族OK'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: '家族みんなで思い出を残せます'
+            });
+          }
+        });
+      }
     });
   } else if (choice === 'maternity') {
     // マタニティ写真を表示
@@ -664,35 +711,80 @@ async function handleNewbornChoice(choice) {
     addStudioComparison();
     await new Promise(r => setTimeout(r, 1200));
 
-    await addMsg('bot', 'ニューボーンスタジオプランは ¥30,000（税別）です。');
+    await addMsg('bot', `撮影プランによって料金が異なります。
+①ニューボーンスタジオプラン: ¥30,000（税別）※土日祝+¥3,000
+②ニューボーン出張ライトプラン: ¥44,000（税別）
+③ベーシックプラン: ¥49,000（税別）`, 600);
 
-    addStepIndicator('— Step 4: プラン詳細 —');
+    addChoices([
+      { label: '📸 スタジオ撮影', value: 'studio_nb' },
+      { label: '🏠 自宅出張撮影', value: 'home_nb' }
+    ], async (nbStyle) => {
 
-    // ニューボーンスタジオ撮影サンプル写真を表示
-    addImageGallery([
-      { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
-      { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
-      { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
-      { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
-      { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
-      { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
-      { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
-    ], '← 横にスライドできます →');
+      addStepIndicator('— Step 4: プラン詳細 —');
 
-    await new Promise(r => setTimeout(r, 2500));
+      if (nbStyle === 'studio_nb') {
+        // ニューボーンスタジオ撮影サンプル写真を表示
+        addImageGallery([
+          { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
+          { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
+          { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
+          { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
+          { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
+          { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
+          { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
+        ], '← 横にスライドできます →');
 
-    await addMsg('bot', 'スタジオプランは衣装・小物がすべて無料。\n完全貸切なので授乳もおむつ替えも気兼ねなくできます。');
+        await new Promise(r => setTimeout(r, 2500));
 
-    addRichMsg({
-      gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
-      title: '👶 ニューボーンスタジオプラン',
-      subtitle: '¥30,000（税別）',
-      features: ['50カット（レタッチ10＋色味明るさ調整40）', '赤ちゃん・家族・兄弟の3シーン（リクエスト2）', '完全貸切', '出産後にお日にち調整OK', '明朗会計・大手の半額'],
-      urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
-      proof: '赤ちゃんのペースに合わせた撮影で安心'
+        await addMsg('bot', 'スタジオプランは衣装・小物がすべて無料。\n完全貸切なので授乳もおむつ替えも気兼ねなくできます。');
+
+        addRichMsg({
+          gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+          title: '👶 ニューボーンスタジオプラン',
+          subtitle: '¥30,000（税別）※土日祝+¥3,000',
+          features: ['50カット（レタッチ10＋色味明るさ調整40）', '赤ちゃん・家族・兄弟の3シーン（リクエスト2）', '土日祝 +3,000円', '完全貸切', '出産後にお日にち調整OK', '明朗会計・大手の半額'],
+          urgency: '生後3週間を過ぎると新生児らしいポーズが難しくなります',
+          proof: '赤ちゃんのペースに合わせた撮影で安心'
+        });
+
+        await sendNewbornStudioInfo();
+
+      } else {
+        await addMsg('bot', 'ご自宅での出張撮影ですね。\n\n赤ちゃんの移動負担がなく、自然光を活かした柔らかい雰囲気で撮影できます。');
+
+        addChoices([
+          { label: '👶 赤ちゃんのみで良い', value: 'baby_only' },
+          { label: '👨‍👩‍👧 家族、兄弟も一緒に', value: 'with_family' }
+        ], async (homeChoice) => {
+
+          if (homeChoice === 'baby_only') {
+            await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+              title: '💎 ライトプラン(出張)',
+              subtitle: '¥44,000（税別）',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '20カット（レタッチ10＋色味明るさ調整10）', '2シーン（リクエスト1）・着替え2着'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: 'いつもの場所だから赤ちゃんもリラックス'
+            });
+
+          } else {
+            await addMsg('bot', '家族、兄弟も一緒に残したい方はベーシックプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+              title: '👶 ベーシックプラン(出張)',
+              subtitle: '¥49,000（税別）',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '40カット（レタッチ15＋色味明るさ調整25）', '3シーン（リクエスト2）・着替え3着・家族OK'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: '家族みんなで思い出を残せます'
+            });
+          }
+        });
+      }
     });
-
-    await sendNewbornStudioInfo();
   } else if (choice === 'omiya') {
     await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
 
@@ -717,15 +809,15 @@ async function handleNewbornChoice(choice) {
         await new Promise(r => setTimeout(r, 2500));
 
         // スタジオのみ → 訪問着無料訴求
-        await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥30,000（税別）。');
+        await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥30,000（税別）※土日祝+¥3,000。');
 
         addStepIndicator('— Step 4: お宮参りベーシック —');
 
         addRichMsg({
           gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
           title: '⛩️ お宮参りベーシック',
-          subtitle: '（税別）',
-          features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', '宮崎神宮ロケ20分（1日で完結）'],
+          subtitle: '¥30,000（税別）※土日祝+¥3,000',
+          features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', '宮崎神宮ロケ20分（1日で完結）', '土日祝 +3,000円'],
           proof: '産着・訪問着の着せ方もお任せください'
         });
 
@@ -808,25 +900,25 @@ https://select-type.com/rsv/?id=y9oX7prw0BA&c_id=282280`);
             addStepIndicator('— Step 5: プラン確定 —');
 
             if (kimonoChoice === 'with_kimono') {
-              await addMsg('bot', '訪問着レンタル＋着付け＋撮影後レンタル込みで、総額¥50,000（税別）です。\n\n着付けスタッフが対応するので準備不要です。');
+              await addMsg('bot', '訪問着レンタル＋着付け＋撮影後レンタル込みで、総額¥50,000（税別）※土日祝+¥3,000です。\n\n着付けスタッフが対応するので準備不要です。');
 
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ お宮参り スタジオ＋ロケ＋訪問着',
-                subtitle: '¥50,000（税別）',
-                features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`],
+                subtitle: '¥50,000（税別）※土日祝+¥3,000',
+                features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`, '土日祝 +3,000円'],
                 urgency: 'スタジオ→神社→お参りが1日で完結',
                 proof: '訪問着のまま御祈祷に行けるのでスムーズです'
               });
 
             } else {
-              await addMsg('bot', '承知しました。\n訪問着なしの場合、総額¥35,000（税別）です。');
+              await addMsg('bot', '承知しました。\n訪問着なしの場合、総額¥35,000（税別）※土日祝+¥3,000です。');
 
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ お宮参り スタジオ＋ロケ',
-                subtitle: '¥35,000（税別）',
-                features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`],
+                subtitle: '¥35,000（税別）※土日祝+¥3,000',
+                features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`, '土日祝 +3,000円'],
                 urgency: 'スタジオ→神社→お参りが1日で完結',
                 proof: '産着の着せ方もお任せください'
               });
