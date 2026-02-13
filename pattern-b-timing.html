@@ -1096,42 +1096,8 @@ async function flowOther() {
 
 async function handleCTA(type) {
   if (type === 'reservation') {
-    await addMsg('user', '空き状況を見たい');
-    await addMsg('bot', '📋 ご予約ありがとうございます！', 600);
-
-    await addMsg('bot', `📅 ご予約の流れ
-1️⃣ LINEの予約カレンダーで【仮予約】
-2️⃣ 届いたLINEを確認
-3️⃣ 「仮予約日＋お名前」をLINE送信
-4️⃣ スタジオから予約確定のLINE
-とっても簡単です！
-キャンセルは3日前まで無料🆓`, 600);
-
-    await addMsg('bot', `💡 料金について補足です
-✓ 表示価格は全て税込
-✓ 土日祝は+¥3,300
-✓ 追加オプション以外の料金は一切なし
-安心の明瞭会計です💰`, 600);
-
-    await addMsg('bot', `📸 hikarino studioの7つのこだわり
-① 完全貸切 → 周りを気にせずリラックス
-② こだわりの撮影シーン
-　 下北方: 複数ルーム＋お庭
-　 都城: アンティーク×ワントーン
-③ 大手の半額の明瞭会計
-④ 衣装・小物すべて無料
-⑤ データ50〜60枚の大容量
-⑥ お子様のペースに合わせた撮影
-⑦ 丁寧なレタッチ・色味調整`, 800);
-
-    await addMsg('bot', `👶 初めての撮影でも安心してください!
-【撮影当日のこと】
-✓ 持ち物は何もいりません(手ぶらでOK)
-✓ 授乳・ミルク・おむつ替えは途中で何度でもOK
-✓ お子様が泣いても大丈夫。休憩しながら進めます
-✓ 産後の体調に配慮。椅子での撮影も可能です`, 600);
-
-    addStepIndicator('✅ 予約フローへ移行');
+    // 予約フォームに直接遷移
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform', '_blank');
   } else {
     await addMsg('user', '相談したい');
     await addMsg('bot', 'もちろんです！\n\n撮影内容・衣装・日程など、何でもお気軽にどうぞ。\nスタッフが丁寧にお答えします。チャット欄へ内容を書いてください。', 600);
