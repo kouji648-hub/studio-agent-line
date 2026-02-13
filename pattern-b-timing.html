@@ -605,6 +605,17 @@ async function handlePregnantChoice(choice) {
           } else {
             await addMsg('bot', '家族、兄弟も一緒に残したい方はベーシックプランですね。');
 
+            // 家族撮影サンプル写真を表示
+            addImageGallery([
+              { src: 'assets/images/newborn-home/nb-basic-1.jpg', alt: 'ニューボーン家族撮影 1' },
+              { src: 'assets/images/newborn-home/nb-basic-2.jpg', alt: 'ニューボーン家族撮影 2' },
+              { src: 'assets/images/newborn-home/nb-basic-3.jpg', alt: 'ニューボーン家族撮影 3' },
+              { src: 'assets/images/newborn-home/nb-basic-4.jpg', alt: 'ニューボーン家族撮影 4' },
+              { src: 'assets/images/newborn-home/nb-basic-5.jpg', alt: 'ニューボーン家族撮影 5' }
+            ], '← 横にスライドできます →');
+
+            await new Promise(r => setTimeout(r, 2500));
+
             addRichMsg({
               gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
               title: '👶 ベーシックプラン(出張)',
@@ -794,6 +805,17 @@ async function handleNewbornChoice(choice) {
 
           } else {
             await addMsg('bot', '家族、兄弟も一緒に残したい方はベーシックプランですね。');
+
+            // 家族撮影サンプル写真を表示
+            addImageGallery([
+              { src: 'assets/images/newborn-home/nb-basic-1.jpg', alt: 'ニューボーン家族撮影 1' },
+              { src: 'assets/images/newborn-home/nb-basic-2.jpg', alt: 'ニューボーン家族撮影 2' },
+              { src: 'assets/images/newborn-home/nb-basic-3.jpg', alt: 'ニューボーン家族撮影 3' },
+              { src: 'assets/images/newborn-home/nb-basic-4.jpg', alt: 'ニューボーン家族撮影 4' },
+              { src: 'assets/images/newborn-home/nb-basic-5.jpg', alt: 'ニューボーン家族撮影 5' }
+            ], '← 横にスライドできます →');
+
+            await new Promise(r => setTimeout(r, 2500));
 
             addRichMsg({
               gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
