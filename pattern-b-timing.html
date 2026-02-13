@@ -582,6 +582,17 @@ async function handlePregnantChoice(choice) {
           if (homeChoice === 'baby_only') {
             await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
 
+            // 出張ニューボーン撮影サンプル写真を表示
+            addImageGallery([
+              { src: 'assets/images/newborn-home/nb-home-1.jpg', alt: 'ニューボーン出張撮影 1' },
+              { src: 'assets/images/newborn-home/nb-home-2.jpg', alt: 'ニューボーン出張撮影 2' },
+              { src: 'assets/images/newborn-home/nb-home-3.jpg', alt: 'ニューボーン出張撮影 3' },
+              { src: 'assets/images/newborn-home/nb-home-4.jpg', alt: 'ニューボーン出張撮影 4' },
+              { src: 'assets/images/newborn-home/nb-home-5.jpg', alt: 'ニューボーン出張撮影 5' }
+            ], '← 横にスライドできます →');
+
+            await new Promise(r => setTimeout(r, 2500));
+
             addRichMsg({
               gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
               title: '💎 ライトプラン(出張)',
@@ -760,6 +771,17 @@ async function handleNewbornChoice(choice) {
 
           if (homeChoice === 'baby_only') {
             await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
+
+            // 出張ニューボーン撮影サンプル写真を表示
+            addImageGallery([
+              { src: 'assets/images/newborn-home/nb-home-1.jpg', alt: 'ニューボーン出張撮影 1' },
+              { src: 'assets/images/newborn-home/nb-home-2.jpg', alt: 'ニューボーン出張撮影 2' },
+              { src: 'assets/images/newborn-home/nb-home-3.jpg', alt: 'ニューボーン出張撮影 3' },
+              { src: 'assets/images/newborn-home/nb-home-4.jpg', alt: 'ニューボーン出張撮影 4' },
+              { src: 'assets/images/newborn-home/nb-home-5.jpg', alt: 'ニューボーン出張撮影 5' }
+            ], '← 横にスライドできます →');
+
+            await new Promise(r => setTimeout(r, 2500));
 
             addRichMsg({
               gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
