@@ -518,35 +518,36 @@ async function handlePregnantChoice(choice) {
       } else {
         await addMsg('bot', 'ご自宅での出張撮影ですね。\n\n赤ちゃんの移動負担がなく、自然光を活かした柔らかい雰囲気で撮影できます。');
 
-        await addMsg('bot', '赤ちゃんのみで良い方はニューボーンライトプラン。', 600);
+        addChoices([
+          { label: '👶 赤ちゃんのみで良い', value: 'baby_only' },
+          { label: '👨‍👩‍👧 家族、兄弟も一緒に', value: 'with_family' }
+        ], async (homeChoice) => {
 
-        addRichMsg({
-          gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
-          title: '💎 ライトプラン(出張)',
-          subtitle: '¥44,000（税別）※土日祝+¥3,300',
-          features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '20カット（レタッチ10＋色味明るさ調整10）', '2シーン（リクエスト1）・着替え2着'],
-          urgency: '生後2〜3週間がベストタイミング',
-          proof: 'いつもの場所だから赤ちゃんもリラックス'
+          if (homeChoice === 'baby_only') {
+            await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+              title: '💎 ライトプラン(出張)',
+              subtitle: '¥44,000（税別）※土日祝+¥3,300',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '20カット（レタッチ10＋色味明るさ調整10）', '2シーン（リクエスト1）・着替え2着'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: 'いつもの場所だから赤ちゃんもリラックス'
+            });
+
+          } else {
+            await addMsg('bot', '家族、兄弟も一緒に残したい方はベーシックプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+              title: '👶 ベーシックプラン(出張)',
+              subtitle: '¥49,000（税別）※土日祝+¥3,300',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '40カット（レタッチ15＋色味明るさ調整25）', '3シーン（リクエスト2）・着替え3着・家族OK'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: '家族みんなで思い出を残せます'
+            });
+          }
         });
-
-        await addMsg('bot', `📅 予約はこちら
-https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform`);
-
-        await new Promise(r => setTimeout(r, 1000));
-
-        await addMsg('bot', '赤ちゃん、家族、兄弟で残したい方はベーシックプラン。', 600);
-
-        addRichMsg({
-          gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
-          title: '👶 ベーシックプラン(出張)',
-          subtitle: '¥49,000（税別）※土日祝+¥3,300',
-          features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '60カット（レタッチ20＋色味明るさ調整40）', '3シーン（赤ちゃん・家族・兄弟）', 'リクエスト2シーン・着替え3着'],
-          urgency: '生後2〜3週間がベストタイミング',
-          proof: '家族みんなで思い出を残せます'
-        });
-
-        await addMsg('bot', `📅 予約はこちら
-https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform`);
       }
     });
   } else if (choice === 'maternity') {
@@ -686,35 +687,36 @@ async function handleNewbornChoice(choice) {
       } else {
         await addMsg('bot', 'ご自宅での出張撮影ですね。\n\n赤ちゃんの移動負担がなく、自然光を活かした柔らかい雰囲気で撮影できます。');
 
-        await addMsg('bot', '赤ちゃんのみで良い方はニューボーンライトプラン。', 600);
+        addChoices([
+          { label: '👶 赤ちゃんのみで良い', value: 'baby_only' },
+          { label: '👨‍👩‍👧 家族、兄弟も一緒に', value: 'with_family' }
+        ], async (homeChoice) => {
 
-        addRichMsg({
-          gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
-          title: '💎 ライトプラン(出張)',
-          subtitle: '¥44,000（税別）※土日祝+¥3,300',
-          features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '20カット（レタッチ10＋色味明るさ調整10）', '2シーン（リクエスト1）・着替え2着'],
-          urgency: '生後2〜3週間がベストタイミング',
-          proof: 'いつもの場所だから赤ちゃんもリラックス'
+          if (homeChoice === 'baby_only') {
+            await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #81c784, #a5d6a7)',
+              title: '💎 ライトプラン(出張)',
+              subtitle: '¥44,000（税別）※土日祝+¥3,300',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '20カット（レタッチ10＋色味明るさ調整10）', '2シーン（リクエスト1）・着替え2着'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: 'いつもの場所だから赤ちゃんもリラックス'
+            });
+
+          } else {
+            await addMsg('bot', '家族、兄弟も一緒に残したい方はベーシックプランですね。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
+              title: '👶 ベーシックプラン(出張)',
+              subtitle: '¥49,000（税別）※土日祝+¥3,300',
+              features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '40カット（レタッチ15＋色味明るさ調整25）', '3シーン（リクエスト2）・着替え3着・家族OK'],
+              urgency: '生後2〜3週間がベストタイミング',
+              proof: '家族みんなで思い出を残せます'
+            });
+          }
         });
-
-        await addMsg('bot', `📅 予約はこちら
-https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform`);
-
-        await new Promise(r => setTimeout(r, 1000));
-
-        await addMsg('bot', '赤ちゃん、家族、兄弟で残したい方はベーシックプラン。', 600);
-
-        addRichMsg({
-          gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
-          title: '👶 ベーシックプラン(出張)',
-          subtitle: '¥49,000（税別）※土日祝+¥3,300',
-          features: ['ご自宅で撮影（赤ちゃん、ママの移動なし）', '出産後にお日にち調整OK', '60カット（レタッチ20＋色味明るさ調整40）', '3シーン（赤ちゃん・家族・兄弟）', 'リクエスト2シーン・着替え3着'],
-          urgency: '生後2〜3週間がベストタイミング',
-          proof: '家族みんなで思い出を残せます'
-        });
-
-        await addMsg('bot', `📅 予約はこちら
-https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform`);
       }
     });
   } else if (choice === 'omiya') {
