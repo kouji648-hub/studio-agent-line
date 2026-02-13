@@ -275,7 +275,11 @@ function addImageGallery(images, label) {
   `;
 
   chat.appendChild(div);
-  scrollDown();
+
+  // ギャラリーが見える位置までスムーズにスクロール
+  setTimeout(() => {
+    div.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+  }, 100);
 }
 
 // Instagramカード（クリッカブル）
@@ -541,7 +545,7 @@ async function handlePregnantChoice(choice) {
           { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
         ], '← 横にスライドできます →');
 
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 2500));
 
         addRichMsg({
           gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
@@ -719,7 +723,7 @@ async function handleNewbornChoice(choice) {
           { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
         ], '← 横にスライドできます →');
 
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 2500));
 
         await addMsg('bot', 'スタジオプランは衣装・小物がすべて無料。\n完全貸切なので授乳もおむつ替えも気兼ねなくできます。');
 
@@ -790,7 +794,7 @@ async function handleNewbornChoice(choice) {
           { src: 'assets/images/omiyamairi/omiya-8.jpg', alt: 'お宮参りスタジオ撮影 8' }
         ], '← 横にスライドできます →');
 
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 2500));
 
         // スタジオのみ → 訪問着無料訴求
         await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥33,000（税込）。');
