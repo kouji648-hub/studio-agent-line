@@ -331,7 +331,11 @@ async function addSiblingAppeal() {
 async function sendNewbornStudioInfo() {
   await addMsg('bot', '📸 スタジオイメージをご覧ください');
   addImageMsg('https://hikarinostudio.com/wp-content/uploads/2021/11/DDD01523-Edit.jpg', 'ニューボーン撮影スタジオ');
-  await addMsg('bot', 'ニューボーン予約はこちら → https://bit.ly/3GSS8c');
+  await addMsg('bot', `📅 今すぐ予約する（60秒で完了）
+👇 タップして空き状況を確認
+https://bit.ly/3GSS8c
+
+💡 仮予約もOK！出産後に日程調整できます`);
   await addMsg('bot', `📍 撮影場所のご案内
 
 【宮崎市にお住まいの方】
@@ -349,7 +353,7 @@ async function finalizeFlow() {
   await addMsg('bot', `🔗 ご不明な点はこちらをご覧ください
 
 📍 公式HP: https://hikarinostudio.com/
-👶 ニューボーン予約: https://bit.ly/3GSS8c
+👶 ニューボーン予約（60秒で完了）: https://bit.ly/3GSS8c
 📸 Instagram: https://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr
 ⛩️ お宮参り詳細: https://hikarinostudio.com/omiyamairi/`);
 
@@ -358,7 +362,10 @@ async function finalizeFlow() {
     { label: '💬 相談する', value: 'consult' }
   ], async (finalAction) => {
     if (finalAction === 'reserve') {
-      await addMsg('bot', 'ご予約はこちらからどうぞ！\nhttps://bit.ly/3GSS8c');
+      await addMsg('bot', `📅 今すぐ予約する（60秒で完了）
+https://bit.ly/3GSS8c
+
+💡 仮予約もOK！出産後に日程調整できます`);
     } else {
       await addMsg('bot', 'ご質問・ご相談はLINEでお気軽にどうぞ💝\nスタッフが丁寧にお答えします。');
     }
@@ -373,13 +380,16 @@ function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.ge
 async function startFlow() {
   addStepIndicator('— Step 1: お子様の状況を把握 —');
   await addMsg('bot', `ヒカリノスタジオ公式LINEへようこそ!👶
-宮崎で【大手の半額】で撮影できる
-完全貸切フォトスタジオです。
-✨ 明瞭会計(追加料金なし)
-✨ データ50~60枚標準付属
-✨ 衣装・小物すべて無料
-まずはお子様の今の状況を教えてください。
-最適なプランをご提案します💝`);
+
+【年間500組以上のママに選ばれています】
+
+✓ 完全貸切で授乳・おむつ替えも安心
+✓ 料金明朗・大手の半額
+✓ データ50〜60枚標準付属
+✓ 衣装・小物すべて無料
+
+お子様の今の状況を教えてください。
+30秒で最適プランがわかります💝`);
 
   addChoices([
     { label: '🤰 妊娠中です', value: 'pregnant' },
