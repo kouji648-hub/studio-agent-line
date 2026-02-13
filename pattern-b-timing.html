@@ -283,10 +283,10 @@ function addImageGallery(images, label) {
   setTimeout(() => {
     div.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
-    // 4秒後に自動スクロールを再開（ユーザーがギャラリーを見る時間）
+    // 2秒後に自動スクロールを再開（ユーザーがギャラリーを見る時間）
     setTimeout(() => {
       pauseAutoScroll = false;
-    }, 4000);
+    }, 2000);
   }, 100);
 }
 
