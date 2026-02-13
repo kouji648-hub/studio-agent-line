@@ -536,6 +536,7 @@ async function handlePregnantChoice(choice) {
   addStepIndicator('— Step 4: 予約・相談 —');
 
   if (choice === 'nb') {
+    currentPlanType = 'newborn'; // ニューボーン用予約URL
     await addMsg('bot', 'ニューボーン撮影ですね。\n撮影場所はどちらがご希望ですか？');
 
     await addMsg('bot', `撮影プランによって料金が異なります。
@@ -629,6 +630,7 @@ async function handlePregnantChoice(choice) {
       }
     });
   } else if (choice === 'maternity') {
+    currentPlanType = 'other'; // マタニティ用予約URL
     // マタニティ写真を表示
     addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/158.png', 'マタニティフォトメイン');
     await new Promise(r => setTimeout(r, 800));
@@ -643,6 +645,7 @@ async function handlePregnantChoice(choice) {
       proof: '一生に一度のマタニティ期を形に残せます'
     });
   } else if (choice === 'bundle') {
+    currentPlanType = 'other'; // バンドル用予約URL
     await addMsg('bot', 'ニューボーン＋お宮参りのセット撮影、素晴らしい選択です！');
     addBundleMsg({
       title: 'ニューボーン＋お宮参り',
@@ -706,6 +709,7 @@ async function handlePregnantChoice(choice) {
 
 // --- 生後1ヶ月以内フロー ---
 async function flowNewborn() {
+  currentPlanType = 'newborn'; // ニューボーン用予約URL
   addStepIndicator('— Step 2: 新生児ママへ —');
 
   await addMsg('bot', 'ご出産おめでとうございます！\n\n今だからこそ撮れる写真があります。');
@@ -722,6 +726,7 @@ async function handleNewbornChoice(choice) {
   addStepIndicator('— Step 3: プラン提案 —');
 
   if (choice === 'nb') {
+    currentPlanType = 'newborn'; // ニューボーン用予約URL
     await addMsg('bot', '赤ちゃんのペースに合わせて撮影するので、ゆったり過ごしていただけます。\n\n撮影場所はどちらがご希望ですか？');
 
     await addMsg('bot', `赤ちゃんの移動負担を考慮して
@@ -830,6 +835,7 @@ async function handleNewbornChoice(choice) {
       }
     });
   } else if (choice === 'omiya') {
+    currentPlanType = 'other'; // お宮参り用予約URL
     await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
 
     addChoices([
@@ -865,23 +871,6 @@ async function handleNewbornChoice(choice) {
           proof: '産着・訪問着の着せ方もお任せください'
         });
 
-        addChoices([
-          { label: '🔗 詳しく見る', value: 'detail' },
-          { label: '💬 質問がある', value: 'question' },
-          { label: '📊 プラン比較', value: 'compare' }
-        ], async (omiyaChoice) => {
-          if (omiyaChoice === 'detail') {
-            await addMsg('bot', 'お宮参り撮影の詳細は公式HPをご覧ください👇');
-            await addMsg('bot', 'https://hikarinostudio.com/omiyamairi/');
-          } else if (omiyaChoice === 'question') {
-            await addMsg('bot', 'ご質問はLINEでお気軽にどうぞ！\nスタッフが丁寧にお答えします💝');
-          } else {
-            await addMsg('bot', 'プラン比較表はHPを参考にしてください。\nhttps://hikarinostudio.com/omiyamairi/');
-          }
-        });
-
-        await addMsg('bot', `📅 予約はこちら
-https://select-type.com/rsv/?id=y9oX7prw0BA&c_id=282280`);
 
       } else {
         // 神社ロケ → 神社選択
@@ -981,6 +970,7 @@ https://select-type.com/rsv/?id=y9oX7prw0BA&c_id=282280`);
 
 // --- 1〜2歳フロー ---
 async function flowToddler() {
+  currentPlanType = 'other'; // 一般用予約URL
   addStepIndicator('— Step 2: 1〜2歳のお子様 —');
 
   await addMsg('bot', '1〜2歳はとっても可愛い時期ですね！\n\n歩き始めたり、表情が豊かになったり。\nこの成長を写真に残しませんか？');
@@ -1072,6 +1062,7 @@ hikarino studioでは2〜6月の期間限定で
 
 // --- 3〜7歳フロー ---
 async function flowChild() {
+  currentPlanType = 'other'; // 七五三用予約URL
   addStepIndicator('— Step 2: 3〜7歳のお子様 —');
 
   await addMsg('bot', '七五三のご準備でしょうか？\n\nお子様のお祝い、大切な節目ですね。');
@@ -1228,6 +1219,7 @@ async function flowChild() {
 
 // --- その他フロー ---
 async function flowOther() {
+  currentPlanType = 'other'; // 一般用予約URL
   addStepIndicator('— Step 2: その他の撮影 —');
   await addMsg('bot', 'どんな撮影でもお気軽にご相談ください！');
 
@@ -1255,10 +1247,16 @@ async function flowOther() {
   });
 }
 
+let currentPlanType = 'other'; // ニューボーン or other
+
 async function handleCTA(type) {
   if (type === 'reservation') {
-    // 予約フォームに直接遷移
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform', '_blank');
+    // プランに応じた予約URLに遷移
+    const reservationUrls = {
+      newborn: 'https://docs.google.com/forms/d/e/1FAIpQLSc3SmhZFUmUb6jigSCQk-oGw8i1wa_nVB4DQSoYre_lqreunQ/viewform',
+      other: 'https://select-type.com/rsv/?id=y9oX7prw0BA&c_id=250455'
+    };
+    window.open(reservationUrls[currentPlanType], '_blank');
   } else {
     await addMsg('user', '相談したい');
     await addMsg('bot', 'もちろんです！\n\n撮影内容・衣装・日程など、何でもお気軽にどうぞ。\nスタッフが丁寧にお答えします。チャット欄へ内容を書いてください。', 600);
