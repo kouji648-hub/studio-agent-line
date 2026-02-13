@@ -241,6 +241,38 @@ function addStepIndicator(text) {
   scrollDown();
 }
 
+// 画像表示メッセージ
+function addImageMsg(src, alt, caption) {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `
+    <div class="bubble" style="padding:4px !important;max-width:250px;">
+      <img src="${src}" alt="${alt}" style="width:100%;border-radius:8px;display:block;" loading="lazy">
+      ${caption ? `<p style="margin:8px 0 0;font-size:12px;color:#666;">${caption}</p>` : ''}
+    </div>
+    <div class="time">${getTime()}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// 横スクロールギャラリー（複数画像）
+function addPhotoGallery(photos) {
+  const div = document.createElement('div');
+  div.className = 'carousel';
+  div.style.cssText = 'display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;max-width:100%;align-self:flex-start;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;';
+
+  photos.forEach(photo => {
+    const img = document.createElement('div');
+    img.style.cssText = 'min-width:200px;max-width:200px;flex-shrink:0;scroll-snap-align:start;';
+    img.innerHTML = `<img src="${photo.url}" alt="${photo.alt}" style="width:100%;height:auto;border-radius:8px;display:block;" loading="lazy">`;
+    div.appendChild(img);
+  });
+
+  chat.appendChild(div);
+  scrollDown();
+}
+
 function scrollDown() {
   setTimeout(() => chat.scrollTop = chat.scrollHeight, 50);
 }
@@ -271,6 +303,20 @@ async function handleInterest(planKey) {
 
   addStepIndicator('— Step 2: プラン紹介 —');
   await addMsg('bot', `${plan.emoji} ${plan.name}ですね！\n\n素敵な選択です。ヒカリノスタジオでは完全貸切のプライベート空間で、ゆったり撮影できます。`);
+
+  // プランに応じた写真を表示
+  const planImages = {
+    newborn: 'https://hikarinostudio.com/wp-content/uploads/2021/11/DDD01523-Edit.jpg',
+    omiyamairi: 'https://hikarinostudio.com/wp-content/uploads/2025/11/172-563x750.png',
+    shichigosan: 'https://hikarinostudio.com/wp-content/uploads/2025/08/5b0844aa5b74bf07784ac44b978dce6c.png',
+    birthday: 'https://hikarinostudio.com/wp-content/uploads/2025/08/f1860b2015165c2c3bff9d3101b4246f-8.png'
+  };
+
+  if (planImages[planKey]) {
+    addImageMsg(planImages[planKey], plan.name);
+    await new Promise(r => setTimeout(r, 800));
+  }
+
   await addMsg('bot', 'こちらのプランをご用意しています', 600);
 
   addCarousel(plan.cards, (card) => handleCardSelect(planKey, card));
@@ -303,6 +349,16 @@ async function handleStudioSelect(planKey, studio) {
     undecided: 'ご相談しながら決めましょう'
   };
   await addMsg('bot', `${studioNames[studio]}ですね！`);
+
+  // スタジオ写真を表示
+  if (studio === 'shimokitakata') {
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2022/04/1.png', '下北方スタジオ外観');
+    await new Promise(r => setTimeout(r, 800));
+  } else if (studio === 'miyakonojo') {
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2023/06/16.png', '都城スタジオ内装');
+    await new Promise(r => setTimeout(r, 800));
+  }
+
   showRichMessage(planKey);
 }
 
@@ -327,7 +383,8 @@ async function handleCTA(type) {
   if (type === 'reservation') {
     await addMsg('user', '空き状況を見たい');
     await addMsg('bot', '今月の空き状況をお調べしますね！\n\nご希望の日程はありますか？平日は比較的空きがあります。');
-    await addMsg('bot', 'こちらからご予約いただけます\nhttps://select-type.com/rsv/?id=...', 600);
+    await addMsg('bot', 'ニューボーン予約はこちらからどうぞ！\nhttps://bit.ly/3GSS8c', 600);
+    await addMsg('bot', `📍 公式HP: https://hikarinostudio.com/\n📸 Instagram: https://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr\n⛩️ お宮参り詳細: https://hikarinostudio.com/omiyamairi/`, 600);
     addStepIndicator('✅ 予約フローへ移行');
   } else {
     await addMsg('user', 'LINEで相談したい');

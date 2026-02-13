@@ -254,6 +254,22 @@ function addImageMsg(src, alt, caption) {
   scrollDown();
 }
 
+// 横スクロールギャラリー（複数画像）
+function addPhotoGallery(photos) {
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;max-width:100%;align-self:flex-start;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;';
+
+  photos.forEach(photo => {
+    const img = document.createElement('div');
+    img.style.cssText = 'min-width:200px;max-width:200px;flex-shrink:0;scroll-snap-align:start;';
+    img.innerHTML = `<img src="${photo.url}" alt="${photo.alt}" style="width:100%;height:auto;border-radius:8px;display:block;" loading="lazy">`;
+    div.appendChild(img);
+  });
+
+  chat.appendChild(div);
+  scrollDown();
+}
+
 // スタジオ比較表示
 function addStudioComparison() {
   const div = document.createElement('div');
@@ -266,6 +282,7 @@ function addStudioComparison() {
           <h5 style="margin:0 0 4px;font-size:14px;">🌸 下北方スタジオ</h5>
           <span style="font-size:12px;opacity:0.9;">宮崎市</span>
         </div>
+        <img src="https://hikarinostudio.com/wp-content/uploads/2022/04/1.png" alt="下北方スタジオ外観" style="width:100%;height:auto;display:block;" loading="lazy">
         <div style="padding:12px 16px;font-size:13px;color:#555;">
           <p style="margin:0 0 8px;line-height:1.5;">複数の撮影ルーム＋緑あふれるお庭</p>
           <div style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;">
@@ -280,6 +297,7 @@ function addStudioComparison() {
           <h5 style="margin:0 0 4px;font-size:14px;">🏛 都城スタジオ</h5>
           <span style="font-size:12px;opacity:0.9;">都城市</span>
         </div>
+        <img src="https://hikarinostudio.com/wp-content/uploads/2023/06/16.png" alt="都城スタジオ内装" style="width:100%;height:auto;display:block;" loading="lazy">
         <div style="padding:12px 16px;font-size:13px;color:#555;">
           <p style="margin:0 0 8px;line-height:1.5;">100年前のアンティーク家具×ワントーン空間</p>
           <div style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;">
@@ -312,7 +330,7 @@ async function addSiblingAppeal() {
 // ニューボーン撮影後のスタジオ情報
 async function sendNewbornStudioInfo() {
   await addMsg('bot', '📸 スタジオイメージをご覧ください');
-  addImageMsg('https://hikarinostudio.com/wp-content/uploads/2024/01/newborn-studio.jpg', 'ニューボーン撮影スタジオ');
+  addImageMsg('https://hikarinostudio.com/wp-content/uploads/2021/11/DDD01523-Edit.jpg', 'ニューボーン撮影スタジオ');
   await addMsg('bot', 'ニューボーン予約はこちら → https://bit.ly/3GSS8c');
   await addMsg('bot', `📍 撮影場所のご案内
 
@@ -475,6 +493,12 @@ async function handlePregnantChoice(choice) {
       }
     });
   } else if (choice === 'maternity') {
+    // マタニティ写真を表示
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/158.png', 'マタニティフォトメイン');
+    await new Promise(r => setTimeout(r, 800));
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/157-563x750.png', 'マタニティフォトギャラリー');
+    await new Promise(r => setTimeout(r, 800));
+
     addRichMsg({
       gradient: 'linear-gradient(135deg, #c06bc7, #e8a0e8)',
       title: '🤰 マタニティフォト',
@@ -611,6 +635,12 @@ async function handleNewbornChoice(choice) {
   } else if (choice === 'omiya') {
     await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
 
+    // お宮参り写真を表示
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/11/172-563x750.png', 'お宮参り 宮崎神宮');
+    await new Promise(r => setTimeout(r, 800));
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/11/173-563x750.png', 'お宮参り 神柱宮');
+    await new Promise(r => setTimeout(r, 800));
+
     addChoices([
       { label: '📸 スタジオ撮影のみ', value: 'studio' },
       { label: '⛩️ スタジオ＋神社ロケ', value: 'location' }
@@ -745,6 +775,11 @@ async function flowToddler() {
     addStepIndicator('— Step 3: プラン提案 —');
     if (choice === 'birthday') {
       await addMsg('bot', '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！');
+
+      // バースデー写真を表示
+      addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/f1860b2015165c2c3bff9d3101b4246f-8.png', 'バースデー撮影メイン');
+      await new Promise(r => setTimeout(r, 800));
+
       await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
       addStudioComparison();
       await new Promise(r => setTimeout(r, 1000));
@@ -845,6 +880,12 @@ async function flowChild() {
 
     const ageLabel = { '3f': '3歳女の子', '5m': '5歳男の子', '7f': '7歳女の子' };
     await addMsg('bot', `${ageLabel[choice]}の七五三ですね！\n\nヘアメイク・着付け込みなので、手ぶらでOKです。`);
+
+    // 七五三写真を表示
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/5b0844aa5b74bf07784ac44b978dce6c.png', '七五三撮影メイン');
+    await new Promise(r => setTimeout(r, 800));
+    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/05/753-563x750.png', '七五三ギャラリー1');
+    await new Promise(r => setTimeout(r, 800));
 
     await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
     addStudioComparison();

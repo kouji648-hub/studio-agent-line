@@ -221,6 +221,37 @@ function addStepIndicator(text) {
   scrollDown();
 }
 
+// 画像表示メッセージ
+function addImageMsg(src, alt, caption) {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `
+    <div class="bubble" style="padding:4px !important;max-width:250px;">
+      <img src="${src}" alt="${alt}" style="width:100%;border-radius:8px;display:block;" loading="lazy">
+      ${caption ? `<p style="margin:8px 0 0;font-size:12px;color:#666;">${caption}</p>` : ''}
+    </div>
+    <div class="time">${getTime()}</div>
+  `;
+  chat.appendChild(div);
+  scrollDown();
+}
+
+// 横スクロールギャラリー（複数画像）
+function addPhotoGallery(photos) {
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;max-width:100%;align-self:flex-start;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;';
+
+  photos.forEach(photo => {
+    const img = document.createElement('div');
+    img.style.cssText = 'min-width:200px;max-width:200px;flex-shrink:0;scroll-snap-align:start;';
+    img.innerHTML = `<img src="${photo.url}" alt="${photo.alt}" style="width:100%;height:auto;border-radius:8px;display:block;" loading="lazy">`;
+    div.appendChild(img);
+  });
+
+  chat.appendChild(div);
+  scrollDown();
+}
+
 function scrollDown() { setTimeout(() => chat.scrollTop = chat.scrollHeight, 50); }
 function getTime() { const n = new Date(); return `${n.getHours()}:${String(n.getMinutes()).padStart(2, '0')}`; }
 
@@ -444,6 +475,26 @@ async function flowLocation() {
 async function showPlanForNeed(planKey) {
   addStepIndicator('— Step 3: あなたにぴったりのプラン —');
 
+  // プランに応じた写真を表示
+  const planImages = {
+    newborn: 'https://hikarinostudio.com/wp-content/uploads/2021/11/DDD01523-Edit.jpg',
+    omiyamairi: 'https://hikarinostudio.com/wp-content/uploads/2025/11/172-563x750.png',
+    shichigosan: 'https://hikarinostudio.com/wp-content/uploads/2025/08/5b0844aa5b74bf07784ac44b978dce6c.png',
+    birthday: 'https://hikarinostudio.com/wp-content/uploads/2025/08/f1860b2015165c2c3bff9d3101b4246f-8.png'
+  };
+
+  const planNames = {
+    newborn: 'ニューボーンフォト',
+    omiyamairi: 'お宮参り撮影',
+    shichigosan: '七五三撮影',
+    birthday: 'バースデーフォト'
+  };
+
+  if (planImages[planKey]) {
+    addImageMsg(planImages[planKey], planNames[planKey]);
+    await new Promise(r => setTimeout(r, 800));
+  }
+
   const plans = {
     newborn: {
       gradient: 'linear-gradient(135deg, #ff6b9d, #ff8fab)',
@@ -641,6 +692,10 @@ async function flowAtHome() {
 
   await new Promise(r => setTimeout(r, 1000));
 
+  // マタニティ写真を表示
+  addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/158.png', 'マタニティフォト');
+  await new Promise(r => setTimeout(r, 800));
+
   await addMsg('bot', 'ナチュラルニューボーン出張プラン:\n\n・ご自宅で撮影（移動なし）\n・自然光を活かした柔らかい雰囲気\n・赤ちゃんのペースで撮影\n・出張料込み ¥33,000（税込）', 600);
 
   addReview({
@@ -816,7 +871,8 @@ async function handleCTA(type) {
   if (type === 'reservation') {
     await addMsg('user', '空き状況を見たい');
     await addMsg('bot', '今月の空き状況をお調べします！\n\nご希望の日程はありますか？\n平日は比較的ご予約が取りやすいです。');
-    await addMsg('bot', 'お気軽にここでメッセージしてくださいね。\nスタッフが丁寧にご案内します。', 600);
+    await addMsg('bot', 'ニューボーン予約はこちらからどうぞ！\nhttps://bit.ly/3GSS8c', 600);
+    await addMsg('bot', `📍 公式HP: https://hikarinostudio.com/\n📸 Instagram: https://www.instagram.com/hikarino_studio?igsh=OXZrMzd5aWF6emhv&utm_source=qr\n⛩️ お宮参り詳細: https://hikarinostudio.com/omiyamairi/`, 600);
     addStepIndicator('✅ 予約フローへ移行');
   } else {
     await addMsg('user', '相談したい');
