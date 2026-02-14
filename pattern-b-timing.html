@@ -1115,12 +1115,6 @@ async function flowChild() {
     const ageLabel = { '3f': '3歳女の子', '5m': '5歳男の子', '7f': '7歳女の子' };
     await addMsg('bot', `${ageLabel[choice]}の七五三ですね！\n\nヘアメイク・着付け込みなので、手ぶらでOKです。`);
 
-    // 七五三写真を表示
-    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/5b0844aa5b74bf07784ac44b978dce6c.png', '七五三撮影メイン');
-    await new Promise(r => setTimeout(r, 800));
-    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/05/753-563x750.png', '七五三ギャラリー1');
-    await new Promise(r => setTimeout(r, 800));
-
     await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
     addStudioComparison();
     await new Promise(r => setTimeout(r, 1200));
@@ -1147,8 +1141,7 @@ async function flowChild() {
           gradient: 'linear-gradient(135deg, #e57373, #ef9a9a)',
           title: '🎎 七五三 着物&洋装プラン',
           subtitle: '¥35,000〜（税別）※土日祝+¥3,000',
-          features: ['💰 明朗会計・大手の半額', '60カット撮影', '着物1着＋洋装1着', 'ヘアメイク・着付け込み', '⭐️ 兄弟も着物着用可能', '帯・髪飾り含む'],
-          proof: '前撮りなら衣装選び放題・混雑を避けられます'
+          features: ['💰 明朗会計・大手の半額', '60カット撮影', '着物1着＋洋装1着', 'ヘアメイク・着付け込み', '⭐️ 兄弟衣装1着', '帯・髪飾り含む']
         });
       } else if (pref === 'loca') {
         await addMsg('bot', '神社ロケなら撮影→そのままお参りが1日で完結します。\nどちらの神社がご希望ですか？');
