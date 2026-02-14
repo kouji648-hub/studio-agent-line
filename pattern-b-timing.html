@@ -461,7 +461,7 @@ async function startFlow() {
   addChoices([
     { label: '🤰 妊娠中です', value: 'pregnant' },
     { label: '👶 生後1ヶ月以内', value: 'newborn' },
-    { label: '👧 1〜2歳', value: 'toddler' },
+    { label: '👧 半年〜2歳', value: 'toddler' },
     { label: '🧒 3〜7歳', value: 'child' },
     { label: '📷 その他の撮影', value: 'other' }
   ], handleTiming);
@@ -979,15 +979,15 @@ async function handleNewbornChoice(choice) {
   }
 }
 
-// --- 1〜2歳フロー ---
+// --- 半年〜2歳フロー ---
 async function flowToddler() {
   currentPlanType = 'other'; // 一般用予約URL
-  addStepIndicator('— Step 2: 1〜2歳のお子様 —');
+  addStepIndicator('— Step 2: 半年〜2歳のお子様 —');
 
-  await addMsg('bot', '1〜2歳はとっても可愛い時期ですね！\n\n歩き始めたり、表情が豊かになったり。\nこの成長を写真に残しませんか？');
+  await addMsg('bot', '半年〜2歳はとっても可愛い時期ですね！\n\n歩き始めたり、表情が豊かになったり。\nこの成長を写真に残しませんか？');
 
   addChoices([
-    { label: '🎂 バースデー撮影', value: 'birthday' },
+    { label: '🎂 ハーフ・バースデー', value: 'birthday' },
     { label: '🎏 初節句（2〜6月限定）', value: 'sekku' },
     { label: '👨‍👩‍👧 家族撮影ご案内', value: 'family' }
   ], async (choice) => {
