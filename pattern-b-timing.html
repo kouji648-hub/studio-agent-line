@@ -1273,6 +1273,31 @@ async function flowOther() {
     addStepIndicator('— Step 3: ご案内 —');
     if (choice === 'consult') {
       await addMsg('bot', 'どんなことでもお気軽にどうぞ！\nスタッフが丁寧にお答えします。');
+    } else if (choice === 'location') {
+      await addMsg('bot', 'ロケーション撮影をご検討中ですね！\n\n自然光溢れる屋外で、思い出に残る特別な1枚を。', 800);
+      await addMsg('bot', 'ロケーションフォトの詳細・プラン・撮影スポットなどは、HPでご覧いただけます。', 600);
+
+      // HPへのリンクボタンを表示
+      const div = document.createElement('div');
+      div.className = 'msg bot';
+      div.innerHTML = `
+        <div class="bubble" style="text-align:center;">
+          <a href="https://hikarinostudio.com/location/" target="_blank"
+             style="display:inline-block;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color:white;padding:12px 24px;border-radius:8px;text-decoration:none;
+                    font-weight:600;transition:transform 0.2s;"
+             onmouseover="this.style.transform='scale(1.05)'"
+             onmouseout="this.style.transform='scale(1)'">
+            📍 ロケフォトを見る
+          </a>
+        </div>
+        <div class="time">${getTime()}</div>
+      `;
+      chat.appendChild(div);
+      scrollDown();
+
+      await new Promise(r => setTimeout(r, 800));
+      await addMsg('bot', '他にもご質問があれば、お気軽にスタッフまでどうぞ！');
     } else {
       await addMsg('bot', 'ぴったりのプランをご提案します。\n詳しいご希望をお聞かせください！');
     }
