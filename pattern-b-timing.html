@@ -995,6 +995,11 @@ async function flowToddler() {
     if (choice === 'birthday') {
       await addMsg('bot', '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！');
 
+      await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
+      addStudioComparison();
+      await new Promise(r => setTimeout(r, 1000));
+      await addSiblingAppeal();
+
       // バースデー写真ギャラリー
       addImageGallery([
         { src: 'assets/images/birthday/bd-1.jpg', alt: 'バースデー撮影 家族写真' },
@@ -1013,10 +1018,6 @@ async function flowToddler() {
 
       await new Promise(r => setTimeout(r, 2500));
 
-      await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
-      addStudioComparison();
-      await new Promise(r => setTimeout(r, 1000));
-      await addSiblingAppeal();
       addRichMsg({
         gradient: 'linear-gradient(135deg, #ffb347, #ffcc80)',
         title: '🎂 バースデー撮影',
