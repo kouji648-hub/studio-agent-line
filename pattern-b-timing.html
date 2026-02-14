@@ -1137,6 +1137,21 @@ async function flowChild() {
 着物1着＋洋装1着が全て込み！
 9月以降は洋装追加料金がかかります。
 前撮りなら断然お得です✨`, 600);
+
+        // 七五三写真ギャラリー（着物＋洋装）
+        await addImageGallery([
+          { src: 'assets/images/shichigosan/shichi-1.jpg', alt: '七五三撮影例1' },
+          { src: 'assets/images/shichigosan/shichi-2.jpg', alt: '七五三撮影例2' },
+          { src: 'assets/images/shichigosan/shichi-3.jpg', alt: '七五三撮影例3' },
+          { src: 'assets/images/shichigosan/shichi-4.jpg', alt: '七五三撮影例4' },
+          { src: 'assets/images/shichigosan/shichi-5.jpg', alt: '七五三撮影例5' },
+          { src: 'assets/images/shichigosan/shichi-6.jpg', alt: '七五三撮影例6' },
+          { src: 'assets/images/shichigosan/shichi-7.jpg', alt: '七五三撮影例7' },
+          { src: 'assets/images/shichigosan/shichi-8.jpg', alt: '七五三撮影例8' },
+          { src: 'assets/images/shichigosan/shichi-9.jpg', alt: '七五三撮影例9' }
+        ], '1 / 9');
+        await new Promise(r => setTimeout(r, 2500));
+
         addRichMsg({
           gradient: 'linear-gradient(135deg, #e57373, #ef9a9a)',
           title: '🎎 七五三 着物&洋装プラン',
