@@ -838,6 +838,19 @@ async function handleNewbornChoice(choice) {
     currentPlanType = 'other'; // お宮参り用予約URL
     await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
 
+    addImageGallery([
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-1.jpg', alt: 'お宮参り撮影 神社ロケ' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-2.jpg', alt: 'お宮参り撮影 スタジオ＆ロケ' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-3.jpg', alt: 'お宮参り撮影 お食い初め' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-4.jpg', alt: 'お宮参り撮影 赤ちゃん' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-5.jpg', alt: 'お宮参り撮影 家族' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-6.jpg', alt: 'お宮参り撮影 夫婦＆赤ちゃん' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-7.jpg', alt: 'お宮参り撮影 ママと赤ちゃん' },
+      { src: 'assets/images/omiyamairi-intro/omiya-intro-8.jpg', alt: 'お宮参り撮影 スタジオ桜' }
+    ], '← 横にスライドできます →');
+
+    await new Promise(r => setTimeout(r, 2500));
+
     addChoices([
       { label: '📸 スタジオ撮影のみ', value: 'studio' },
       { label: '⛩️ スタジオ＋神社ロケ', value: 'location' }
