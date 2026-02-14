@@ -995,9 +995,23 @@ async function flowToddler() {
     if (choice === 'birthday') {
       await addMsg('bot', '1歳のバースデーは衣装チェンジで2つの雰囲気を楽しめます！');
 
-      // バースデー写真を表示
-      addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/f1860b2015165c2c3bff9d3101b4246f-8.png', 'バースデー撮影メイン');
-      await new Promise(r => setTimeout(r, 800));
+      // バースデー写真ギャラリー
+      addImageGallery([
+        { src: 'assets/images/birthday/bd-1.jpg', alt: 'バースデー撮影 家族写真' },
+        { src: 'assets/images/birthday/bd-2.jpg', alt: 'バースデー撮影 お菓子' },
+        { src: 'assets/images/birthday/bd-3.jpg', alt: 'バースデー撮影 ぬいぐるみ' },
+        { src: 'assets/images/birthday/bd-4.jpg', alt: 'バースデー撮影 ハーフバースデー' },
+        { src: 'assets/images/birthday/bd-5.jpg', alt: 'バースデー撮影 Happy Birthday' },
+        { src: 'assets/images/birthday/bd-6.jpg', alt: 'バースデー撮影 ベレー帽' },
+        { src: 'assets/images/birthday/bd-7.jpg', alt: 'バースデー撮影 傘と花' },
+        { src: 'assets/images/birthday/bd-8.jpg', alt: 'バースデー撮影 ぬいぐるみ2' },
+        { src: 'assets/images/birthday/bd-9.jpg', alt: 'バースデー撮影 ママと赤ちゃん' },
+        { src: 'assets/images/birthday/bd-10.jpg', alt: 'バースデー撮影 ママと抱っこ' },
+        { src: 'assets/images/birthday/bd-11.jpg', alt: 'バースデー撮影 家族笑顔' },
+        { src: 'assets/images/birthday/bd-12.jpg', alt: 'バースデー撮影 家族ふれあい' }
+      ], '← 横にスライドできます →');
+
+      await new Promise(r => setTimeout(r, 2500));
 
       await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
       addStudioComparison();
