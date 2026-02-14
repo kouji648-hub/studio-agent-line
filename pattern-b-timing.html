@@ -629,11 +629,25 @@ async function handlePregnantChoice(choice) {
     });
   } else if (choice === 'maternity') {
     currentPlanType = 'other'; // マタニティ用予約URL
-    // マタニティ写真を表示
-    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/158.png', 'マタニティフォトメイン');
-    await new Promise(r => setTimeout(r, 800));
-    addImageMsg('https://hikarinostudio.com/wp-content/uploads/2025/08/157-563x750.png', 'マタニティフォトギャラリー');
-    await new Promise(r => setTimeout(r, 800));
+    await addMsg('bot', 'マタニティフォトですね！\n\n大切なマタニティ期を、美しく残しましょう✨', 800);
+
+    // マタニティの画像ギャラリー
+    addImageGallery([
+      { src: 'assets/images/maternity/147.jpg', alt: 'マタニティフォト 夫婦' },
+      { src: 'assets/images/maternity/239.jpg', alt: 'マタニティフォト お腹アップ' },
+      { src: 'assets/images/maternity/240.jpg', alt: 'マタニティフォト ポーズ1' },
+      { src: 'assets/images/maternity/241.jpg', alt: 'マタニティフォト ポーズ2' },
+      { src: 'assets/images/maternity/252.jpg', alt: 'マタニティフォト 家族' },
+      { src: 'assets/images/maternity/285.jpg', alt: 'マタニティフォト スタジオ' },
+      { src: 'assets/images/maternity/286.jpg', alt: 'マタニティフォト 夫婦2' },
+      { src: 'assets/images/maternity/287.jpg', alt: 'マタニティフォト ドレス' },
+      { src: 'assets/images/maternity/319.jpg', alt: 'マタニティフォト 自然光' },
+      { src: 'assets/images/maternity/320.jpg', alt: 'マタニティフォト エレガント' },
+      { src: 'assets/images/maternity/321.jpg', alt: 'マタニティフォト 上の子と' },
+      { src: 'assets/images/maternity/86.jpg', alt: 'マタニティフォト カジュアル' }
+    ], '← 横にスライドできます →');
+
+    await new Promise(r => setTimeout(r, 2000));
 
     addRichMsg({
       gradient: 'linear-gradient(135deg, #c06bc7, #e8a0e8)',
@@ -1031,19 +1045,16 @@ async function flowToddler() {
 hikarino studioでは2〜6月の期間限定で
 おしゃれな「白粋(HAKI)」の小物を
 ご用意しています✨`);
-      await new Promise(r => setTimeout(r, 1000));
-      addImageMsg(
-        'https://hikarinostudio.com/wp-content/uploads/2025/08/147-563x750.png',
-        '白粋(HAKI)の節句小物',
-        '白粋(HAKI) — 白を基調としたモダンな節句飾り'
-      );
-      await new Promise(r => setTimeout(r, 1200));
-      addImageMsg(
-        'https://hikarinostudio.com/wp-content/uploads/2025/08/148-563x750.png',
-        '白粋(HAKI)の節句撮影サンプル',
-        'お子様と一緒に。おしゃれな節句写真が残せます'
-      );
-      await new Promise(r => setTimeout(r, 1200));
+      await new Promise(r => setTimeout(r, 800));
+
+      // 初節句の画像ギャラリー
+      addImageGallery([
+        { src: 'assets/images/sekku/311.jpg', alt: '初節句撮影 白粋HAKI' },
+        { src: 'assets/images/sekku/312.jpg', alt: '初節句撮影 兄弟撮影' },
+        { src: 'assets/images/sekku/80.jpg', alt: '初節句撮影 節句飾り' }
+      ], '← 横にスライドできます →');
+
+      await new Promise(r => setTimeout(r, 2000));
       await addMsg('bot', `🎏 節句撮影オプション
 メインのお子様のみ: +¥2,200
 メイン＋兄弟一緒: +¥3,300
@@ -1273,6 +1284,28 @@ async function flowOther() {
     addStepIndicator('— Step 3: ご案内 —');
     if (choice === 'consult') {
       await addMsg('bot', 'どんなことでもお気軽にどうぞ！\nスタッフが丁寧にお答えします。');
+    } else if (choice === 'event') {
+      // 成人式・入学卒園
+      currentPlanType = 'other';
+      await addMsg('bot', '成人式・入学卒園の撮影ですね！\n\n人生の節目を、特別な1枚に残しましょう✨', 800);
+
+      // 成人の画像ギャラリー
+      addImageGallery([
+        { src: 'assets/images/seijin/265.jpg', alt: '成人式撮影 振袖1' },
+        { src: 'assets/images/seijin/266.jpg', alt: '成人式撮影 振袖2' },
+        { src: 'assets/images/seijin/273.jpg', alt: '成人式撮影 ポーズ1' },
+        { src: 'assets/images/seijin/274.jpg', alt: '成人式撮影 ポーズ2' }
+      ], '← 横にスライドできます →');
+
+      await new Promise(r => setTimeout(r, 2000));
+
+      addRichMsg({
+        gradient: 'linear-gradient(135deg, #f093fb, #f5576c)',
+        title: '🎓 成人式・入学卒園フォト',
+        subtitle: '¥30,000（税別）※土日祝+¥3,000',
+        features: ['60カット撮影', '衣装レンタル可能（別途）', 'ヘアメイク可能（別途）', '家族撮影サービス'],
+        proof: '人生の節目を美しく残せます'
+      });
     } else if (choice === 'location') {
       await addMsg('bot', 'ロケーション撮影をご検討中ですね！\n\n自然光溢れる屋外で、思い出に残る特別な1枚を。', 800);
       await addMsg('bot', 'ロケーションフォトの詳細・プラン・撮影スポットなどは、HPでご覧いただけます。', 600);
