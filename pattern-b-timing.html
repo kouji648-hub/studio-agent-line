@@ -1214,12 +1214,21 @@ async function flowChild() {
           ], async (kimono753) => {
 
             if (kimono753 === 'with_kimono_753') {
-              await addMsg('bot', '訪問着＋着付け込みで、総額¥42,000（税別）です。\n\n親子で着物姿の記念写真、素敵ですね。');
+              // タイムラインを再表示
+              addTimeline([
+                { title: '9:00 スタジオ到着', desc: 'ヘアメイク・着付け', active: true },
+                { title: '10:00 スタジオ撮影', desc: '着物＋洋装の2着撮影（60分）', active: true },
+                { title: '11:00 神社へ移動', desc: '着物のまま車で5分', active: false },
+                { title: '11:10 神社ロケ撮影', desc: '参道・境内で撮影（20分）', active: false },
+                { title: '11:30 そのままお参り', desc: '御祈祷・記念撮影', active: false, highlight: '→ 1日で全部完結！' }
+              ]);
+
+              await new Promise(r => setTimeout(r, 1000));
 
               addRichMsg({
                 gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
                 title: '⛩️ 七五三 スタジオ＋ロケ（訪問着付き）',
-                subtitle: '¥42,000（税別）※土日祝+¥3,000',
+                subtitle: '¥53,000（税別）※土日祝+¥3,000',
                 features: ['💰 明朗会計・大手の半額', '60カット（3〜4シーン）', '着物1着＋洋装1着（2着撮影）', 'お子様のヘアメイク・着付け込み', '👘 ママの訪問着＋着付け込み', '⭐️ 兄弟も着物着用可能', `⛩️ ${info753.shrine}ロケで家族写真（1日で完結）`],
                 urgency: '秋の七五三シーズンは予約が埋まりやすくなります',
                 proof: '親子で着物姿の記念写真が残せます'
