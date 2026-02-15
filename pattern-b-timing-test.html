@@ -122,6 +122,85 @@ body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #749
 </div>
 
 <script>
+const GALLERY_IMAGES = {
+  newborn: [
+    { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
+    { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
+    { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
+    { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
+    { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
+    { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
+    { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
+  ],
+  newborn-home: [
+    { src: 'assets/images/newborn-home/nb-home-1.jpg', alt: 'ニューボーン出張撮影 1' },
+    { src: 'assets/images/newborn-home/nb-home-2.jpg', alt: 'ニューボーン出張撮影 2' },
+    { src: 'assets/images/newborn-home/nb-home-3.jpg', alt: 'ニューボーン出張撮影 3' },
+    { src: 'assets/images/newborn-home/nb-home-4.jpg', alt: 'ニューボーン出張撮影 4' },
+    { src: 'assets/images/newborn-home/nb-home-5.jpg', alt: 'ニューボーン出張撮影 5' }
+  ],
+  omiyamairi: [
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-1.jpg', alt: 'お宮参り撮影 神社ロケ' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-2.jpg', alt: 'お宮参り撮影 スタジオ＆ロケ' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-3.jpg', alt: 'お宮参り撮影 お食い初め' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-4.jpg', alt: 'お宮参り撮影 赤ちゃん' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-5.jpg', alt: 'お宮参り撮影 家族' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-6.jpg', alt: 'お宮参り撮影 夫婦＆赤ちゃん' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-7.jpg', alt: 'お宮参り撮影 ママと赤ちゃん' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-8.jpg', alt: 'お宮参り撮影 スタジオ桜' }
+  ],
+  birthday: [
+    { src: 'assets/images/birthday/bd-1.jpg', alt: 'バースデー撮影 家族写真' },
+    { src: 'assets/images/birthday/bd-2.jpg', alt: 'バースデー撮影 お菓子' },
+    { src: 'assets/images/birthday/bd-3.jpg', alt: 'バースデー撮影 ぬいぐるみ' },
+    { src: 'assets/images/birthday/bd-4.jpg', alt: 'バースデー撮影 ハーフバースデー' },
+    { src: 'assets/images/birthday/bd-5.jpg', alt: 'バースデー撮影 Happy Birthday' },
+    { src: 'assets/images/birthday/bd-6.jpg', alt: 'バースデー撮影 ベレー帽' },
+    { src: 'assets/images/birthday/bd-7.jpg', alt: 'バースデー撮影 傘と花' },
+    { src: 'assets/images/birthday/bd-8.jpg', alt: 'バースデー撮影 ぬいぐるみ2' },
+    { src: 'assets/images/birthday/bd-9.jpg', alt: 'バースデー撮影 ママと赤ちゃん' },
+    { src: 'assets/images/birthday/bd-10.jpg', alt: 'バースデー撮影 ママと抱っこ' },
+    { src: 'assets/images/birthday/bd-11.jpg', alt: 'バースデー撮影 家族笑顔' },
+    { src: 'assets/images/birthday/bd-12.jpg', alt: 'バースデー撮影 家族ふれあい' }
+  ],
+  shichigosan: [
+    { src: 'assets/images/shichigosan/shichi-1.jpg', alt: '七五三撮影例1' },
+    { src: 'assets/images/shichigosan/shichi-2.jpg', alt: '七五三撮影例2' },
+    { src: 'assets/images/shichigosan/shichi-3.jpg', alt: '七五三撮影例3' },
+    { src: 'assets/images/shichigosan/shichi-4.jpg', alt: '七五三撮影例4' },
+    { src: 'assets/images/shichigosan/shichi-5.jpg', alt: '七五三撮影例5' },
+    { src: 'assets/images/shichigosan/shichi-6.jpg', alt: '七五三撮影例6' },
+    { src: 'assets/images/shichigosan/shichi-7.jpg', alt: '七五三撮影例7' },
+    { src: 'assets/images/shichigosan/shichi-8.jpg', alt: '七五三撮影例8' },
+    { src: 'assets/images/shichigosan/shichi-9.jpg', alt: '七五三撮影例9' }
+  ],
+  sekku: [
+    { src: 'assets/images/sekku/311.jpg', alt: '初節句撮影 白粋HAKI' },
+    { src: 'assets/images/sekku/312.jpg', alt: '初節句撮影 兄弟撮影' },
+    { src: 'assets/images/sekku/80.jpg', alt: '初節句撮影 節句飾り' }
+  ],
+  seijin: [
+    { src: 'assets/images/seijin/265.jpg', alt: '成人式撮影 振袖1' },
+    { src: 'assets/images/seijin/266.jpg', alt: '成人式撮影 振袖2' },
+    { src: 'assets/images/seijin/273.jpg', alt: '成人式撮影 ポーズ1' },
+    { src: 'assets/images/seijin/274.jpg', alt: '成人式撮影 ポーズ2' }
+  ],
+  maternity: [
+    { src: 'assets/images/maternity/147.jpg', alt: 'マタニティフォト 夫婦' },
+    { src: 'assets/images/maternity/239.jpg', alt: 'マタニティフォト お腹アップ' },
+    { src: 'assets/images/maternity/240.jpg', alt: 'マタニティフォト ポーズ1' },
+    { src: 'assets/images/maternity/241.jpg', alt: 'マタニティフォト ポーズ2' },
+    { src: 'assets/images/maternity/252.jpg', alt: 'マタニティフォト 家族' },
+    { src: 'assets/images/maternity/285.jpg', alt: 'マタニティフォト スタジオ' },
+    { src: 'assets/images/maternity/286.jpg', alt: 'マタニティフォト 夫婦2' },
+    { src: 'assets/images/maternity/287.jpg', alt: 'マタニティフォト ドレス' },
+    { src: 'assets/images/maternity/319.jpg', alt: 'マタニティフォト 自然光' },
+    { src: 'assets/images/maternity/320.jpg', alt: 'マタニティフォト エレガント' },
+    { src: 'assets/images/maternity/321.jpg', alt: 'マタニティフォト 上の子と' },
+    { src: 'assets/images/maternity/86.jpg', alt: 'マタニティフォト カジュアル' }
+  ]
+};
+
 const chat = document.getElementById('chat');
 
 function addMsg(type, text, delay) {
@@ -261,12 +340,18 @@ function addImageMsg(src, alt, caption) {
 }
 
 // 画像ギャラリー（横スクロール）
-function addImageGallery(images, label) {
+function addImageGallery(galleryType, label) {
+  if (!GALLERY_IMAGES[galleryType]) {
+    console.error(`Unknown gallery type: ${galleryType}`);
+    return;
+  }
+
+  const images = GALLERY_IMAGES[galleryType];
   const div = document.createElement('div');
   div.className = 'image-gallery';
 
   const imagesHTML = images.map(img =>
-    `<img src="${img.src}" alt="${img.alt}" loading="lazy">`
+    `<img src="${img.src}" alt="${img.alt}" loading="lazy" onerror="this.src='assets/images/fallback.jpg'">`
   ).join('');
 
   div.innerHTML = `
@@ -549,15 +634,7 @@ async function handlePregnantChoice(choice) {
 
       if (pregNbStyle === 'studio_preg') {
         // ニューボーンスタジオ撮影サンプル写真を表示
-        addImageGallery([
-          { src: 'assets/images/newborn/nb-1.jpg', alt: 'ニューボーンスタジオ撮影 1' },
-          { src: 'assets/images/newborn/nb-2.jpg', alt: 'ニューボーンスタジオ撮影 2' },
-          { src: 'assets/images/newborn/nb-3.jpg', alt: 'ニューボーンスタジオ撮影 3' },
-          { src: 'assets/images/newborn/nb-4.jpg', alt: 'ニューボーンスタジオ撮影 4' },
-          { src: 'assets/images/newborn/nb-5.jpg', alt: 'ニューボーンスタジオ撮影 5' },
-          { src: 'assets/images/newborn/nb-6.jpg', alt: 'ニューボーンスタジオ撮影 6' },
-          { src: 'assets/images/newborn/nb-7.jpg', alt: 'ニューボーンスタジオ撮影 7' }
-        ], '← 横にスライドできます →');
+        addImageGallery('newborn', '← 横にスライドできます →');
 
         await new Promise(r => setTimeout(r, 2500));
 
@@ -582,13 +659,7 @@ async function handlePregnantChoice(choice) {
             await addMsg('bot', '赤ちゃんのみのニューボーンライトプランですね。');
 
             // 出張ニューボーン撮影サンプル写真を表示
-            addImageGallery([
-              { src: 'assets/images/newborn-home/nb-home-1.jpg', alt: 'ニューボーン出張撮影 1' },
-              { src: 'assets/images/newborn-home/nb-home-2.jpg', alt: 'ニューボーン出張撮影 2' },
-              { src: 'assets/images/newborn-home/nb-home-3.jpg', alt: 'ニューボーン出張撮影 3' },
-              { src: 'assets/images/newborn-home/nb-home-4.jpg', alt: 'ニューボーン出張撮影 4' },
-              { src: 'assets/images/newborn-home/nb-home-5.jpg', alt: 'ニューボーン出張撮影 5' }
-            ], '← 横にスライドできます →');
+            addImageGallery('newborn-home', '← 横にスライドできます →');
 
             await new Promise(r => setTimeout(r, 2500));
 
@@ -632,20 +703,7 @@ async function handlePregnantChoice(choice) {
     await addMsg('bot', 'マタニティフォトですね！\n\n大切なマタニティ期を、美しく残しましょう✨', 800);
 
     // マタニティの画像ギャラリー
-    addImageGallery([
-      { src: 'assets/images/maternity/147.jpg', alt: 'マタニティフォト 夫婦' },
-      { src: 'assets/images/maternity/239.jpg', alt: 'マタニティフォト お腹アップ' },
-      { src: 'assets/images/maternity/240.jpg', alt: 'マタニティフォト ポーズ1' },
-      { src: 'assets/images/maternity/241.jpg', alt: 'マタニティフォト ポーズ2' },
-      { src: 'assets/images/maternity/252.jpg', alt: 'マタニティフォト 家族' },
-      { src: 'assets/images/maternity/285.jpg', alt: 'マタニティフォト スタジオ' },
-      { src: 'assets/images/maternity/286.jpg', alt: 'マタニティフォト 夫婦2' },
-      { src: 'assets/images/maternity/287.jpg', alt: 'マタニティフォト ドレス' },
-      { src: 'assets/images/maternity/319.jpg', alt: 'マタニティフォト 自然光' },
-      { src: 'assets/images/maternity/320.jpg', alt: 'マタニティフォト エレガント' },
-      { src: 'assets/images/maternity/321.jpg', alt: 'マタニティフォト 上の子と' },
-      { src: 'assets/images/maternity/86.jpg', alt: 'マタニティフォト カジュアル' }
-    ], '← 横にスライドできます →');
+    addImageGallery('maternity', '← 横にスライドできます →');
 
     await new Promise(r => setTimeout(r, 2000));
 
@@ -850,16 +908,7 @@ async function handleNewbornChoice(choice) {
     currentPlanType = 'other'; // お宮参り用予約URL
     await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
 
-    addImageGallery([
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-1.jpg', alt: 'お宮参り撮影 神社ロケ' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-2.jpg', alt: 'お宮参り撮影 スタジオ＆ロケ' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-3.jpg', alt: 'お宮参り撮影 お食い初め' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-4.jpg', alt: 'お宮参り撮影 赤ちゃん' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-5.jpg', alt: 'お宮参り撮影 家族' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-6.jpg', alt: 'お宮参り撮影 夫婦＆赤ちゃん' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-7.jpg', alt: 'お宮参り撮影 ママと赤ちゃん' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-8.jpg', alt: 'お宮参り撮影 スタジオ桜' }
-    ], '← 横にスライドできます →');
+    addImageGallery('omiyamairi', '← 横にスライドできます →');
 
     await new Promise(r => setTimeout(r, 2500));
 
@@ -1015,20 +1064,7 @@ async function flowToddler() {
       await addSiblingAppeal();
 
       // バースデー写真ギャラリー
-      addImageGallery([
-        { src: 'assets/images/birthday/bd-1.jpg', alt: 'バースデー撮影 家族写真' },
-        { src: 'assets/images/birthday/bd-2.jpg', alt: 'バースデー撮影 お菓子' },
-        { src: 'assets/images/birthday/bd-3.jpg', alt: 'バースデー撮影 ぬいぐるみ' },
-        { src: 'assets/images/birthday/bd-4.jpg', alt: 'バースデー撮影 ハーフバースデー' },
-        { src: 'assets/images/birthday/bd-5.jpg', alt: 'バースデー撮影 Happy Birthday' },
-        { src: 'assets/images/birthday/bd-6.jpg', alt: 'バースデー撮影 ベレー帽' },
-        { src: 'assets/images/birthday/bd-7.jpg', alt: 'バースデー撮影 傘と花' },
-        { src: 'assets/images/birthday/bd-8.jpg', alt: 'バースデー撮影 ぬいぐるみ2' },
-        { src: 'assets/images/birthday/bd-9.jpg', alt: 'バースデー撮影 ママと赤ちゃん' },
-        { src: 'assets/images/birthday/bd-10.jpg', alt: 'バースデー撮影 ママと抱っこ' },
-        { src: 'assets/images/birthday/bd-11.jpg', alt: 'バースデー撮影 家族笑顔' },
-        { src: 'assets/images/birthday/bd-12.jpg', alt: 'バースデー撮影 家族ふれあい' }
-      ], '← 横にスライドできます →');
+      addImageGallery('birthday', '← 横にスライドできます →');
 
       await new Promise(r => setTimeout(r, 2500));
 
@@ -1048,11 +1084,7 @@ hikarino studioでは2〜6月の期間限定で
       await new Promise(r => setTimeout(r, 800));
 
       // 初節句の画像ギャラリー
-      addImageGallery([
-        { src: 'assets/images/sekku/311.jpg', alt: '初節句撮影 白粋HAKI' },
-        { src: 'assets/images/sekku/312.jpg', alt: '初節句撮影 兄弟撮影' },
-        { src: 'assets/images/sekku/80.jpg', alt: '初節句撮影 節句飾り' }
-      ], '← 横にスライドできます →');
+      addImageGallery('sekku', '← 横にスライドできます →');
 
       await new Promise(r => setTimeout(r, 2000));
       await addMsg('bot', `🎏 節句撮影オプション
@@ -1320,12 +1352,7 @@ async function flowOther() {
       await addMsg('bot', '成人式・入学卒園の撮影ですね！\n\n人生の節目を、特別な1枚に残しましょう✨', 800);
 
       // 成人の画像ギャラリー
-      addImageGallery([
-        { src: 'assets/images/seijin/265.jpg', alt: '成人式撮影 振袖1' },
-        { src: 'assets/images/seijin/266.jpg', alt: '成人式撮影 振袖2' },
-        { src: 'assets/images/seijin/273.jpg', alt: '成人式撮影 ポーズ1' },
-        { src: 'assets/images/seijin/274.jpg', alt: '成人式撮影 ポーズ2' }
-      ], '← 横にスライドできます →');
+      addImageGallery('seijin', '← 横にスライドできます →');
 
       await new Promise(r => setTimeout(r, 2000));
 
