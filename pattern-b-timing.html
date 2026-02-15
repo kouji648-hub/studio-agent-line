@@ -1284,6 +1284,36 @@ async function flowOther() {
     addStepIndicator('— Step 3: ご案内 —');
     if (choice === 'consult') {
       await addMsg('bot', 'どんなことでもお気軽にどうぞ！\nスタッフが丁寧にお答えします。');
+    } else if (choice === 'maternity') {
+      // マタニティフォト
+      currentPlanType = 'other';
+      await addMsg('bot', 'マタニティフォトですね！\n\n大切なマタニティ期を、美しく残しましょう✨', 800);
+
+      // マタニティの画像ギャラリー
+      addImageGallery([
+        { src: 'assets/images/maternity/147.jpg', alt: 'マタニティフォト 夫婦' },
+        { src: 'assets/images/maternity/239.jpg', alt: 'マタニティフォト お腹アップ' },
+        { src: 'assets/images/maternity/240.jpg', alt: 'マタニティフォト ポーズ1' },
+        { src: 'assets/images/maternity/241.jpg', alt: 'マタニティフォト ポーズ2' },
+        { src: 'assets/images/maternity/252.jpg', alt: 'マタニティフォト 家族' },
+        { src: 'assets/images/maternity/285.jpg', alt: 'マタニティフォト スタジオ' },
+        { src: 'assets/images/maternity/286.jpg', alt: 'マタニティフォト 夫婦2' },
+        { src: 'assets/images/maternity/287.jpg', alt: 'マタニティフォト ドレス' },
+        { src: 'assets/images/maternity/319.jpg', alt: 'マタニティフォト 自然光' },
+        { src: 'assets/images/maternity/320.jpg', alt: 'マタニティフォト エレガント' },
+        { src: 'assets/images/maternity/321.jpg', alt: 'マタニティフォト 上の子と' },
+        { src: 'assets/images/maternity/86.jpg', alt: 'マタニティフォト カジュアル' }
+      ], '← 横にスライドできます →');
+
+      await new Promise(r => setTimeout(r, 2000));
+
+      addRichMsg({
+        gradient: 'linear-gradient(135deg, #c06bc7, #e8a0e8)',
+        title: '🤰 マタニティフォト',
+        subtitle: '¥30,000（税別）※土日祝+¥3,000',
+        features: ['60カット撮影', '夫婦撮影サービス', '私服+お着替え1着', '平日・土曜のみ'],
+        proof: '一生に一度のマタニティ期を形に残せます'
+      });
     } else if (choice === 'event') {
       // 成人式・入学卒園
       currentPlanType = 'other';
