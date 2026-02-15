@@ -1106,21 +1106,8 @@ async function flowChild() {
   addChoices([
     { label: '👧 3歳の七五三（女の子）', value: '3f' },
     { label: '👦 5歳の七五三（男の子）', value: '5m' },
-    { label: '👧 7歳の七五三（女の子）', value: '7f' },
-    { label: '🎂 バースデー撮影', value: 'bd' }
+    { label: '👧 7歳の七五三（女の子）', value: '7f' }
   ], async (choice) => {
-    if (choice === 'bd') {
-      addStepIndicator('— Step 3: バースデー提案 —');
-      addRichMsg({
-        gradient: 'linear-gradient(135deg, #ffb347, #ffcc80)',
-        title: '🎂 バースデーフォト',
-        subtitle: '¥30,000（税別）※土日祝+¥3,000',
-        features: ['💰 明朗会計・大手の半額', '60カット撮影', '衣装2着', '⭐️ 兄弟衣装1着無料', '完全貸切でリラックス'],
-        proof: 'お誕生日の特別な1日を写真に'
-      });
-      return;
-    }
-
     addStepIndicator('— Step 3: 七五三プラン —');
 
     const ageLabel = { '3f': '3歳女の子', '5m': '5歳男の子', '7f': '7歳女の子' };
