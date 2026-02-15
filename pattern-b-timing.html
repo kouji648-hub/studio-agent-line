@@ -1124,7 +1124,7 @@ async function flowChild() {
     addStepIndicator('— Step 3: 七五三プラン —');
 
     const ageLabel = { '3f': '3歳女の子', '5m': '5歳男の子', '7f': '7歳女の子' };
-    await addMsg('bot', `${ageLabel[choice]}の七五三ですね！\n\nヘアメイク・着付け込みなので、手ぶらでOKです。`);
+    await addMsg('bot', `${ageLabel[choice]}の七五三ですね！\n\n着付け込みなので、手ぶらでOKです。`);
 
     await addMsg('bot', 'どちらのスタジオで撮影されますか？\n\n雰囲気が全く違うので、お好みで選べます✨');
     addStudioComparison();
@@ -1206,7 +1206,7 @@ async function flowChild() {
 
           await new Promise(r => setTimeout(r, 1000));
 
-          await addMsg('bot', 'ママの訪問着についてもご案内できます。\n\n七五三の場合、訪問着は+¥11,000（着付け込）です。', 800);
+          await addMsg('bot', 'ママの訪問着についてもご案内できます。', 800);
 
           addChoices([
             { label: '👘 訪問着も借りたい', value: 'with_kimono_753' },
@@ -1214,6 +1214,8 @@ async function flowChild() {
           ], async (kimono753) => {
 
             if (kimono753 === 'with_kimono_753') {
+              await addMsg('bot', '👘 訪問着も借りたい');
+
               // タイムラインを再表示
               addTimeline([
                 { title: '9:00 スタジオ到着', desc: 'ヘアメイク・着付け', active: true },
