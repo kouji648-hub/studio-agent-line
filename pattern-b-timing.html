@@ -531,6 +531,12 @@ async function flowPregnant() {
 }
 
 async function handlePregnantChoice(choice) {
+  if (choice === 'bundle') {
+    // お宮参りフローに合流（Step 3 はすでに表示済み）
+    await startOmiyamairiFlow();
+    return;
+  }
+
   addStepIndicator('— Step 4: 予約・相談 —');
 
   if (choice === 'nb') {
@@ -656,21 +662,6 @@ async function handlePregnantChoice(choice) {
       features: ['60カット撮影', '夫婦撮影サービス', '私服+お着替え1着', '平日・土曜のみ'],
       proof: '一生に一度のマタニティ期を形に残せます'
     });
-  } else if (choice === 'bundle') {
-    currentPlanType = 'other'; // バンドル用予約URL
-    await addMsg('bot', 'ニューボーン＋お宮参りのセット撮影、素晴らしい選択です！');
-    addBundleMsg({
-      title: 'ニューボーン＋お宮参り',
-      tag: '続けて撮影されるママに人気',
-      items: [
-        { name: '👶 ニューボーンフォト（50カット）', originalPrice: '¥38,500' },
-        { name: '⛩️ お宮参り撮影（60カット）', originalPrice: '¥33,000' },
-        { name: '👘 訪問着レンタル＋着付け（ベーシック）', originalPrice: '無料' }
-      ],
-      totalPrice: '65,000'
-    });
-    await new Promise(r => setTimeout(r, 500));
-    await addMsg('bot', 'お宮参りでは訪問着の着付けも無料で対応しています。\n神社ロケなら撮影当日にそのままお参りできます。', 600);
   } else {
     await addMsg('bot', 'もちろんです！ゆっくりご検討ください😊');
     addChoices([
@@ -732,6 +723,142 @@ async function flowNewborn() {
     { label: '⛩️ お宮参りの撮影がしたい', value: 'omiya' },
     { label: '🎀 両方まとめて相談したい', value: 'both' }
   ], handleNewbornChoice);
+}
+
+// --- お宮参り撮影場所選択フロー（共通） ---
+async function startOmiyamairiFlow() {
+  currentPlanType = 'other';
+  await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
+
+  addImageGallery([
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-1.jpg', alt: 'お宮参り撮影 神社ロケ' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-2.jpg', alt: 'お宮参り撮影 スタジオ＆ロケ' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-3.jpg', alt: 'お宮参り撮影 お食い初め' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-4.jpg', alt: 'お宮参り撮影 赤ちゃん' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-5.jpg', alt: 'お宮参り撮影 家族' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-6.jpg', alt: 'お宮参り撮影 夫婦＆赤ちゃん' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-7.jpg', alt: 'お宮参り撮影 ママと赤ちゃん' },
+    { src: 'assets/images/omiyamairi-intro/omiya-intro-8.jpg', alt: 'お宮参り撮影 スタジオ桜' }
+  ], '← 横にスライドできます →');
+
+  await new Promise(r => setTimeout(r, 2500));
+
+  addChoices([
+    { label: '📸 スタジオ撮影のみ', value: 'studio' },
+    { label: '⛩️ スタジオ＋神社ロケ', value: 'location' }
+  ], async (styleChoice) => {
+
+    if (styleChoice === 'studio') {
+      addImageGallery([
+        { src: 'assets/images/omiyamairi/omiya-1.jpg', alt: 'お宮参りスタジオ撮影 1' },
+        { src: 'assets/images/omiyamairi/omiya-2.jpg', alt: 'お宮参りスタジオ撮影 2' },
+        { src: 'assets/images/omiyamairi/omiya-3.jpg', alt: 'お宮参りスタジオ撮影 3' },
+        { src: 'assets/images/omiyamairi/omiya-4.jpg', alt: 'お宮参りスタジオ撮影 4' },
+        { src: 'assets/images/omiyamairi/omiya-5.jpg', alt: 'お宮参りスタジオ撮影 5' },
+        { src: 'assets/images/omiyamairi/omiya-6.jpg', alt: 'お宮参りスタジオ撮影 6' },
+        { src: 'assets/images/omiyamairi/omiya-7.jpg', alt: 'お宮参りスタジオ撮影 7' },
+        { src: 'assets/images/omiyamairi/omiya-8.jpg', alt: 'お宮参りスタジオ撮影 8' }
+      ], '← 横にスライドできます →');
+
+      await new Promise(r => setTimeout(r, 2500));
+
+      await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥30,000（税別）※土日祝+¥3,000。');
+
+      addStepIndicator('— Step 4: お宮参りベーシック —');
+
+      addRichMsg({
+        gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+        title: '⛩️ お宮参りベーシック',
+        subtitle: '¥30,000（税別）※土日祝+¥3,000',
+        features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', '宮崎神宮ロケ20分（1日で完結）', '土日祝 +3,000円'],
+        proof: '産着・訪問着の着せ方もお任せください'
+      });
+
+    } else {
+      await addMsg('bot', '神社ロケをご希望ですね！\n\nスタジオから神社まで車で5分。\n撮影→お参りが1日で完結します。');
+      await addMsg('bot', '⏰ 所要時間について\n着替え〜撮影終了まで約1〜1.5時間です。\nお子様の体調やご機嫌により前後する場合があります。');
+
+      addChoices([
+        { label: '📍 宮崎神宮（下北方スタジオ）', value: 'shimokitakata' },
+        { label: '📍 神柱宮（都城スタジオ）', value: 'miyakonojo' }
+      ], async (shrineChoice) => {
+
+        addStepIndicator('— Step 4: 当日の流れ —');
+
+        const shrineInfo = {
+          shimokitakata: {
+            shrine: '宮崎神宮',
+            feature: '木漏れ日と参道の雰囲気が素敵',
+            studio: '下北方スタジオ'
+          },
+          miyakonojo: {
+            shrine: '神柱宮',
+            feature: '白い鳥居と広い参道が特徴',
+            studio: '都城スタジオ'
+          }
+        };
+
+        const info = shrineInfo[shrineChoice];
+
+        await addMsg('bot', `${info.shrine}（${info.studio}から車5分）\n${info.feature}です。`);
+
+        await addMsg('bot', `撮影スケジュールの例
+
+9:00 スタジオ到着
+着付け・撮影準備
+
+9:30 スタジオ撮影
+家族写真・赤ちゃんのアップ等（60分）
+
+10:00 神社へ移動
+車で5分
+
+10:15 神社ロケ撮影
+参道・境内で撮影（20分）
+
+10:30 そのままお参り
+御祈祷・記念撮影
+→ 1日で全部完結！`);
+
+        await new Promise(r => setTimeout(r, 1000));
+
+        await addMsg('bot', 'ママの訪問着はオプションです。\n\nスタジオ＋ロケプランの場合、訪問着は撮影後もそのままレンタル継続できます（+¥15,000）。', 800);
+
+        addChoices([
+          { label: '👘 訪問着も借りたい', value: 'with_kimono' },
+          { label: '🙅‍♀️ 持参します / 不要です', value: 'no_kimono' }
+        ], async (kimonoChoice) => {
+
+          addStepIndicator('— Step 5: プラン確定 —');
+
+          if (kimonoChoice === 'with_kimono') {
+            await addMsg('bot', '訪問着レンタル＋着付け＋撮影後レンタル込みで、総額¥50,000（税別）※土日祝+¥3,000です。\n\n着付けスタッフが対応するので準備不要です。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+              title: '⛩️ お宮参り スタジオ＋ロケ＋訪問着',
+              subtitle: '¥50,000（税別）※土日祝+¥3,000',
+              features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`, '土日祝 +3,000円'],
+              urgency: 'スタジオ→神社→お参りが1日で完結',
+              proof: '訪問着のまま御祈祷に行けるのでスムーズです'
+            });
+
+          } else {
+            await addMsg('bot', '承知しました。\n訪問着なしの場合、総額¥35,000（税別）※土日祝+¥3,000です。');
+
+            addRichMsg({
+              gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
+              title: '⛩️ お宮参り スタジオ＋ロケ',
+              subtitle: '¥35,000（税別）※土日祝+¥3,000',
+              features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`, '土日祝 +3,000円'],
+              urgency: 'スタジオ→神社→お参りが1日で完結',
+              proof: '産着の着せ方もお任せください'
+            });
+          }
+        });
+      });
+    }
+  });
 }
 
 async function handleNewbornChoice(choice) {
@@ -847,144 +974,7 @@ async function handleNewbornChoice(choice) {
       }
     });
   } else if (choice === 'omiya') {
-    currentPlanType = 'other'; // お宮参り用予約URL
-    await addMsg('bot', 'お宮参りプランは撮影スタイルが選べます。\nまず、撮影場所をお聞かせください。');
-
-    addImageGallery([
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-1.jpg', alt: 'お宮参り撮影 神社ロケ' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-2.jpg', alt: 'お宮参り撮影 スタジオ＆ロケ' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-3.jpg', alt: 'お宮参り撮影 お食い初め' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-4.jpg', alt: 'お宮参り撮影 赤ちゃん' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-5.jpg', alt: 'お宮参り撮影 家族' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-6.jpg', alt: 'お宮参り撮影 夫婦＆赤ちゃん' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-7.jpg', alt: 'お宮参り撮影 ママと赤ちゃん' },
-      { src: 'assets/images/omiyamairi-intro/omiya-intro-8.jpg', alt: 'お宮参り撮影 スタジオ桜' }
-    ], '← 横にスライドできます →');
-
-    await new Promise(r => setTimeout(r, 2500));
-
-    addChoices([
-      { label: '📸 スタジオ撮影のみ', value: 'studio' },
-      { label: '⛩️ スタジオ＋神社ロケ', value: 'location' }
-    ], async (styleChoice) => {
-
-      if (styleChoice === 'studio') {
-        // スタジオ撮影サンプル写真を表示
-        addImageGallery([
-          { src: 'assets/images/omiyamairi/omiya-1.jpg', alt: 'お宮参りスタジオ撮影 1' },
-          { src: 'assets/images/omiyamairi/omiya-2.jpg', alt: 'お宮参りスタジオ撮影 2' },
-          { src: 'assets/images/omiyamairi/omiya-3.jpg', alt: 'お宮参りスタジオ撮影 3' },
-          { src: 'assets/images/omiyamairi/omiya-4.jpg', alt: 'お宮参りスタジオ撮影 4' },
-          { src: 'assets/images/omiyamairi/omiya-5.jpg', alt: 'お宮参りスタジオ撮影 5' },
-          { src: 'assets/images/omiyamairi/omiya-6.jpg', alt: 'お宮参りスタジオ撮影 6' },
-          { src: 'assets/images/omiyamairi/omiya-7.jpg', alt: 'お宮参りスタジオ撮影 7' },
-          { src: 'assets/images/omiyamairi/omiya-8.jpg', alt: 'お宮参りスタジオ撮影 8' }
-        ], '← 横にスライドできます →');
-
-        await new Promise(r => setTimeout(r, 2500));
-
-        // スタジオのみ → 訪問着無料訴求
-        await addMsg('bot', 'スタジオ撮影なら、ママの訪問着レンタル＋着付けが無料です！\n\n産着・訪問着・着付けが全て込みで¥30,000（税別）※土日祝+¥3,000。');
-
-        addStepIndicator('— Step 4: お宮参りベーシック —');
-
-        addRichMsg({
-          gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
-          title: '⛩️ お宮参りベーシック',
-          subtitle: '¥30,000（税別）※土日祝+¥3,000',
-          features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', '宮崎神宮ロケ20分（1日で完結）', '土日祝 +3,000円'],
-          proof: '産着・訪問着の着せ方もお任せください'
-        });
-
-
-      } else {
-        // 神社ロケ → 神社選択
-        await addMsg('bot', '神社ロケをご希望ですね！\n\nスタジオから神社まで車で5分。\n撮影→お参りが1日で完結します。');
-        await addMsg('bot', '⏰ 所要時間について\n着替え〜撮影終了まで約1〜1.5時間です。\nお子様の体調やご機嫌により前後する場合があります。');
-
-        addChoices([
-          { label: '📍 宮崎神宮（下北方スタジオ）', value: 'shimokitakata' },
-          { label: '📍 神柱宮（都城スタジオ）', value: 'miyakonojo' }
-        ], async (shrineChoice) => {
-
-          addStepIndicator('— Step 4: 当日の流れ —');
-
-          const shrineInfo = {
-            shimokitakata: {
-              shrine: '宮崎神宮',
-              feature: '木漏れ日と参道の雰囲気が素敵',
-              studio: '下北方スタジオ'
-            },
-            miyakonojo: {
-              shrine: '神柱宮',
-              feature: '白い鳥居と広い参道が特徴',
-              studio: '都城スタジオ'
-            }
-          };
-
-          const info = shrineInfo[shrineChoice];
-
-          await addMsg('bot', `${info.shrine}（${info.studio}から車5分）\n${info.feature}です。`);
-
-          // 撮影スケジュールの例を表示
-          await addMsg('bot', `撮影スケジュールの例
-
-9:00 スタジオ到着
-着付け・撮影準備
-
-9:30 スタジオ撮影
-家族写真・赤ちゃんのアップ等（60分）
-
-10:00 神社へ移動
-車で5分
-
-10:15 神社ロケ撮影
-参道・境内で撮影（20分）
-
-10:30 そのままお参り
-御祈祷・記念撮影
-→ 1日で全部完結！`);
-
-
-          await new Promise(r => setTimeout(r, 1000));
-
-          await addMsg('bot', 'ママの訪問着はオプションです。\n\nスタジオ＋ロケプランの場合、訪問着は撮影後もそのままレンタル継続できます（+¥15,000）。', 800);
-
-          addChoices([
-            { label: '👘 訪問着も借りたい', value: 'with_kimono' },
-            { label: '🙅‍♀️ 持参します / 不要です', value: 'no_kimono' }
-          ], async (kimonoChoice) => {
-
-            addStepIndicator('— Step 5: プラン確定 —');
-
-            if (kimonoChoice === 'with_kimono') {
-              await addMsg('bot', '訪問着レンタル＋着付け＋撮影後レンタル込みで、総額¥50,000（税別）※土日祝+¥3,000です。\n\n着付けスタッフが対応するので準備不要です。');
-
-              addRichMsg({
-                gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
-                title: '⛩️ お宮参り スタジオ＋ロケ＋訪問着',
-                subtitle: '¥50,000（税別）※土日祝+¥3,000',
-                features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '訪問着レンタル・着付け・撮影後レンタル込', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`, '土日祝 +3,000円'],
-                urgency: 'スタジオ→神社→お参りが1日で完結',
-                proof: '訪問着のまま御祈祷に行けるのでスムーズです'
-              });
-
-            } else {
-              await addMsg('bot', '承知しました。\n訪問着なしの場合、総額¥35,000（税別）※土日祝+¥3,000です。');
-
-              addRichMsg({
-                gradient: 'linear-gradient(135deg, #4a90d9, #7ab8e8)',
-                title: '⛩️ お宮参り スタジオ＋ロケ',
-                subtitle: '¥35,000（税別）※土日祝+¥3,000',
-                features: ['明朗会計・大手の半額', '60カット（明るさ・色味調整済み）', '産着レンタル無料', `${info.shrine}ロケ20分（1日で完結）`, '土日祝 +3,000円'],
-                urgency: 'スタジオ→神社→お参りが1日で完結',
-                proof: '産着の着せ方もお任せください'
-              });
-            }
-          });
-        });
-      }
-    });
+    await startOmiyamairiFlow();
   } else {
     await addMsg('bot', 'ニューボーン→お宮参りの流れで撮影されるママ、多いです！');
     await addMsg('bot', 'お宮参り撮影詳細はこちら👇');
